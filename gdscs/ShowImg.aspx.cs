@@ -66,15 +66,11 @@ namespace gds
                                 int wT, hT;
                                 if (w > h)
                                 {
-                                    // wT = w / (w / c)
-                                    // hT = h / (w / c)
                                     wT = w / (w / thumbWidth);
                                     hT = h / (w / thumbWidth);
                                 }
                                 else
                                 {
-                                    // wT = w / (h / c)
-                                    // hT = h / (h / c)
                                     wT = w / (h / thumbHeight);
                                     hT = h / (h / thumbHeight);
                                 }
@@ -199,8 +195,6 @@ namespace gds
                                 int wT, hT;
                                 if (w > h)
                                 {
-                                    // wT = w / (w / c)
-                                    // hT = h / (w / c)
                                     wT = w / (w / thumbWidth);
                                     hT = h / (w / thumbWidth);
                                 }
@@ -291,7 +285,6 @@ namespace gds
 
                 default:
                     {
-                        // TODO: bikim image yg says file invalid
                         Response.WriteFile(commonModule.IMGNAVIRTUALPATH);
                         break;
                     }
