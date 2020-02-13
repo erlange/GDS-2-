@@ -1,0 +1,135 @@
+Exception: 14/02/2020 0:21:44
+Object reference not set to an instance of an object.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+   at gds.treeVars2.BuildVarTreeRoots(Boolean isEnglish) in C:\gdscs\gdscs\components\treeVars2.ascx.cs:line 278
+   at gds.treeVars2.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeVars2.ascx.cs:line 261
+Exception: 14/02/2020 0:27:08
+Object reference not set to an instance of an object.
+http://localhost/gdscs/v.aspx?ds=11&r=12
+   at gds.treeVars2.BuildVarTreeRoots(Boolean isEnglish) in C:\gdscs\gdscs\components\treeVars2.ascx.cs:line 278
+   at gds.treeVars2.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeVars2.ascx.cs:line 261
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=64&ds=11
+14/02/2020 0:43:24
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+14/02/2020 0:50:17
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=64&ds=11
+14/02/2020 0:57:32
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+14/02/2020 0:58:51
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+14/02/2020 1:03:48
+Object reference not set to an instance of an object.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+2/14/2020 1:06:33 AM
+   at gds.gds2_v.GetRequest() in C:\gdscs\gdscs\v.aspx.cs:line 189
+   at gds.gds2_v.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 25
+http://localhost/gdscs/v.aspx?r=32&ds=11
+2/14/2020 1:09:01 AM
+   at gds.gds2_v.GetRequest() in C:\gdscs\gdscs\v.aspx.cs:line 188
+   at gds.gds2_v.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 25
+http://localhost/gdscs/v.aspx?r=62&ds=11
+2/14/2020 1:13:02 AM
+   at gds.gds2_v.GetRequest() in C:\gdscs\gdscs\v.aspx.cs:line 188
+   at gds.gds2_v.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 25
+http://localhost/gdscs/v.aspx?ds=12&r=15
+2/14/2020 1:15:21 AM
+   at gds.gds2_v.GetRequest() in C:\gdscs\gdscs\v.aspx.cs:line 188
+   at gds.gds2_v.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 25
+http://localhost/gdscs/v.aspx?ds=12&r=15
+2/14/2020 1:15:35 AM
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=12
+14/02/2020 1:17:02
+Exception: 14/02/2020 1:21:04
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 304
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:26:38
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:27:50
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=32&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:28:35
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:30:37
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=32&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:33:37
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=32&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 14/02/2020 1:35:28
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?r=62&ds=11
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 305
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Exception: 2/14/2020 1:37:55 AM
+The expression contains an invalid string constant: '.
+http://localhost/gdscs/v.aspx?ds=12
+   at System.Data.ExpressionParser.ScanString(Char escape)
+   at System.Data.ExpressionParser.Scan()
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 300
+   at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208

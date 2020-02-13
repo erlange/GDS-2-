@@ -10,7 +10,26 @@ namespace gds
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Session["en"] == "1")
+            if (HttpContext.Current.Session["en"] == null)
+            {
+                SetSelectedLang("id");
+            }
+            else
+            {
+                if (HttpContext.Current.Session["en"].ToString() == "1")
+                {
+                    SetSelectedLang("en");
+                }
+                else
+                {
+                    SetSelectedLang("id");
+                }
+            }
+        }
+
+        void SetSelectedLang(string lang)
+        {
+            if (lang == "en")
             {
                 CheckAdminRole("Welcome, ");
                 btnIna.Attributes["class"] = "langMnu";

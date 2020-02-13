@@ -52,7 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="album.ascx" />
-    <Content Include="components\langBar.ascx" />
+    <Content Include="components\treeComparators.ascx" />
+    <Content Include="components\treeDs.ascx" />
+    <Content Include="components\treeLocations.ascx" />
+    <Content Include="components\treeVars.ascx" />
+    <Content Include="components\treeVars2.ascx" />
+    <Content Include="err.aspx" />
     <Content Include="gallery\785814-001.jpg" />
     <Content Include="gallery\DC006653.jpg" />
     <Content Include="gallery\IH073991.jpg" />
@@ -60,6 +65,7 @@
     <Content Include="gallery\YM016025.jpg" />
     <Content Include="highlight.xml" />
     <Content Include="imgd.aspx" />
+    <Content Include="panelAnalysis.ascx" />
     <Content Include="panelComments.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="images\!!minus.gif" />
@@ -370,6 +376,9 @@
     <Content Include="panelHtml.ascx" />
     <Content Include="panelPpt.ascx" />
     <Content Include="panelSearch.ascx" />
+    <Content Include="panelSearchHtml.ascx" />
+    <Content Include="panelToolTip.ascx" />
+    <Content Include="s.aspx" />
     <Content Include="s.css" />
     <Content Include="s00.css" />
     <Content Include="s01.css" />
@@ -389,12 +398,14 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="setLang.aspx" />
     <Content Include="ShowImg.aspx" />
     <Content Include="ss.css" />
     <Content Include="Styles.css" />
     <Content Include="sWB.css" />
     <Content Include="sWBsafe.css" />
     <Content Include="s_Orig.css" />
+    <Content Include="v.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -455,8 +466,47 @@
       <DependentUpon>album.ascx</DependentUpon>
     </Compile>
     <Compile Include="commonModule.cs" />
-    <Compile Include="components\langBar.cs">
+    <Compile Include="components\treeComparators.ascx.cs">
+      <DependentUpon>treeComparators.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeComparators.ascx.designer.cs">
+      <DependentUpon>treeComparators.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeDs.ascx.cs">
+      <DependentUpon>treeDs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeDs.ascx.designer.cs">
+      <DependentUpon>treeDs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeLocations.ascx.cs">
+      <DependentUpon>treeLocations.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeLocations.ascx.designer.cs">
+      <DependentUpon>treeLocations.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeVars.ascx.cs">
+      <DependentUpon>treeVars.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeVars.ascx.designer.cs">
+      <DependentUpon>treeVars.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeVars2.ascx.cs">
+      <DependentUpon>treeVars2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeVars2.ascx.designer.cs">
+      <DependentUpon>treeVars2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="err.aspx.cs">
+      <DependentUpon>err.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="err.aspx.designer.cs">
+      <DependentUpon>err.aspx</DependentUpon>
     </Compile>
     <Compile Include="imgd.aspx.cs">
       <DependentUpon>imgd.aspx</DependentUpon>
@@ -464,6 +514,13 @@
     </Compile>
     <Compile Include="imgd.aspx.designer.cs">
       <DependentUpon>imgd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="panelAnalysis.ascx.cs">
+      <DependentUpon>panelAnalysis.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelAnalysis.ascx.designer.cs">
+      <DependentUpon>panelAnalysis.ascx</DependentUpon>
     </Compile>
     <Compile Include="panelComments.ascx.cs">
       <DependentUpon>panelComments.ascx</DependentUpon>
@@ -570,13 +627,48 @@
     <Compile Include="panelSearch.ascx.designer.cs">
       <DependentUpon>panelSearch.ascx</DependentUpon>
     </Compile>
+    <Compile Include="panelSearchHtml.ascx.cs">
+      <DependentUpon>panelSearchHtml.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelSearchHtml.ascx.designer.cs">
+      <DependentUpon>panelSearchHtml.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelToolTip.ascx.cs">
+      <DependentUpon>panelToolTip.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelToolTip.ascx.designer.cs">
+      <DependentUpon>panelToolTip.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="s.aspx.cs">
+      <DependentUpon>s.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="s.aspx.designer.cs">
+      <DependentUpon>s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="setLang.aspx.cs">
+      <DependentUpon>setLang.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="setLang.aspx.designer.cs">
+      <DependentUpon>setLang.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ShowImg.aspx.cs">
       <DependentUpon>ShowImg.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ShowImg.aspx.designer.cs">
       <DependentUpon>ShowImg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="v.aspx.cs">
+      <DependentUpon>v.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="v.aspx.designer.cs">
+      <DependentUpon>v.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
