@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mnuLeft>
+	<item>
+		<id>0</id>
+		<sortorder>0</sortorder>
+		<leftbgurl>images/z0l.gif</leftbgurl>
+		<leftbgurlinv>images/y0l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z0r.gif</rightbgurl>
+		<rightbgurlinv>images/y0r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>90</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#0bcefb</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>Default.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>Beranda</linktitle>
+		<linktitle_en>Home</linktitle_en>
+		<linktooltip>Halaman Depan</linktooltip>
+		<linktooltip_en>Front Page</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+	<item>
+		<id>1</id>
+		<sortorder>1</sortorder>
+		<leftbgurl>images/z1l.gif</leftbgurl>
+		<leftbgurlinv>images/y1l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z1r.gif</rightbgurl>
+		<rightbgurlinv>images/y1r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>118</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#0096c3</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>gds.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>Sekilas GDS</linktitle>
+		<linktitle_en>GDS Overview</linktitle_en>
+		<linktooltip>Penjelasan tentang GDS</linktooltip>
+		<linktooltip_en>Overview and explanation of GDS</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+	<item>
+		<id>2</id>
+		<sortorder>2</sortorder>
+		<leftbgurl>images/z2l.gif</leftbgurl>
+		<leftbgurlinv>images/y2l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z2r.gif</rightbgurl>
+		<rightbgurlinv>images/y2r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>120</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#196eaf</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>s.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>GDS Interaktif</linktitle>
+		<linktitle_en>GDS Interactive</linktitle_en>
+		<linktooltip>Analisis data survei GDS</linktooltip>
+		<linktooltip_en>Interactive GDS data analyses</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+	<item>
+		<id>3</id>
+		<sortorder>3</sortorder>
+		<leftbgurl>images/z3l.gif</leftbgurl>
+		<leftbgurlinv>images/y3l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z3r.gif</rightbgurl>
+		<rightbgurlinv>images/y3r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>97</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#133192</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>doclist.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>Download</linktitle>
+		<linktitle_en>Download</linktitle_en>
+		<linktooltip>Manual, kuesioner dan dokumen GDS</linktooltip>
+		<linktooltip_en>GDS Manuals, questionnaires, and other documents</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+	<item>
+		<id>4</id>
+		<sortorder>4</sortorder>
+		<leftbgurl>images/z4l.gif</leftbgurl>
+		<leftbgurlinv>images/y4l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z4r.gif</rightbgurl>
+		<rightbgurlinv>images/y4r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>97</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#101074</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>contacts.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>Kontak</linktitle>
+		<linktitle_en>Contact Us</linktitle_en>
+		<linktooltip>Anda dapat menghubungi kami di sini</linktooltip>
+		<linktooltip_en>You can find us here</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+	<item>
+		<id>5</id>
+		<sortorder>5</sortorder>
+		<leftbgurl>images/z5l.gif</leftbgurl>
+		<leftbgurlinv>images/y5l.gif</leftbgurlinv>
+		<leftbgcolor>#abaebf</leftbgcolor>
+		<rightbgurl>images/z5r.gif</rightbgurl>
+		<rightbgurlinv>images/y5r.gif</rightbgurlinv>
+		<rightbgcolor>#abaebf</rightbgcolor>
+		<width>97</width>
+		<height>17</height>
+		<leftwidth>8</leftwidth>
+		<rightwidth>8</rightwidth>
+		<bgcolor>#210666</bgcolor>
+		<bgurl></bgurl>
+		<bgurlinv></bgurlinv>
+		<class>mnu</class>
+		<style></style>
+		<href>links.aspx</href>
+		<linkclass>aMnu</linkclass>
+		<linkstyle></linkstyle>
+		<linktitle>Link</linktitle>
+		<linktitle_en>Links</linktitle_en>
+		<linktooltip>Beberapa web site lain sebagai referensi</linktooltip>
+		<linktooltip_en>Other useful sites</linktooltip_en>
+		<isvisible>1</isvisible>
+	</item>
+</mnuLeft>

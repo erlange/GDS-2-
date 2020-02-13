@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<highlights>
+    <highlight>
+        <var_id>196</var_id>
+        <desc>Kesehatan</desc>
+        <desc_en>Health</desc_en>
+    </highlight>
+    <highlight>
+        <var_id>318</var_id>
+        <desc>Pendidikan</desc>
+        <desc_en>Education</desc_en>
+    </highlight>
+    <highlight>
+        <var_id>207</var_id>
+        <desc>Administrasi</desc>
+        <desc_en>Administration</desc_en>
+    </highlight>
+    <highlight>
+        <var_id>259</var_id>
+        <desc>Polisi</desc>
+        <desc_en>Police</desc_en>
+    </highlight>
+    <highlight>
+        <var_id>289</var_id>
+        <desc>Rasa Aman</desc>
+        <desc_en>Security</desc_en>
+    </highlight>
+    <highlight>
+        <var_id>447</var_id>
+        <desc>Ekonomi</desc>
+        <desc_en>Economics</desc_en>
+    </highlight>
+</highlights>

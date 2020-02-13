@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3511298E-608B-4958-AE33-59B6D3610B3B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>gds</RootNamespace>
+    <AssemblyName>gdscs</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="airlangga.tree">
+      <HintPath>..\..\gds\bin\airlangga.tree.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="netchartdir, Version=3.1.0.3, Culture=neutral">
+      <HintPath>..\..\gds\bin\netchartdir.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="album.ascx" />
+    <Content Include="components\langBar.ascx" />
+    <Content Include="gallery\785814-001.jpg" />
+    <Content Include="gallery\DC006653.jpg" />
+    <Content Include="gallery\IH073991.jpg" />
+    <Content Include="gallery\RR011829.jpg" />
+    <Content Include="gallery\YM016025.jpg" />
+    <Content Include="highlight.xml" />
+    <Content Include="imgd.aspx" />
+    <Content Include="panelComments.ascx" />
+    <Content Include="Default.aspx" />
+    <Content Include="images\!!minus.gif" />
+    <Content Include="images\!!plus.gif" />
+    <Content Include="images\!minus.gif" />
+    <Content Include="images\!plus.gif" />
+    <Content Include="images\bacaan.jpg" />
+    <Content Include="images\BannerBitmap.bmp" />
+    <Content Include="images\banner_01.jpg" />
+    <Content Include="images\banner_02.jpg" />
+    <Content Include="images\banner_03.jpg" />
+    <Content Include="images\bg.png" />
+    <Content Include="images\bgLangBar2T4.gif" />
+    <Content Include="images\bgLangBarT4.gif" />
+    <Content Include="images\bgLangBarT8.gif" />
+    <Content Include="images\bgLangBarT9.gif" />
+    <Content Include="images\bgMnuLeftT11.gif" />
+    <Content Include="images\bgMnuLeftT5.gif" />
+    <Content Include="images\bgMnuLeftT5.jpg" />
+    <Content Include="images\bgMnuLeftT9.gif" />
+    <Content Include="images\bgMnuLeftTxT5.jpg" />
+    <Content Include="images\bgMnuLeftTxT5_a.jpg" />
+    <Content Include="images\bgPnlCntT11.gif" />
+    <Content Include="images\bgPnlHdrT10.gif" />
+    <Content Include="images\bgPnlHdrT4.gif" />
+    <Content Include="images\bgPnlHdrT8.gif" />
+    <Content Include="images\bgPnlHdrT9.gif" />
+    <Content Include="images\bgTab.gif" />
+    <Content Include="images\bgTabO.gif" />
+    <Content Include="images\bg_blk_ppl.jpg" />
+    <Content Include="images\bg_footer_blue.jpg" />
+    <Content Include="images\black_px.gif" />
+    <Content Include="images\botleft.gif" />
+    <Content Include="images\botright.gif" />
+    <Content Include="images\bullet.gif" />
+    <Content Include="images\bullet2.gif" />
+    <Content Include="images\bullets.gif" />
+    <Content Include="images\button10.jpg" />
+    <Content Include="images\buttonB.jpg" />
+    <Content Include="images\buttonC.jpg" />
+    <Content Include="images\buttonD.jpg" />
+    <Content Include="images\buttonE.jpg" />
+    <Content Include="images\buttonF.jpg" />
+    <Content Include="images\cancel.gif" />
+    <Content Include="images\chart.gif" />
+    <Content Include="images\chart1.gif" />
+    <Content Include="images\chart2.gif" />
+    <Content Include="images\chart3.gif" />
+    <Content Include="images\chart4.gif" />
+    <Content Include="images\decentralization.jpg" />
+    <Content Include="images\delete.gif" />
+    <Content Include="images\dots.gif" />
+    <Content Include="images\dsf2.jpg" />
+    <Content Include="images\edit.gif" />
+    <Content Include="images\fc.gif" />
+    <Content Include="images\fmin.gif" />
+    <Content Include="images\fo.gif" />
+    <Content Include="images\fplus.gif" />
+    <Content Include="images\GagasanDesainWebsite          2.122E-314DS2-Versi-3Oktober_43519232_0028.png" />
+    <Content Include="images\GagasanDesainWebsite        4.24399E-314DS2-Versi-3Oktober_43519232_0028.png" />
+    <Content Include="images\gds2Logo.jpg" />
+    <Content Include="images\gds2Logo2.jpg" />
+    <Content Include="images\go.jpg" />
+    <Content Include="images\graddk.jpg" />
+    <Content Include="images\gradlt.jpg" />
+    <Content Include="images\graypaper.png" />
+    <Content Include="images\grdk.jpg" />
+    <Content Include="images\grlt.jpg" />
+    <Content Include="images\help.gif" />
+    <Content Include="images\imagemap.txt" />
+    <Content Include="images\indo.jpg" />
+    <Content Include="images\indofullsm.jpg" />
+    <Content Include="images\indomap.jpg" />
+    <Content Include="images\indosm.gif" />
+    <Content Include="images\indosmw.jpg" />
+    <Content Include="images\keyreading.jpg" />
+    <Content Include="images\lgo.jpg" />
+    <Content Include="images\LLeft.gif" />
+    <Content Include="images\LMid.gif" />
+    <Content Include="images\LMid.jpg" />
+    <Content Include="images\LRight.gif" />
+    <Content Include="images\marble.jpg" />
+    <Content Include="images\menu_01.gif" />
+    <Content Include="images\menu_02.gif" />
+    <Content Include="images\menu_03.gif" />
+    <Content Include="images\menu_04.gif" />
+    <Content Include="images\menu_05.gif" />
+    <Content Include="images\mid.gif" />
+    <Content Include="images\minus.gif" />
+    <Content Include="images\mnubg.gif" />
+    <Content Include="images\Orig LRight.gif" />
+    <Content Include="images\orig_minus.gif" />
+    <Content Include="images\orig_plus.gif" />
+    <Content Include="images\peraturan.jpg" />
+    <Content Include="images\PETA.GIF" />
+    <Content Include="images\plus.gif" />
+    <Content Include="images\presentasi.jpg" />
+    <Content Include="images\print.gif" />
+    <Content Include="images\red_px.gif" />
+    <Content Include="images\RR007402.jpg" />
+    <Content Include="images\save.gif" />
+    <Content Include="images\setupLogo.bmp" />
+    <Content Include="images\sortascending.gif" />
+    <Content Include="images\sortdescending.gif" />
+    <Content Include="images\spacer.gif" />
+    <Content Include="images\template_01.gif" />
+    <Content Include="images\template_02.gif" />
+    <Content Include="images\template_03.gif" />
+    <Content Include="images\template_04.gif" />
+    <Content Include="images\template_05.jpg" />
+    <Content Include="images\template_06.jpg" />
+    <Content Include="images\template_07.gif" />
+    <Content Include="images\template_08.png" />
+    <Content Include="images\template_09.gif" />
+    <Content Include="images\template_10.gif" />
+    <Content Include="images\template_11.gif" />
+    <Content Include="images\template_12.gif" />
+    <Content Include="images\template_13.gif" />
+    <Content Include="images\template_14.gif" />
+    <Content Include="images\template_15.gif" />
+    <Content Include="images\template_16.gif" />
+    <Content Include="images\template_17.gif" />
+    <Content Include="images\template_18.gif" />
+    <Content Include="images\theme1.bmp" />
+    <Content Include="images\theme2.bmp" />
+    <Content Include="images\theme3.bmp" />
+    <Content Include="images\theme4.bmp" />
+    <Content Include="images\theme5.bmp" />
+    <Content Include="images\theme6.bmp" />
+    <Content Include="images\theme7.bmp" />
+    <Content Include="images\theme8.bmp" />
+    <Content Include="images\theme9.bmp" />
+    <Content Include="images\top.gif" />
+    <Content Include="images\topleft.gif" />
+    <Content Include="images\topleft.png" />
+    <Content Include="images\topright.gif" />
+    <Content Include="images\tree.gif" />
+    <Content Include="images\ugm.jpg" />
+    <Content Include="images\w.gif" />
+    <Content Include="images\wb.gif" />
+    <Content Include="images\xls.gif" />
+    <Content Include="images\y0.gif" />
+    <Content Include="images\y0l.gif" />
+    <Content Include="images\y0r.gif" />
+    <Content Include="images\y1l.gif" />
+    <Content Include="images\y1r.gif" />
+    <Content Include="images\y2l.gif" />
+    <Content Include="images\y2r.gif" />
+    <Content Include="images\y3l.gif" />
+    <Content Include="images\y3r.gif" />
+    <Content Include="images\y4l.gif" />
+    <Content Include="images\y4r.gif" />
+    <Content Include="images\y5l.gif" />
+    <Content Include="images\y5r.gif" />
+    <Content Include="images\yyl.gif" />
+    <Content Include="images\yyr.gif" />
+    <Content Include="images\yyy.gif" />
+    <Content Include="images\z0.gif" />
+    <Content Include="images\z0l.gif" />
+    <Content Include="images\z0r.gif" />
+    <Content Include="images\z1l.gif" />
+    <Content Include="images\z1r.gif" />
+    <Content Include="images\z2l.gif" />
+    <Content Include="images\z2r.gif" />
+    <Content Include="images\z3l.gif" />
+    <Content Include="images\z3r.gif" />
+    <Content Include="images\z4l.gif" />
+    <Content Include="images\z4r.gif" />
+    <Content Include="images\z5l.gif" />
+    <Content Include="images\z5r.gif" />
+    <Content Include="images\zzl.gif" />
+    <Content Include="images\zzr.gif" />
+    <Content Include="images\zzz.gif" />
+    <Content Include="images\_0-1.gif" />
+    <Content Include="images\_0.gif" />
+    <Content Include="images\_1-2.gif" />
+    <Content Include="images\_2-3.gif" />
+    <Content Include="images\_3-4.gif" />
+    <Content Include="images\_4-5.gif" />
+    <Content Include="images\_5.gif" />
+    <Content Include="imgedit\add.gif" />
+    <Content Include="imgedit\ask.gif" />
+    <Content Include="imgedit\bmp.gif" />
+    <Content Include="imgedit\bold.gif" />
+    <Content Include="imgedit\bulletedlist.gif" />
+    <Content Include="imgedit\buttons.gif" />
+    <Content Include="imgedit\buttons.png" />
+    <Content Include="imgedit\cancel.gif" />
+    <Content Include="imgedit\checked.gif" />
+    <Content Include="imgedit\copy.gif" />
+    <Content Include="imgedit\createlink.gif" />
+    <Content Include="imgedit\csharp.gif" />
+    <Content Include="imgedit\cut.gif" />
+    <Content Include="imgedit\delete.gif" />
+    <Content Include="imgedit\deletetablecolumn.gif" />
+    <Content Include="imgedit\deletetablerow.gif" />
+    <Content Include="imgedit\doc.gif" />
+    <Content Include="imgedit\edit.gif" />
+    <Content Include="imgedit\edittable.gif" />
+    <Content Include="imgedit\file.gif" />
+    <Content Include="imgedit\fontbackcolorpicker.gif" />
+    <Content Include="imgedit\fontforecolorpicker.gif" />
+    <Content Include="imgedit\gif.gif" />
+    <Content Include="imgedit\iespellcheck.gif" />
+    <Content Include="imgedit\imgna.jpg" />
+    <Content Include="imgedit\indent.gif" />
+    <Content Include="imgedit\insertbutton.gif" />
+    <Content Include="imgedit\insertcheckbox.gif" />
+    <Content Include="imgedit\insertdate.gif" />
+    <Content Include="imgedit\insertdropdownlist.gif" />
+    <Content Include="imgedit\insertform.gif" />
+    <Content Include="imgedit\insertimage.gif" />
+    <Content Include="imgedit\insertimagefromgallery.gif" />
+    <Content Include="imgedit\insertlistbox.gif" />
+    <Content Include="imgedit\insertradiobutton.gif" />
+    <Content Include="imgedit\insertrule.gif" />
+    <Content Include="imgedit\insertsmiley.gif" />
+    <Content Include="imgedit\inserttable.gif" />
+    <Content Include="imgedit\inserttablecolumn.gif" />
+    <Content Include="imgedit\inserttablecolumnafter.gif" />
+    <Content Include="imgedit\inserttablecolumnbefore.gif" />
+    <Content Include="imgedit\inserttablerow.gif" />
+    <Content Include="imgedit\inserttablerowafter.gif" />
+    <Content Include="imgedit\inserttablerowbefore.gif" />
+    <Content Include="imgedit\inserttextarea.gif" />
+    <Content Include="imgedit\inserttextbox.gif" />
+    <Content Include="imgedit\inserttime.gif" />
+    <Content Include="imgedit\italic.gif" />
+    <Content Include="imgedit\jpe.gif" />
+    <Content Include="imgedit\jpeg.gif" />
+    <Content Include="imgedit\jpg.gif" />
+    <Content Include="imgedit\justifycenter.gif" />
+    <Content Include="imgedit\justifyfull.gif" />
+    <Content Include="imgedit\justifyleft.gif" />
+    <Content Include="imgedit\justifyright.gif" />
+    <Content Include="imgedit\login.gif" />
+    <Content Include="imgedit\lt.gif" />
+    <Content Include="imgedit\mergecells.gif" />
+    <Content Include="imgedit\mergecolumns.gif" />
+    <Content Include="imgedit\mode.design.gif" />
+    <Content Include="imgedit\mode.html.gif" />
+    <Content Include="imgedit\netspell.gif" />
+    <Content Include="imgedit\numberedlist.gif" />
+    <Content Include="imgedit\outdent.gif" />
+    <Content Include="imgedit\paste.gif" />
+    <Content Include="imgedit\pdf.gif" />
+    <Content Include="imgedit\ppt.gif" />
+    <Content Include="imgedit\preview.gif" />
+    <Content Include="imgedit\print.gif" />
+    <Content Include="imgedit\redo.gif" />
+    <Content Include="imgedit\removeformat.gif" />
+    <Content Include="imgedit\rt.gif" />
+    <Content Include="imgedit\save.gif" />
+    <Content Include="imgedit\selectall.gif" />
+    <Content Include="imgedit\separator.horizontal.gif" />
+    <Content Include="imgedit\separator.vertical.gif" />
+    <Content Include="imgedit\sortasc.gif" />
+    <Content Include="imgedit\sortdesc.gif" />
+    <Content Include="imgedit\spacer.gif" />
+    <Content Include="imgedit\spellcheck.gif" />
+    <Content Include="imgedit\strikethrough.gif" />
+    <Content Include="imgedit\subscript.gif" />
+    <Content Include="imgedit\superscript.gif" />
+    <Content Include="imgedit\tbledit.gif" />
+    <Content Include="imgedit\tif.gif" />
+    <Content Include="imgedit\toolbar.horizontal.background.gif" />
+    <Content Include="imgedit\toolbar.horizontal.end.gif" />
+    <Content Include="imgedit\toolbar.horizontal.start.gif" />
+    <Content Include="imgedit\toolbar.vertical.background.gif" />
+    <Content Include="imgedit\toolbar.vertical.end.gif" />
+    <Content Include="imgedit\toolbar.vertical.start.gif" />
+    <Content Include="imgedit\toolbarbg.gif" />
+    <Content Include="imgedit\toolbarbutton.background.gif" />
+    <Content Include="imgedit\toolbarbutton.down.gif" />
+    <Content Include="imgedit\toolbarbutton.off.out.gif" />
+    <Content Include="imgedit\toolbarbutton.off.over.gif" />
+    <Content Include="imgedit\toolbarbutton.on.out.gif" />
+    <Content Include="imgedit\toolbarbutton.on.over.gif" />
+    <Content Include="imgedit\toolbarbutton.over.gif" />
+    <Content Include="imgedit\toolbarbuttoncss.off.out.gif" />
+    <Content Include="imgedit\toolbarbuttoncss.off.over.gif" />
+    <Content Include="imgedit\toolbarbuttoncss.on.out.gif" />
+    <Content Include="imgedit\toolbarbuttoncss.on.over.gif" />
+    <Content Include="imgedit\toolbarend.gif" />
+    <Content Include="imgedit\toolbarstart.gif" />
+    <Content Include="imgedit\txt.gif" />
+    <Content Include="imgedit\unchecked.gif" />
+    <Content Include="imgedit\underline.gif" />
+    <Content Include="imgedit\undo.gif" />
+    <Content Include="imgedit\unlink.gif" />
+    <Content Include="imgedit\wordclean.gif" />
+    <Content Include="imgedit\wordcount.gif" />
+    <Content Include="imgedit\xls.gif" />
+    <Content Include="imgedit\zip.gif" />
+    <Content Include="langBar.ascx" />
+    <Content Include="mnuAdmin.ascx" />
+    <Content Include="mnuBottom.ascx" />
+    <Content Include="mnuLeft.ascx" />
+    <Content Include="mnuLeft.xml" />
+    <Content Include="mnuTop.ascx" />
+    <Content Include="mnuTop.xml" />
+    <Content Include="panelCopyright.ascx" />
+    <Content Include="panelCopyright.xml" />
+    <Content Include="panelGallery.ascx" />
+    <Content Include="panelGenericText.ascx" />
+    <Content Include="panelGenericTitle.ascx" />
+    <Content Include="panelHighlight.ascx" />
+    <Content Include="panelHtml.ascx" />
+    <Content Include="panelPpt.ascx" />
+    <Content Include="panelSearch.ascx" />
+    <Content Include="s.css" />
+    <Content Include="s00.css" />
+    <Content Include="s01.css" />
+    <Content Include="s02.css" />
+    <Content Include="s03.css" />
+    <Content Include="s04.css" />
+    <Content Include="s05.css" />
+    <Content Include="s06.css" />
+    <Content Include="s07.css" />
+    <Content Include="s08.css" />
+    <Content Include="s09.css" />
+    <Content Include="s10.css" />
+    <Content Include="s11.css" />
+    <Content Include="s12.css" />
+    <Content Include="sc.js" />
+    <Content Include="script.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="ShowImg.aspx" />
+    <Content Include="ss.css" />
+    <Content Include="Styles.css" />
+    <Content Include="sWB.css" />
+    <Content Include="sWBsafe.css" />
+    <Content Include="s_Orig.css" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="webTree\1_0\images\folder.gif" />
+    <Content Include="webTree\1_0\images\folderfav.gif" />
+    <Content Include="webTree\1_0\images\folderfavopen.gif" />
+    <Content Include="webTree\1_0\images\folderopen.gif" />
+    <Content Include="webTree\1_0\images\html.gif" />
+    <Content Include="webTree\1_0\images\minus.gif" />
+    <Content Include="webTree\1_0\images\plus.gif" />
+    <Content Include="webTree\1_0\images\root.gif" />
+    <Content Include="webTree\1_0\treeimages\f.gif" />
+    <Content Include="webTree\1_0\treeimages\fminus.gif" />
+    <Content Include="webTree\1_0\treeimages\fplus.gif" />
+    <Content Include="webTree\1_0\treeimages\i.gif" />
+    <Content Include="webTree\1_0\treeimages\L.gif" />
+    <Content Include="webTree\1_0\treeimages\Lminus.gif" />
+    <Content Include="webTree\1_0\treeimages\Lplus.gif" />
+    <Content Include="webTree\1_0\treeimages\minus.gif" />
+    <Content Include="webTree\1_0\treeimages\plus.gif" />
+    <Content Include="webTree\1_0\treeimages\r.gif" />
+    <Content Include="webTree\1_0\treeimages\Rminus.gif" />
+    <Content Include="webTree\1_0\treeimages\Rplus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\F.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Fminus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Fplus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\I.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\L.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Lminus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Lplus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\minus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\plus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\r.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Rminus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Rplus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\T.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Tminus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\Tplus.gif" />
+    <Content Include="webTree\1_0\treeimages\rtl\white.gif" />
+    <Content Include="webTree\1_0\treeimages\T.gif" />
+    <Content Include="webTree\1_0\treeimages\Tminus.gif" />
+    <Content Include="webTree\1_0\treeimages\Tplus.gif" />
+    <Content Include="webTree\1_0\treeimages\white.gif" />
+    <Content Include="webTree\1_0\treeview.htc" />
+    <Content Include="webTree\1_0\webservice.htc" />
+    <Content Include="webTree\1_0\webserviced.htc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="album.ascx.cs">
+      <DependentUpon>album.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="album.ascx.designer.cs">
+      <DependentUpon>album.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="commonModule.cs" />
+    <Compile Include="components\langBar.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="imgd.aspx.cs">
+      <DependentUpon>imgd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="imgd.aspx.designer.cs">
+      <DependentUpon>imgd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="panelComments.ascx.cs">
+      <DependentUpon>panelComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelComments.ascx.designer.cs">
+      <DependentUpon>panelComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="langBar.ascx.cs">
+      <DependentUpon>langBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="langBar.ascx.designer.cs">
+      <DependentUpon>langBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mnuAdmin.ascx.cs">
+      <DependentUpon>mnuAdmin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mnuAdmin.ascx.designer.cs">
+      <DependentUpon>mnuAdmin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mnuBottom.ascx.cs">
+      <DependentUpon>mnuBottom.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mnuBottom.ascx.designer.cs">
+      <DependentUpon>mnuBottom.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mnuLeft.ascx.cs">
+      <DependentUpon>mnuLeft.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mnuLeft.ascx.designer.cs">
+      <DependentUpon>mnuLeft.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mnuTop.ascx.cs">
+      <DependentUpon>mnuTop.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mnuTop.ascx.designer.cs">
+      <DependentUpon>mnuTop.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelCopyright.ascx.cs">
+      <DependentUpon>panelCopyright.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelCopyright.ascx.designer.cs">
+      <DependentUpon>panelCopyright.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelGallery.ascx.cs">
+      <DependentUpon>panelGallery.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelGallery.ascx.designer.cs">
+      <DependentUpon>panelGallery.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelGenericText.ascx.cs">
+      <DependentUpon>panelGenericText.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelGenericText.ascx.designer.cs">
+      <DependentUpon>panelGenericText.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelGenericTitle.ascx.cs">
+      <DependentUpon>panelGenericTitle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelGenericTitle.ascx.designer.cs">
+      <DependentUpon>panelGenericTitle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelHighlight.ascx.cs">
+      <DependentUpon>panelHighlight.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelHighlight.ascx.designer.cs">
+      <DependentUpon>panelHighlight.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelHtml.ascx.cs">
+      <DependentUpon>panelHtml.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelHtml.ascx.designer.cs">
+      <DependentUpon>panelHtml.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelPpt.ascx.cs">
+      <DependentUpon>panelPpt.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelPpt.ascx.designer.cs">
+      <DependentUpon>panelPpt.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelSearch.ascx.cs">
+      <DependentUpon>panelSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelSearch.ascx.designer.cs">
+      <DependentUpon>panelSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShowImg.aspx.cs">
+      <DependentUpon>ShowImg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShowImg.aspx.designer.cs">
+      <DependentUpon>ShowImg.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gallery\Thumbs.db" />
+    <None Include="images\BannerBitmap.psd" />
+    <None Include="images\descript.ion" />
+    <None Include="images\dsf.ai" />
+    <None Include="images\GDS2 Logo.psd" />
+    <None Include="images\indo.psd" />
+    <None Include="images\indoLayers.psd" />
+    <None Include="images\indoProvinces.psd" />
+    <None Include="images\palette.psd" />
+    <None Include="images\palettePrint.psd" />
+    <None Include="images\palettOriginal.psd" />
+    <None Include="images\tabs.psd" />
+    <None Include="images\Thumbs.db" />
+    <None Include="images\topMenu.psd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1627</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
