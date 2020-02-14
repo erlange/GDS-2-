@@ -375,9 +375,11 @@
     <Content Include="panelHighlight.ascx" />
     <Content Include="panelHtml.ascx" />
     <Content Include="panelPpt.ascx" />
+    <Content Include="panelResultToolBar.ascx" />
     <Content Include="panelSearch.ascx" />
     <Content Include="panelSearchHtml.ascx" />
     <Content Include="panelToolTip.ascx" />
+    <Content Include="pvOut.aspx" />
     <Content Include="s.aspx" />
     <Content Include="s.css" />
     <Content Include="s00.css" />
@@ -620,6 +622,13 @@
     <Compile Include="panelPpt.ascx.designer.cs">
       <DependentUpon>panelPpt.ascx</DependentUpon>
     </Compile>
+    <Compile Include="panelResultToolBar.ascx.cs">
+      <DependentUpon>panelResultToolBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelResultToolBar.ascx.designer.cs">
+      <DependentUpon>panelResultToolBar.ascx</DependentUpon>
+    </Compile>
     <Compile Include="panelSearch.ascx.cs">
       <DependentUpon>panelSearch.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -642,6 +651,13 @@
       <DependentUpon>panelToolTip.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pvOut.aspx.cs">
+      <DependentUpon>pvOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pvOut.aspx.designer.cs">
+      <DependentUpon>pvOut.aspx</DependentUpon>
+    </Compile>
     <Compile Include="s.aspx.cs">
       <DependentUpon>s.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
