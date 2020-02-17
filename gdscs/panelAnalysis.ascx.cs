@@ -72,10 +72,14 @@ namespace gds
             lstds.Items.Clear();
             lstds2.Items.Clear();
             lstr.Items.Clear();
-            if (Request.Params["r"] != null)
+            if (char.IsNumber(Request.Params["r"], 0))
             {
                 iR = Convert.ToInt32(Request.Params["r"]);
             }
+            //if (Request.Params["r"] != null)
+            //{
+            //    iR = Convert.ToInt32(Request.Params["r"]);
+            //}
 
             if (bEn)
             {

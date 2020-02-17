@@ -157,3 +157,21 @@ http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=6&cp1=1&r=32&d=All&ds
 Object cannot be cast from DBNull to other types.
 http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=5&cp1=1&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
 17/02/2020 21:23:31
+Exception: 17/02/2020 21:57:59
+Invalid attempt to read when no data is present.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=33&l=All~Natl&r=All&d=Natl&ds=33&c=0&ch=1&btnNext=Lanjut+>>
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619
+Exception: 17/02/2020 22:56:46
+Invalid attempt to read when no data is present.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619
+Exception: 17/02/2020 23:33:29
+Invalid attempt to read when no data is present.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=13~All&cp1=1&r=13&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619

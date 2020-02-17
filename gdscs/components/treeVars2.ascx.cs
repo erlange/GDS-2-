@@ -368,6 +368,7 @@ namespace gds
                         desc = dRw[i].IsNull("desc_en") ? dRw[i]["desc"].ToString() : dRw[i]["desc_en"].ToString();
                     else
                         desc = dRw[i].IsNull("desc") ? "" : dRw[i]["desc"].ToString(); // _IsEnglish
+                    
                     sl.Add(dRw[i]["var_id"]);
                     var_id = Convert.ToInt32( dRw[i]["var_id"]);
                     var = dRw[i].IsNull("var")? "": dRw[i]["var"].ToString();

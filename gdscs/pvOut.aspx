@@ -30,7 +30,7 @@
             string submitString;
             string actionString;
             string chString;
-            if (IsSingleVar)
+            if (isSingleVar)
             {
                 submitString = string.Format("return dist3('frmV',{0});", l);
                 actionString = "pvOut.aspx";

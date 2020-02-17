@@ -15,7 +15,6 @@ namespace gds
     public partial class pvOut : System.Web.UI.Page
     {
         protected bool bEn;
-        protected bool IsSingleVar;
 
         protected treeComparators TreeComparators1;
         protected treeVars TreeVars1;
@@ -81,6 +80,7 @@ namespace gds
                 SetUI();
                 oGt = new gdsTable(iDs);
                 InitTrees();
+                
                 if (isValidRequest)
                 {
                     oGv = new gdsVar(Convert.ToInt32(var_id), oGt.VarTable);
@@ -2422,21 +2422,15 @@ namespace gds
                   btnPrev.Value = commonModule.PREVSTRING;
               }
 
-              if (char.IsNumber(Request.Params["c"].ToString(), 0))
+              if (char.IsNumber(Request.Params["c"], 0))
               {
                   if (Convert.ToInt32(Request.Params["c"]) == 1)
-                  {
                       isSingleVar = false;
-                  }
                   else
-                  {
                       isSingleVar = true;
-                  }
               }
               else
-              {
                   isSingleVar = true;
-              }
           }
 
           public void ShowResultAv()

@@ -31,7 +31,7 @@ namespace gds
         gdsTable _GdsTable;
         ArrayList sl;
 
-        static int ii;
+        static int ii = 0;
 
         public string SelectedID
         {
@@ -339,7 +339,7 @@ namespace gds
         }
 
 
-        private string BuildTreeChildren(DataTable table, string where, string cssClass, bool isEnglish)
+        private string BuildTreeChildren2(DataTable table, string where, string cssClass, bool isEnglish)
         {
             string desc;
             int var_id;
@@ -431,7 +431,7 @@ namespace gds
                                     fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding-left:30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new string[] { var_id.ToString(), desc });
                                 }
 
-                                ii += 1;
+                                ii++;
                             }
                         }
                     }
@@ -485,6 +485,156 @@ namespace gds
 
             return fsOut.ToString();
         }
+
+        private string BuildTreeChildren(DataTable table, string where, string cssClass, bool isEnglish)
+        {
+            string desc;
+            int var_id;
+            string var;
+            int contflg;
+            int lvl;
+            string exstr;
+            var fsOut = new StringBuilder(string.Empty);
+            DataRow[] dRw = table.Select(where);
+            for (int i = 0, loopTo = dRw.Length - 1; i <= loopTo; i++)
+            {
+                if (!sl.Contains(dRw[i]["var_id"]))
+                {
+                    if (_IsEnglish)
+                        desc = dRw[i].IsNull("desc_en") ? dRw[i]["desc"].ToString() : dRw[i]["desc_en"].ToString();
+                    else
+                        desc = dRw[i].IsNull("desc") ? "" : dRw[i]["desc"].ToString();
+
+                    sl.Add(dRw[i]["var_id"]);
+                    var_id = Convert.ToInt32(dRw[i]["var_id"]);
+                    var = dRw[i].IsNull("var") ? "" : dRw[i]["var"].ToString();
+                    
+                    contflg = dRw[i].IsNull("isContVar") ? 0 : Convert.ToInt32(dRw[i]["isContVar"]);
+                    lvl = Convert.ToInt32(dRw[i]["lvl"]); // kolom Level (penanda lowest level)
+                    if (lvl != 0) // Not a variable
+                    {
+                        // fsOut.AppendFormat("<DIV CLASS=""{1}"" STYLE=""padding-left:20px;"" onClick=""shf('dd{0}');"" onmouseover=""ca();"" onmouseout=""ca();"">", dRw(i)("var_id"), cssClass)    'uses dua img
+                        // fsOut.AppendFormat("<IMG SRC=""images/plus.gif"" ID=""dd{0}imga"">&nbsp;&nbsp;<IMG SRC=""images/fc.gif"" ID=""dd{0}imgb"">&nbsp;", var_id)    'uses dua img
+
+                        fsOut.AppendFormat("<DIV CLASS=\"{1}\" STYLE=\"padding-left:20px;\" onClick=\"sh('dv{0}');\" >", dRw[i]["var_id"].ToString(), cssClass);
+                        // TODO: Nantinya TABLE hrs diganti pake UL LI
+                        // fsOut.AppendFormat("<TABLE BORDER=""0"" CELLPADDING=""0"" CELLSPACING=""0"">")
+                        // fsOut.AppendFormat("<TR><TD VALIGN=""top"" WIDTH=""34"">")
+                        fsOut.AppendFormat("<IMG SRC=\"images/fplus.gif\" ID=\"dv{0}img\">&nbsp;", var_id);
+                        // fsOut.AppendFormat("</TD><TD CLASS=""{0}"" STYLE=""padding:0 0 0 0;"">", cssClass)
+                        fsOut.Append(desc);
+                        // fsOut.AppendFormat("</TD></TR>")
+                        // fsOut.AppendFormat("</TABLE>")
+                        fsOut.AppendLine("</DIV>");
+                    }
+                    else // then it's a variable 
+                    {
+                        if (_IsContVarOnly)
+                        {
+                            // ************* Ensures 1st & 2nd var. is always selected
+                            // Static ij As Integer = 0
+                            // If ij < 2 Then
+                            // fsOut.AppendFormat("<LABEL FOR=""zz{0}""><DIV CLASS=""i4"" STYLE=""padding-left:20px;"" ><INPUT TYPE=""checkbox"" CHECKED ID=""zz{0}"" NAME=""v"" VALUE=""{1}~{2}~{3}~{4}~{5}~{0}~zzzz"" >{7}</DIV></LABEL>", New String() {var_id, "", "", "", contflg, exstr, "", desc})
+                            // Else
+                            fsOut.AppendFormat("<LABEL FOR=\"zz{0}\" ><DIV CLASS=\"i4\" STYLE=\"padding-left:30px;\" ><INPUT TYPE=\"checkbox\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}~z\">{1}</DIV></LABEL>", new object[] { var_id, desc });
+                        }
+                        // End If
+                        // ij += 1
+                        // ************* END OF Ensures 1st & 2nd var. is always selected
+                        else
+                        {
+                            if (contflg == 5)       // Use Stored Proc?
+                            {
+                                fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding-left:30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new object[] { var_id, desc });
+                            }
+                            else
+                            {
+                                ;
+//#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
+                                /* Cannot convert LocalDeclarationStatementSyntax, System.NotSupportedException: StaticKeyword not supported!
+                           at ICSharpCode.CodeConverter.CSharp.SyntaxKindExtensions.ConvertToken(SyntaxKind t, TokenContext context)
+                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifier(SyntaxToken m, TokenContext context) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\CommonConversions.cs:line 358
+                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiersCore(Accessibility declaredAccessibility, IEnumerable`1 modifiers, TokenContext context)+MoveNext() in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\CommonConversions.cs:line 373
+                           at System.Linq.Enumerable.ConcatIterator`1.MoveNext()
+                           at System.Linq.Enumerable.WhereEnumerableIterator`1.ToArray()
+                           at System.Linq.OrderedEnumerable`1.GetEnumerator()+MoveNext()
+                           at Microsoft.CodeAnalysis.SyntaxTokenList.CreateNode(IEnumerable`1 tokens)
+                           at Microsoft.CodeAnalysis.SyntaxTokenList..ctor(IEnumerable`1 tokens)
+                           at Microsoft.CodeAnalysis.CSharp.SyntaxFactory.TokenList(IEnumerable`1 tokens)
+                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiers(SyntaxNode node, IReadOnlyCollection`1 modifiers, TokenContext context, Boolean isVariableOrConst, SyntaxKind[] extraCsModifierKinds) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\CommonConversions.cs:line 326
+                           at ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\MethodBodyExecutableStatementVisitor.cs:line 89
+                           at ICSharpCode.CodeConverter.CSharp.ByRefParameterVisitor.CreateLocals(VisualBasicSyntaxNode node) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\ByRefParameterVisitor.cs:line 53
+                           at ICSharpCode.CodeConverter.CSharp.ByRefParameterVisitor.AddLocalVariables(VisualBasicSyntaxNode node) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\ByRefParameterVisitor.cs:line 43
+                           at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.DefaultVisitInnerAsync(SyntaxNode node) in D:\GitWorkspace\CodeConverter\ICSharpCode.CodeConverter\CSharp\CommentConvertingMethodBodyVisitor.cs:line 32
+
+                        Input:
+                                                    Static ii As Integer = 0
+
+                         */
+                                if (ii == 0 | _SelectedID == var_id.ToString())// ensures 1st var. is always selected
+                                {
+                                    fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding-left:30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" CHECKED NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new object [] { var_id, desc });
+                                }
+                                else
+                                {
+                                    fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding-left:30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new object[] { var_id, desc });
+                                }
+
+                                ii += 1;
+                            }
+                        }
+                    }
+
+                    // no need to traverse through all nodes, lvl=0 tells us to stop. 
+                    if (!(lvl == 0))
+                    {
+                        fsOut.AppendFormat("<DIV ID=\"dv{0}\" STYLE=\"padding:0px 0px 5px 20px;display:none;\"> ", var_id);
+                        switch (lvl)
+                        {
+                            case 0:
+                                {
+                                    fsOut.Append(BuildTreeChildren(table, " var_parent = '" + var_id + "'", "iFl", _IsEnglish));
+                                    break;
+                                }
+                            // fsOut.Append(BuildTreeChildren(table, " var_parent = '" & var_id & "'", "i4", isEnglish))
+                            case 1:
+                                {
+                                    fsOut.Append(BuildTreeChildren(table, " var_parent = '" + var_id + "'", "iFl2", _IsEnglish));
+                                    break;
+                                }
+                            // fsOut.Append(BuildTreeChildren(table, " var_parent = '" & var_id & "'", "i4", isEnglish))
+                            case 2:
+                                {
+                                    fsOut.Append(BuildTreeChildren(table, " var_parent = '" + var_id + "'", "iFl2", _IsEnglish));
+                                    break;
+                                }
+                            // fsOut.Append(BuildTreeChildren(table, " var_parent = '" & var_id & "'", "i3", isEnglish))
+                            case 3:
+                                {
+                                    // fsOut.Append(BuildTreeChildren(table, " var_parent = '" & var_id & "'", "i1", isEnglish))
+                                    fsOut.Append(BuildTreeChildren(table, " var_parent = '" + var_id + "'", "iFl2", _IsEnglish));
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    fsOut.Append(BuildTreeChildren(table, " var_parent = '" + var_id + "'", "iFl", _IsEnglish));
+                                    break;
+                                }
+                            // fsOut.Append(BuildTreeChildren(table, " var_parent = '" & var_id & "'", "i1", isEnglish))
+                        }
+
+                        fsOut.AppendLine("</DIV> ");
+                    }
+
+                    // *************** END OF Percobaan
+
+                }
+            }
+
+            return fsOut.ToString();
+        }
+
 
     }
 }
