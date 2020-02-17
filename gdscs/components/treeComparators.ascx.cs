@@ -203,23 +203,23 @@ namespace gds
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            //try
             {
                 string s = BuildComparatorTree();
                 Literal1.Text = s;
             }
-            catch (SqlException ex)
-            {
-                commonModule.RedirectError(ex);
-                //Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                //Response.Redirect("err.aspx");
-            }
-            catch (Exception ex)
-            {
-                commonModule.RedirectError(ex);
-                //Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                //Response.Redirect("err.aspx");
-            }
+            //catch (SqlException ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //    //Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    //Response.Redirect("err.aspx");
+            //}
+            //catch (Exception ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //    //Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    //Response.Redirect("err.aspx");
+            //}
         }
 
         public string BuildComparatorTree()

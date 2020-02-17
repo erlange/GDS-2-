@@ -133,3 +133,27 @@ http://localhost/gdscs/v.aspx?ds=12
    at System.Data.DataTable.Select(String filterExpression)
    at gds.treeComparators.BuildComparatorTree() in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 300
    at gds.treeComparators.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\components\treeComparators.ascx.cs:line 208
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=34~All&v=6&cp1=1&r=34&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+15/02/2020 3:24:11
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=6&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+15/02/2020 3:30:52
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=6&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+15/02/2020 3:33:42
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=6&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+15/02/2020 3:48:53
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=35~All&v=6&cp1=1&r=35&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+15/02/2020 4:00:37
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=803&cp1=1&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+17/02/2020 21:20:18
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=6&cp1=1&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+17/02/2020 21:21:22
+Object cannot be cast from DBNull to other types.
+http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=32~All&v=5&cp1=1&r=32&d=All&ds=11&c=0&ch=1&btnNext=Lanjut+>>
+17/02/2020 21:23:31

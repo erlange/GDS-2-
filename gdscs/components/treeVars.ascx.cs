@@ -239,20 +239,22 @@ namespace gds
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            //try
             {
                 Literal1.Text = BuildVarTreeRoots(_IsEnglish);
             }
-            catch (SqlException ex)
-            {
-                Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                Response.Redirect("err.aspx");
-            }
-            catch (Exception ex)
-            {
-                Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                System.Web.HttpContext.Current.Response.Redirect("err.aspx");
-            }
+            //catch (SqlException ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //    Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    Response.Redirect("err.aspx");
+            //}
+            //catch (Exception ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //    Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    System.Web.HttpContext.Current.Response.Redirect("err.aspx");
+            //}
         }
 
         private string BuildVarTreeRoots(bool isEnglish)
@@ -352,16 +354,12 @@ namespace gds
                 if (!sl.Contains(dRw[i]["var"]))
                 {
                     if (_IsEnglish)
-                    {
                         desc = dRw[i].IsNull("desc_en") ? dRw[i]["desc"].ToString() : dRw[i]["desc_en"].ToString();
-                    }
                     else
-                    {
                         desc = dRw[i].IsNull("desc") ? "" : dRw[i]["desc"].ToString(); 
-                    }
 
                     sl.Add(dRw[i]["var"]);
-                    var_id = Convert.ToInt32(dRw[i]["var"]);
+                    var_id = Convert.IsDBNull(dRw[i]["var"]) ? 0 : Convert.ToInt32(dRw[i]["var"]);
                     var = dRw[i].IsNull("var")? "": dRw[i]["var"].ToString();
                     contflg = dRw[i].IsNull("isContVar") ? 0 : Convert.ToInt32(dRw[i]["isContVar"]);
                     lvl = Convert.ToInt32(dRw[i]["lvl"]); // kolom Level (penanda lowest level)

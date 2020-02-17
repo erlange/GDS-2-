@@ -73,7 +73,100 @@ namespace gds
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //try
+            {
+                MnuBottom1.SetSelectedIndex(2);
+                MnuTop1.SetSelectedIndex(2);
+                isValidRequest = GetValidRequest();
+                SetUI();
+                oGt = new gdsTable(iDs);
+                InitTrees();
+                if (isValidRequest)
+                {
+                    oGv = new gdsVar(Convert.ToInt32(var_id), oGt.VarTable);
+                    oGg = new gdsGeo(sRegn, sDist);
+                    desc = bEn? oGv.Desc_En: oGv.Desc;
+                    var_parent_desc = bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc;
+                    contflg = Convert.ToInt32(oGv.IsContVar);
+                    ViewState["desc"] = desc;
+                    // getDsProv()
 
+                    // Response.Write(oGv.Var & "," & oGv.Desc)
+                    // Response.Write("<BR>")
+                    // Response.Write("Kabupaten = " & oGg.KabuName)
+                    // Response.Write("<BR>")
+                    // Response.Write("Propinsi = " & oGg.ProvName)
+                    // Response.Write("<BR>")
+                    // Response.Write("Question = " & oGv.Q)
+                    // Response.Write("<BR>")
+
+                    // Response.Write("Q_En = " & oGv.Q_En)
+                    // Response.Write("<BR>")
+                    if (Trace.IsEnabled)
+                    {
+                        {
+                            var withBlock = Trace;
+                            withBlock.Warn("oGv.Var", oGv.Var);
+                            withBlock.Warn("oGv.Var_Id", oGv.Var_Id.ToString());
+                            withBlock.Warn("oGv.Desc", oGv.Desc);
+                            withBlock.Warn("oGv.Desc_En", oGv.Desc_En);
+                            withBlock.Warn("oGv.Q", oGv.Q);
+                            withBlock.Warn("oGv.Q_En", oGv.Q_En);
+                            withBlock.Warn("oGv.Tbl", oGv.Tbl);
+                            withBlock.Warn("oGv.Tbl_Id", oGv.Tbl_Id);
+                            withBlock.Warn("oGv.IsContVar", oGv.IsContVar.ToString());
+                            withBlock.Warn("lang?", (bEn? "English": "Bahasa"));
+                        }
+                    }
+
+                    this.WebChartViewer1.Visible = isChartVisible;
+                    this.WebChartViewer2.Visible = isChartVisible;
+
+                    // If bEn Then
+                    // Title1.InnerHtml = "GDS-2 Result - " & oGt.Desc_En & ". " & oGv.Desc_En
+                    // Else
+                    // Title1.InnerHtml = "GDS-2 Result - " & oGt.Desc & ". " & oGv.Desc
+                    // End If
+
+                    if (oGv.IsContVar)
+                    {
+                        ShowResultCont();
+                    }
+                    else if (oGv.IsAdvance)
+                    {
+                        this.WebChartViewer2.Visible = false;
+                        this.DataGrid1.Visible = false;
+                        ShowResultAv();
+                    }
+                    else
+                    {
+                        this.WebChartViewer2.Visible = false;
+                        this.DataGrid1.Visible = false;
+                        ShowResultCat();
+                    }
+
+                    if (Request.Params["xl"] == "1")
+                    {
+                        commonModule.DownloadExcel(oGv.Desc + ".xls", this.Literal1, this.DataGrid1);
+                    }
+
+                    PanelResultToolBar1.SetPrintUrl("window.open('pvOutP.aspx" + Request.Url.Query + "','_blank','width=800,status=0,toolbar=0,menubar=0,location=0,resizable=1,scrollbars=1');");
+                }
+
+                // PanelResultToolBar1.SetPrintUrl("javascript:window.open('pvOutP.aspx" & Request.Url.Query & "');")
+                else
+                {
+                    this.TreeLocations1.SelectedID = "";
+                }
+            }
+            //catch (SqlException ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //}
+            //catch (Exception ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //}
         }
 
         enum BasicCompType : int
@@ -2297,15 +2390,14 @@ namespace gds
               }
 
               {
-                  var withBlock2 = this.TreeComparators1;
-                  withBlock2.DatasetNumber = _datasetNumber;
-                  withBlock2.DivTitleString = "Pilih Pembanding";
-                  withBlock2.DivTitleStringEn = "Comparators Selection";
-                  withBlock2.IsEnglish = _isEnglish;
-                  withBlock2.IsSecondLevelVisible = true;
-                  withBlock2.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                  withBlock2.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                  withBlock2.DivTitleAdditionalAttr = "onclick=\"sh0('dcroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+                  TreeComparators1.DatasetNumber = _datasetNumber;
+                  TreeComparators1.DivTitleString = "Pilih Pembanding";
+                  TreeComparators1.DivTitleStringEn = "Comparators Selection";
+                  TreeComparators1.IsEnglish = _isEnglish;
+                  TreeComparators1.IsSecondLevelVisible = true;
+                  TreeComparators1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeComparators1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeComparators1.DivTitleAdditionalAttr = "onclick=\"sh0('dcroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
 
               }
 
