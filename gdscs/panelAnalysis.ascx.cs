@@ -72,10 +72,15 @@ namespace gds
             lstds.Items.Clear();
             lstds2.Items.Clear();
             lstr.Items.Clear();
-            if (char.IsNumber(Request.Params["r"], 0))
+            if (Request.Params["r"] != null)
             {
-                iR = Convert.ToInt32(Request.Params["r"]);
+                if (!string.IsNullOrEmpty(Request.Params["r"]))
+                    iR = char.IsNumber(Request.Params["r"], 0) ? Convert.ToInt32(Request.Params["r"]) : 0;
             }
+
+            //if (!string.IsNullOrEmpty(Request.Params["r"]))
+            //    iR = char.IsNumber(Request.Params["r"], 0) ? Convert.ToInt32(Request.Params["r"]) : 0;
+
             //if (Request.Params["r"] != null)
             //{
             //    iR = Convert.ToInt32(Request.Params["r"]);

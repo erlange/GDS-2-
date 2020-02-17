@@ -55,6 +55,7 @@
     <Content Include="components\treeComparators.ascx" />
     <Content Include="components\treeDs.ascx" />
     <Content Include="components\treeLocations.ascx" />
+    <Content Include="components\treeTwOut.ascx" />
     <Content Include="components\treeVars.ascx" />
     <Content Include="components\treeVars2.ascx" />
     <Content Include="err.aspx" />
@@ -407,6 +408,7 @@
     <Content Include="sWB.css" />
     <Content Include="sWBsafe.css" />
     <Content Include="s_Orig.css" />
+    <Content Include="tw.aspx" />
     <Content Include="v.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -488,6 +490,13 @@
     </Compile>
     <Compile Include="components\treeLocations.ascx.designer.cs">
       <DependentUpon>treeLocations.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeTwOut.ascx.cs">
+      <DependentUpon>treeTwOut.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeTwOut.ascx.designer.cs">
+      <DependentUpon>treeTwOut.ascx</DependentUpon>
     </Compile>
     <Compile Include="components\treeVars.ascx.cs">
       <DependentUpon>treeVars.ascx</DependentUpon>
@@ -678,6 +687,13 @@
     </Compile>
     <Compile Include="ShowImg.aspx.designer.cs">
       <DependentUpon>ShowImg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tw.aspx.cs">
+      <DependentUpon>tw.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tw.aspx.designer.cs">
+      <DependentUpon>tw.aspx</DependentUpon>
     </Compile>
     <Compile Include="v.aspx.cs">
       <DependentUpon>v.aspx</DependentUpon>
