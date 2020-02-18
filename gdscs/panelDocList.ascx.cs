@@ -4,6 +4,7 @@ using System.Web;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
 
 namespace gds
 {
@@ -25,6 +26,11 @@ namespace gds
             bEn = commonModule.IsEnglish();
             ShowData();
 
+        }
+
+        protected bool isDemoMode()
+        {
+           return Convert.ToBoolean( ConfigurationManager.AppSettings["demo"]);
         }
 
         public void ShowData()
@@ -79,7 +85,7 @@ namespace gds
                 extension = filename.Split('.')[filename.Split('.').Length - 1];
                 if (bEn)
                 {
-                    lblUrl.Text = Convert.IsDBNull(drv["title_en"])? filename: drv["title_en"].ToString();
+                    lblUrl.Text = Convert.IsDBNull(drv["title_en"]) ? filename : drv["title_en"].ToString();
                     lblDesc.Text = Convert.IsDBNull(drv["desc_en"])? "- No description available -":drv["desc_en"].ToString();
                     lblSubmitDate.Text = "Submitted Date";
                     lblDocTitle.Text = "Title";
@@ -104,6 +110,13 @@ namespace gds
                 {
                     Image1.ImageUrl = "imgedit/file.gif";
                 }
+
+                if (isDemoMode())
+                {
+                    lblFilename.NavigateUrl = "g.aspx?f=" + drv["url"].ToString();
+                    lblUrl.NavigateUrl = "g.aspx?f=" + drv["url"].ToString();
+                }
+
             }
         }
     }
