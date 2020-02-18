@@ -55,6 +55,8 @@
     <Content Include="components\treeComparators.ascx" />
     <Content Include="components\treeDs.ascx" />
     <Content Include="components\treeLocations.ascx" />
+    <Content Include="components\treeScore.ascx" />
+    <Content Include="components\treeScoreOut.ascx" />
     <Content Include="components\treeTwOut.ascx" />
     <Content Include="components\treeVars.ascx" />
     <Content Include="components\treeVars2.ascx" />
@@ -396,6 +398,7 @@
     <Content Include="s10.css" />
     <Content Include="s11.css" />
     <Content Include="s12.css" />
+    <Content Include="sc.aspx" />
     <Content Include="sc.js" />
     <Content Include="script.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
@@ -490,6 +493,20 @@
     </Compile>
     <Compile Include="components\treeLocations.ascx.designer.cs">
       <DependentUpon>treeLocations.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeScore.ascx.cs">
+      <DependentUpon>treeScore.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeScore.ascx.designer.cs">
+      <DependentUpon>treeScore.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="components\treeScoreOut.ascx.cs">
+      <DependentUpon>treeScoreOut.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="components\treeScoreOut.ascx.designer.cs">
+      <DependentUpon>treeScoreOut.ascx</DependentUpon>
     </Compile>
     <Compile Include="components\treeTwOut.ascx.cs">
       <DependentUpon>treeTwOut.ascx</DependentUpon>
@@ -673,6 +690,13 @@
     </Compile>
     <Compile Include="s.aspx.designer.cs">
       <DependentUpon>s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sc.aspx.cs">
+      <DependentUpon>sc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sc.aspx.designer.cs">
+      <DependentUpon>sc.aspx</DependentUpon>
     </Compile>
     <Compile Include="setLang.aspx.cs">
       <DependentUpon>setLang.aspx</DependentUpon>
