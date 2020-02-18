@@ -60,6 +60,7 @@
     <Content Include="components\treeTwOut.ascx" />
     <Content Include="components\treeVars.ascx" />
     <Content Include="components\treeVars2.ascx" />
+    <Content Include="doclist.aspx" />
     <Content Include="err.aspx" />
     <Content Include="gallery\785814-001.jpg" />
     <Content Include="gallery\DC006653.jpg" />
@@ -374,6 +375,7 @@
     <Content Include="mnuTop.xml" />
     <Content Include="panelCopyright.ascx" />
     <Content Include="panelCopyright.xml" />
+    <Content Include="panelDocList.ascx" />
     <Content Include="panelGallery.ascx" />
     <Content Include="panelGenericText.ascx" />
     <Content Include="panelGenericTitle.ascx" />
@@ -531,6 +533,13 @@
     <Compile Include="components\treeVars2.ascx.designer.cs">
       <DependentUpon>treeVars2.ascx</DependentUpon>
     </Compile>
+    <Compile Include="doclist.aspx.cs">
+      <DependentUpon>doclist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="doclist.aspx.designer.cs">
+      <DependentUpon>doclist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="err.aspx.cs">
       <DependentUpon>err.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -621,6 +630,13 @@
     </Compile>
     <Compile Include="panelCopyright.ascx.designer.cs">
       <DependentUpon>panelCopyright.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelDocList.ascx.cs">
+      <DependentUpon>panelDocList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="panelDocList.ascx.designer.cs">
+      <DependentUpon>panelDocList.ascx</DependentUpon>
     </Compile>
     <Compile Include="panelGallery.ascx.cs">
       <DependentUpon>panelGallery.ascx</DependentUpon>
