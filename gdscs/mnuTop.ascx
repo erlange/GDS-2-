@@ -44,6 +44,6 @@
 </footertemplate> </asp:repeater></TD></TR>
 <tr>
 	<td id="tdLogo" width="775" style="BACKGROUND-ATTACHMENT: fixed" bgcolor="white">
-		<asp:image id="Image1" runat="server"></asp:image></td>
+		<a href="default.aspx"><asp:image id="Image1" runat="server" ></asp:image></a></td>
 </tr>
 </TBODY></TABLE>

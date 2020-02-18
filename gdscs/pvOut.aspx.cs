@@ -55,21 +55,6 @@ namespace gds
         private panelResultToolBar _PanelResultToolBar1;
         protected bool isValidRequest;
 
-        //protected panelResultToolBar PanelResultToolBar1
-        //{
-        //    [MethodImpl(MethodImplOptions.Synchronized)]
-        //    get
-        //    {
-        //        return _PanelResultToolBar1;
-        //    }
-
-        //    [MethodImpl(MethodImplOptions.Synchronized)]
-        //    set
-        //    {
-        //        _PanelResultToolBar1 = value;
-        //    }
-        //}
-
         protected void Page_Load(object sender, EventArgs e)
         {
             //try
@@ -110,16 +95,10 @@ namespace gds
                     WebChartViewer1.Visible = isChartVisible;
                     WebChartViewer2.Visible = isChartVisible;
 
-                    // If bEn Then
-                    // Title1.InnerHtml = "GDS-2 Result - " & oGt.Desc_En & ". " & oGv.Desc_En
-                    // Else
-                    // Title1.InnerHtml = "GDS-2 Result - " & oGt.Desc & ". " & oGv.Desc
-                    // End If
 
                     if (oGv.IsContVar)
-                    {
                         ShowResultCont();
-                    }
+
                     else if (oGv.IsAdvance)
                     {
                         this.WebChartViewer2.Visible = false;
@@ -134,9 +113,7 @@ namespace gds
                     }
 
                     if (Request.Params["xl"] == "1")
-                    {
                         commonModule.DownloadExcel(oGv.Desc + ".xls", this.Literal1, this.DataGrid1);
-                    }
 
                     PanelResultToolBar1.SetPrintUrl("window.open('pvOutP.aspx" + Request.Url.Query + "','_blank','width=800,status=0,toolbar=0,menubar=0,location=0,resizable=1,scrollbars=1');");
                 }
@@ -186,20 +163,14 @@ namespace gds
             var sb = new StringBuilder();
             string[] comps = GetRequestComparators();
             if (bEn)
-            {
                 sb.AppendFormat("SELECT comp_id,[var],[value],desc_en,subgrp_id, subgrp_en FROM [{0}] WHERE subgrp_id IN (", compTbl);
-            }
             else
-            {
                 sb.AppendFormat("SELECT comp_id,[var],[value],[desc],subgrp_id, subgrp FROM [{0}] WHERE subgrp_id IN (", compTbl);
-            }
 
             for (int i = 0, loopTo = comps.Length - 1; i <= loopTo; i++)
             {
                 if (Trace.IsEnabled)
-                {
                     Trace.Warn("comps(" + i.ToString() + ")", comps[i]);
-                }
 
                 sb.Append(comps[i]);
                 sb.Append(",");
@@ -208,9 +179,7 @@ namespace gds
             sb.Remove(sb.Length - 1, 1); // removes trailing ocmmaas (sorry, mustinye commas ;-)
             sb.Append(") ORDER BY comp_id");
             if (Trace.IsEnabled)
-            {
                 Trace.Warn("GetCompaRator", sb.ToString());
-            }
 
             dt = commonModule.GetData(commonModule.GetConnString(), sb.ToString());
             return dt;
@@ -261,13 +230,9 @@ namespace gds
                     {
                         sb.Append("EXEC ");
                         if (bEn)
-                        {
                             sb.AppendFormat(" GetResultAvEn2 '{0}','{1}','{2}','{3}','[Count{4}]','AND 1=1' ", var, avTbl, gdsTbl, tblId, aliasFld);
-                        }
                         else
-                        {
                             sb.AppendFormat(" GetResultAv2 '{0}','{1}','{2}','{3}','[Count{4}]','AND 1=1' ", var, avTbl, gdsTbl, tblId, aliasFld);
-                        }
 
                         sb.Append(r);
                         break;
@@ -277,13 +242,9 @@ namespace gds
                     {
                         sb.Append("EXEC ");
                         if (bEn)
-                        {
                             sb.AppendFormat(" GetResultAvEn2 '{0}','{1}','{2}','{3}','[Count{4}]','AND {5}={6} ' ", var, avTbl, gdsTbl, tblId, aliasFld, provFld, whereProv);
-                        }
                         else
-                        {
                             sb.AppendFormat(" GetResultAv2 '{0}','{1}','{2}','{3}','[Count{4}]','AND {5}={6} ' ", var, avTbl, gdsTbl, tblId, aliasFld, provFld, whereProv);
-                        }
 
                         sb.Append(r);
                         break;
@@ -293,13 +254,9 @@ namespace gds
                     {
                         sb.Append("EXEC ");
                         if (bEn)
-                        {
                             sb.AppendFormat(" GetResultAvEn2 '{0}','{1}','{2}','{3}','[Count{4}]','AND {5}={6} ' ", var, avTbl, gdsTbl, tblId, aliasFld, compFld, whereComp);
-                        }
                         else
-                        {
                             sb.AppendFormat(" GetResultAv2 '{0}','{1}','{2}','{3}','[Count{4}]','AND {5}={6} ' ", var, avTbl, gdsTbl, tblId, aliasFld, compFld, whereComp);
-                        }
 
                         sb.Append(r);
                         break;
@@ -807,42 +764,15 @@ namespace gds
             BarLayer layer;
             layer = c.addBarLayer2(Chart.Percentage);
             layer.set3D(5);
-            // c.setWallpaper(Request.PhysicalApplicationPath & "images\graypaper.png")'awas berat >50k
-            // aSt = sTemp.Split(" "c)
-            // 'aSt = desc.Split(" "c)
-            // For i As Integer = 0 To aSt.Length - 1
-            // 'If (ii * 10) < (250 + (dtTable.Columns.Count * 30)) Then
-            // If (ii * 10) < intWidth Then
-            // ii += aSt(i).Length()
-            // ii += 1
-            // sT &= aSt(i) & " "
-            // Else
-            // sT &= Chr(10)
-            // Exit For
-            // End If
-            // Next
-            // sT &= Right(sTemp, (sTemp.Length + 1) - ii)
-            // If sDist = "All" Then
-            // If sRegn = "Natl" Then
-            // sT &= Chr(10) & IIf(bEn, "National", "Nasional")
-            // Else     'All districts in a region
-            // sT &= Chr(10) & IIf(bEn, "(Province ", "Propinsi ") & oGg.ProvName & ")"
-            // End If
-            // Else   'single district
-            // sT &= Chr(10) & "( " & oGg.KabuName & Chr(10) & IIf(bEn, "Province ", "Propinsi ") & oGg.ProvName & " )"
-            // End If
 
             if (sDist == "All") // Province
             {
             }
-            // sT &= Chr(10) & IIf(bEn, "(Province ", "Propinsi ") & oGg.ProvName & ")"
             else if (sDist == "Natl") // National
             {
             }
-            // sT &= Chr(10) & IIf(bEn, "National", "Nasional")
             else
             {
-                // sT &= Chr(10) & "( " & oGg.KabuName & Chr(10) & IIf(bEn, "Province ", "Propinsi ") & oGg.ProvName & " )"
             }   // single district
 
             string sTemp1 = commonModule.WrapString((bEn ? oGv.Desc_En : oGv.Desc), intWidth, 10);
@@ -1198,22 +1128,6 @@ namespace gds
             c.yAxis().setLabelStyle("arialb.ttf");
             c.yAxis().setLabelFormat(bEn ? "{value|1,.}" : "{value|1.,}");
 
-            // aSt = desc.Split(" "c)
-            // For i As Integer = 0 To aSt.Length - 1
-            // If (ii * 10) < (350) Then
-            // ii += aSt(i).Length()
-            // ii += 1
-            // sT &= aSt(i) & " "
-            // Else
-            // sT &= Chr(10)
-            // Exit For
-            // 'Else
-            // 'TODO
-            // 'masih salah kalo s.Length-title.length
-            // '	sT &= " " & s(i)
-            // End If
-            // Next
-            // sT &= Right(desc, (desc.Length + 1) - ii)
             if (sDist == "All")
             {
                 if (sRegn == "Natl")
@@ -1267,14 +1181,6 @@ namespace gds
             WebChartViewer1.Image = c.makeWebImage(Chart.PNG);
             if (bIE)
             {
-                // sHover = "TITLE='{xLabel}: " & Chr(10) & _
-                // vbTab & "CI(-) = {min} " & Chr(10) & _
-                // vbTab & "CI(+) = {max}" & Chr(10) & _
-                // vbTab & "Mean = {top}" & Chr(10) & _
-                // vbTab & "Std. Dev = {med}'"
-                // sHover = " onmouseover=""ci('{xLabel}:<BR>&nbsp;&nbsp;CI(-) = {min|1}<BR>&nbsp;&nbsp;CI(+) = {max|1}<BR>&nbsp;&nbsp;Mean = {top|1}<BR>&nbsp;&nbsp;Std. Dev = {med|1}');"" onmousemove=""cm();"" onmouseout=""ch();""  "
-
-                // sHover = " onmouseover='ci(""tip"",""{xLabel}:<BR>&nbsp;&nbsp;Mean = {med|1}<BR>&nbsp;&nbsp;Max. = {max|1}<BR>&nbsp;&nbsp;Min. = {min|1}<BR>&nbsp;&nbsp;CI+ = {top|1}<BR>&nbsp;&nbsp;CI- = {bottom|1}"");' onmousemove='cm(""tip"");' onmouseout='ch(""tip"");'  "
                 sHover = " onmouseover='ci(\"tip\",\"{xLabel}:<BR>&nbsp;&nbsp;Mean = {med|1,.}<BR>&nbsp;&nbsp;Max. = {max|1,.}<BR>&nbsp;&nbsp;Min. = {min|1,.}<BR>&nbsp;&nbsp;CI+ = {top|1,.}<BR>&nbsp;&nbsp;CI- = {bottom|1,.}\");' onmousemove='cm(\"tip\");' onmouseout='ch(\"tip\");'  ";
                 WebChartViewer1.ImageMap = c.getHTMLImageMap("javascript:void(null);", " ", sHover);
             }
@@ -1324,31 +1230,6 @@ namespace gds
             c.yAxis().setLabelFormat(bEn? "{value|1,.}": "{value|1.,}");
             c.yAxis().setTitle("Mean", "Arialbd.ttf", 10, 0x0);
 
-            // aSt = desc.Split(" "c)
-            // For i As Integer = 0 To aSt.Length - 1
-            // If (ii * 10) < (350) Then
-            // ii += aSt(i).Length()
-            // ii += 1
-            // sT &= aSt(i) & " "
-            // Else
-            // sT &= Chr(10)
-            // Exit For
-            // 'Else
-            // 'TODO
-            // 'masih salah kalo s.Length-title.length
-            // '	sT &= " " & s(i)
-            // End If
-            // Next
-            // sT &= Right(desc, (desc.Length + 1) - ii)
-            // If sDist = "All" Then
-            // If sRegn = "Natl" Then
-            // sT &= Chr(10) & IIf(bEn, "National", "Nasional")
-            // Else     'All districts in a region
-            // sT &= Chr(10) & IIf(bEn, "Province ", "Propinsi ") & oGg.ProvName
-            // End If
-            // Else   'single district
-            // sT &= Chr(10) & "(" & oGg.KabuName & Chr(10) & IIf(bEn, "Province ", "Propinsi ") & oGg.ProvName & ")"
-            // End If
             string sTemp1 = commonModule.WrapString(bEn? oGv.Desc_En: oGv.Desc, intWidth, 10);
             string sTemp2 = commonModule.WrapString(bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc, intWidth, 10);
             // Dim sTitle As String = WrapString(sTemp1 & "(" & sTemp2 & ")", intWidth, 10)
@@ -1406,14 +1287,7 @@ namespace gds
             for (int i = 0, loopTo = dtTable.Columns.Count - 1; i <= loopTo; i++)
             {
                 if (i == 0)
-                {
-                    // s &= "<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">Category</TD>"
-                    // If oGv.IsAdvance Then
-                    // .Append("<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">&nbsp;</TD>") 'Header Jumlah/% not use here
-                    // Else
                     s.Append("<TD BGCOLOR=\"#FFEEFF\" ROWSPAN=\"3\">&nbsp;</TD>");
-                }
-                // End If
                 else
                 {
                     // If iRow Mod 2 = 0 Then
@@ -1422,8 +1296,8 @@ namespace gds
                         string sComp1 = sComp[0, i - 1];
                         if (!(sDist == "All Districts" & sRegn == "National"))
                         {
-                            var switchExpr = sComp1;
-                            switch (switchExpr)
+                            //var switchExpr = sComp1;
+                            switch (sComp1)
                             {
                                 case "District":
                                 case "Province":
@@ -1447,19 +1321,8 @@ namespace gds
                                 // sComp1 = sComp1 & "<SUP>+</SUP>"   'uncomment this Kalo ternyata comparator nya per dist/regn
                             }
                         }
-                        // red-brick
-                        // .Append("<TD COLSPAN=""" & sComp(1, i - 1) * 2 & """ BGCOLOR=""#FFCCCC"">" & sComp1 & "</TD>")
-                        // lightblue
-
-                        // If oGv.IsAdvance Then
-                        // .Append("<TD COLSPAN=""" & sComp(1, i - 1) * 1 & """ BGCOLOR=""#E6E6FA"" class=""H11vb"">" & sComp1 & "</TD>")
-                        // Else
-                        s.Append("<TD COLSPAN=\"" + (Convert.ToInt32(sComp[1, i - 1]) * 2) + "\" BGCOLOR=\"#E6E6FA\" class=\"H11vb\">" + sComp1 + "</TD>");
-                        // End If
+                        s.AppendLine("<TD COLSPAN=\"" + (Convert.ToInt32(sComp[1, i - 1]) * 2) + "\" BGCOLOR=\"#E6E6FA\" class=\"H11vb\">" + sComp1 + "</TD>");
                     }
-                    // Else
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#CCCCFF"">" & Replace(Replace(dtTable.Columns(i).ColumnName, "Count", ""), "_", " ") & "</TD>")
-                    // End If
                 }
 
                 iRow += 1;
@@ -1475,9 +1338,6 @@ namespace gds
             {
                 if (i > 0)
                 {
-                    // s &= "<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">Category</TD>"
-                    // .Append("<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">&nbsp;</TD>")
-                    // Else	'comm out
                     sColName = dtTable.Columns[i].Caption.Replace("Count", "");
                     sColName = sColName.Replace("Below7", "0-6");
                     sColName = sColName.Replace( "Above7", "7+");
@@ -1491,18 +1351,7 @@ namespace gds
                     sColName = sColName.Replace( "Aware_Of_Voice", "Yes");
                     sColName = sColName.Replace("_", " ");
 
-                    // Warna selang-seling
-                    // If iRow Mod 2 = 0 Then
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#FFCCCC"">" & sColName & "</TD>")
-                    // Else
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#CCCCFF"">" & sColName & "</TD>")
-                    // End If
-
-                    // If oGv.IsAdvance Then
-                    // .Append("<TD BGCOLOR=""#E6E6FA"" class=""H11b"">" & sColName & "</TD>")
-                    // Else
                     s.Append("<TD COLSPAN=\"2\" BGCOLOR=\"#E6E6FA\"class=\"H11b\">" + sColName + "</TD>");
-                    // End If
                 }
 
                 iRow += 1;
@@ -1543,27 +1392,12 @@ namespace gds
                     if (i2 == 0)
                     {
                         if (dtTable.Rows[i].IsNull(i2))
-                        {
                             s.Append("<TD BGCOLOR=\"" + colors[i] + "\">&nbsp;</TD>");
-                        }
                         else
                         {
                             s.Append(("<TD NOWRAP BGCOLOR=\"" + colors[i] + "\">") + dtTable.Rows[i][i2].ToString() + "</TD>");
                         }
                     }
-                    // If iRow Mod 2 = 0 Then
-                    // If dtTable.Rows(i).IsNull(i2) Then
-                    // s &= "<TD BGCOLOR=""#FFEEFF"">&nbsp;</TD>"
-                    // Else
-                    // s &= "<TD BGCOLOR=""#FFEEFF"">" & dtTable.Rows(i)(i2) & "</TD>"
-                    // End If
-                    // Else
-                    // If dtTable.Rows(i).IsNull(i2) Then
-                    // s &= "<TD>&nbsp;</TD>"
-                    // Else
-                    // s &= "<TD>" & dtTable.Rows(i)(i2) & "</TD>"
-                    // End If
-                    // End If
                     else
                     {
                         if (iRow % 2 == 0)
@@ -1581,16 +1415,12 @@ namespace gds
                                 {
                                     case 0:
                                         {
-                                            // If Not oGv.IsAdvance Then
-                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Compute("SUM ([" + dtTable.Columns[i2].ColumnName + "])", ""))).ToString("#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
+                                            s.AppendLine("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Compute("SUM ([" + dtTable.Columns[i2].ColumnName + "])", ""))).ToString("#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
-                                    // End If
-                                    // .Append("<TD BGCOLOR=""#FFEEFF"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "#,##0.0%") & "</TD>")           'Percentage Format with 1 decimal digits
-                                    // .Append("<TD BGCOLOR=""#FFEEFF"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "p") & "</TD>")		'Percentage Format with 2 decimel digits
                                     case 4:
                                         {
-                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble( dtTable.Rows[i][i2] )/Convert.ToDouble( dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString( "#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
+                                            s.AppendLine("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble( dtTable.Rows[i][i2] )/Convert.ToDouble( dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString( "#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
                                 }
@@ -1611,17 +1441,9 @@ namespace gds
                                 {
                                     case 0:
                                         {
-                                            // If Trace.IsEnabled Then
-                                            // Trace.Warn(dtTable.Columns(i2).ColumnName, dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", ""))
-                                            // End If
-                                            // If Not oGv.IsAdvance Then
                                             s.Append("<TD BGCOLOR=\"#EEEEEE\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Compute("SUM ([" + dtTable.Columns[i2].ColumnName + "])", ""))).ToString("#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
-                                    // End If
-                                    // .Append("<TD BGCOLOR=""#EEEEEE"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "#,##0.0%") & "</TD>")           'Percentage Format with 1 decimal digits
-
-                                    // .Append("<TD BGCOLOR=""#EEEEEE"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "p") & "</TD>") 'Percentage Format with 2 decimal digits
                                     case 4:
                                         {
                                             s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString("#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
@@ -1640,8 +1462,8 @@ namespace gds
             {
                 if (contflg == 0)
                 {
-                    s.Append("<TR  BGCOLOR=\"#DDDDDD\" ALIGN=\"right\" VALIGN=\"top\" > ");
-                    s.Append("<TD><B>Total</B></TD>");
+                    s.AppendLine("<TR  BGCOLOR=\"#DDDDDD\" ALIGN=\"right\" VALIGN=\"top\" > ");
+                    s.AppendLine("<TD><B>Total</B></TD>");
                     for (int i2 = 0, loopTo5 = dtTable.Columns.Count - 1; i2 <= loopTo5; i2++)
                     {
                         if (i2 > 0)
@@ -1652,7 +1474,7 @@ namespace gds
                                 s.AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM([" + dtTable.Columns[i2].ColumnName + "])", ""));
                             }
                             // .AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM(" & dtTable.Columns(i2).ColumnName & ")", ""))
-                            s.Append("<TD>&nbsp;</TD>");
+                            s.AppendLine("<TD>&nbsp;</TD>");
                         }
                     }
                 }
@@ -1665,29 +1487,17 @@ namespace gds
 
             if (!(sDist == "All Districts" & sRegn == "National"))
             {
-                s.Append("<TR>");
-                s.Append("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
+                s.AppendLine("<TR>");
+                s.AppendLine("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn? oGv.Q_En: oGv.Q));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn? oGt.Desc_En + " Survey Data": "Data Survei " + oGt.Desc));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8\">{0}</DIV>", "Governance and Decentralization Survey 2 (GDS2) - Indonesia");
                 // .Append("<SUP>++</SUP> Overall (National)")		  'uncomment this Kalo ternyata comparator nya per dist/regn
-                s.Append("</TD>");
-                s.Append("</TR>");
+                s.AppendLine("</TD>");
+                s.AppendLine("</TR>");
             }
 
-            // s &= "<TR>"
-            // s &= "<TD>&nbsp;</TD>"
-            // For i = 1 To dtTable.Columns.Count - 1
-            // s &= "<TD>" & dtTable.Compute("SUM (" & dtTable.Columns(i).ColumnName & ")", "") & "</TD>"
-            // Next
-            // s &= "</TR>"
-            // END OF Footer
-            // .Append("</TR>")
-
-
-
-            // s &= "<DIV ALIGN=""RIGHT""><A HREF=""csv.aspx"" TITLE=""Click here to download Excel CSV"">Download Excel file (.CSV)</A> <A HREF=""csv.aspx""><img border=""0"" align=""absmiddle"" width=""16"" height=""16"" src=""../images/xls.gif""></img></A></DIV>"
-            s.Append("</TABLE>");
+            s.AppendLine("</TABLE>");
             return s.ToString();
         }
 
@@ -1715,10 +1525,6 @@ namespace gds
             {
                 if (i == 0)
                 {
-                    // s &= "<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">Category</TD>"
-                    // If oGv.IsAdvance Then
-                    // .Append("<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">&nbsp;</TD>") 'Header Jumlah/% not use here
-                    // Else
                     s.Append("<TD BGCOLOR=\"#FFEEFF\" ROWSPAN=\"3\">&nbsp;</TD>");
                 }
                 // End If
@@ -1755,19 +1561,8 @@ namespace gds
                                 // sComp1 = sComp1 & "<SUP>+</SUP>"   'uncomment this Kalo ternyata comparator nya per dist/regn
                             }
                         }
-                        // red-brick
-                        // .Append("<TD COLSPAN=""" & sComp(1, i - 1) * 2 & """ BGCOLOR=""#FFCCCC"">" & sComp1 & "</TD>")
-                        // lightblue
-
-                        // If oGv.IsAdvance Then
-                        // .Append("<TD COLSPAN=""" & sComp(1, i - 1) * 1 & """ BGCOLOR=""#E6E6FA"" class=""H11vb"">" & sComp1 & "</TD>")
-                        // Else
                         s.Append("<TD COLSPAN=\"" + Convert.ToInt32(sComp[1, i - 1]) * 2 + "\" BGCOLOR=\"#E6E6FA\" class=\"H11vb\">" + sComp1 + "</TD>");
-                        // End If
                     }
-                    // Else
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#CCCCFF"">" & Replace(Replace(dtTable.Columns(i).ColumnName, "Count", ""), "_", " ") & "</TD>")
-                    // End If
                 }
 
                 iRow += 1;
@@ -1799,29 +1594,18 @@ namespace gds
                     sColName = sColName.Replace( "Aware_Of_Voice", "Yes");
                     sColName = sColName.Replace("_", " ");
 
-                    // Warna selang-seling
-                    // If iRow Mod 2 = 0 Then
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#FFCCCC"">" & sColName & "</TD>")
-                    // Else
-                    // .Append("<TD COLSPAN=""2"" BGCOLOR=""#CCCCFF"">" & sColName & "</TD>")
-                    // End If
-
-                    // If oGv.IsAdvance Then
-                    // .Append("<TD BGCOLOR=""#E6E6FA"" class=""H11b"">" & sColName & "</TD>")
-                    // Else
-                    s.Append("<TD COLSPAN=\"2\" BGCOLOR=\"#E6E6FA\"class=\"H11b\">" + sColName + "</TD>");
-                    // End If
+                    s.AppendLine("<TD COLSPAN=\"2\" BGCOLOR=\"#E6E6FA\"class=\"H11b\">" + sColName + "</TD>");
                 }
 
                 iRow += 1;
             }
 
-            s.Append("</TR>");
+            s.AppendLine("</TR>");
             // END OF Heading 3 ---------------
 
 
             // BEGIN OF Heading 3 (Count Percent Header)---------------
-            s.Append("<TR ALIGN=\"center\" CLASS=\"H9\" STYLE=\"border-bottom:black 1px solid;\"> ");
+            s.AppendLine("<TR ALIGN=\"center\" CLASS=\"H9\" STYLE=\"border-bottom:black 1px solid;\"> ");
             for (int i = 0, loopTo2 = dtTable.Columns.Count - 1; i <= loopTo2; i++)
             {
                 if (i > 0)
@@ -1829,11 +1613,11 @@ namespace gds
                     // If Not oGv.IsAdvance Then
                     if (bEn)
                     {
-                        s.Append("<TD BGCOLOR=\"#EEEEEE\">Count</TD><TD BGCOLOR=\"#DDDDDD\"><B>%</B></TD>");
+                        s.AppendLine("<TD BGCOLOR=\"#EEEEEE\">Count</TD><TD BGCOLOR=\"#DDDDDD\"><B>%</B></TD>");
                     }
                     else
                     {
-                        s.Append("<TD BGCOLOR=\"#EEEEEE\">Jumlah</TD><TD BGCOLOR=\"#DDDDDD\"><B>%</B></TD>");
+                        s.AppendLine("<TD BGCOLOR=\"#EEEEEE\">Jumlah</TD><TD BGCOLOR=\"#DDDDDD\"><B>%</B></TD>");
                     }
                     // End If
                 }
@@ -1859,19 +1643,6 @@ namespace gds
                             s.Append("<TD NOWRAP BGCOLOR=\"" + colors[i] + "\">" + dtTable.Rows[i][i2] + "</TD>");
                         }
                     }
-                    // If iRow Mod 2 = 0 Then
-                    // If dtTable.Rows(i).IsNull(i2) Then
-                    // s &= "<TD BGCOLOR=""#FFEEFF"">&nbsp;</TD>"
-                    // Else
-                    // s &= "<TD BGCOLOR=""#FFEEFF"">" & dtTable.Rows(i)(i2) & "</TD>"
-                    // End If
-                    // Else
-                    // If dtTable.Rows(i).IsNull(i2) Then
-                    // s &= "<TD>&nbsp;</TD>"
-                    // Else
-                    // s &= "<TD>" & dtTable.Rows(i)(i2) & "</TD>"
-                    // End If
-                    // End If
                     else
                     {
                         if (iRow % 2 == 0)
@@ -1919,17 +1690,9 @@ namespace gds
                                 {
                                     case 0:
                                         {
-                                            // If Trace.IsEnabled Then
-                                            // Trace.Warn(dtTable.Columns(i2).ColumnName, dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", ""))
-                                            // End If
-                                            // If Not oGv.IsAdvance Then
                                             s.Append("<TD BGCOLOR=\"#EEEEEE\">" + (Convert.ToDouble(dtTablePct.Rows[i][i2])).ToString( "#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
-                                    // End If
-                                    // .Append("<TD BGCOLOR=""#EEEEEE"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "#,##0.0%") & "</TD>")           'Percentage Format with 1 decimal digits
-
-                                    // .Append("<TD BGCOLOR=""#EEEEEE"">" & Format((dtTable.Rows(i)(i2)) / (dtTable.Compute("SUM (" & dtTable.Columns(i2).ColumnName & ")", "")), "p") & "</TD>") 'Percentage Format with 2 decimal digits
                                     case 4:
                                         {
                                             s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString( "#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
@@ -1956,10 +1719,9 @@ namespace gds
                         {
                             // .Append("<TD>" & String.Format("#,###,##0", dtTable.Compute("SUM(" & dtTable.Columns(i2).ColumnName & ")", "")) & "</TD>")
                             if (!oGv.IsAdvance)
-                            {
                                 s.AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM([" + dtTable.Columns[i2].ColumnName + "])", ""));
-                            }
                             // .AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM(" & dtTable.Columns(i2).ColumnName & ")", ""))
+                            
                             s.Append("<TD>&nbsp;</TD>");
                         }
                     }
@@ -1973,29 +1735,16 @@ namespace gds
 
             if (!(sDist == "All Districts" & sRegn == "National"))
             {
-                s.Append("<TR>");
-                s.Append("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
+                s.AppendLine("<TR>");
+                s.AppendLine("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn? oGv.Q_En: oGv.Q));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn? oGt.Desc_En + " Survey Data": "Data Survei " + oGt.Desc));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8\">{0}</DIV>", "Governance and Decentralization Survey 2 (GDS2) - Indonesia");
                 // .Append("<SUP>++</SUP> Overall (National)")		  'uncomment this Kalo ternyata comparator nya per dist/regn
-                s.Append("</TD>");
-                s.Append("</TR>");
+                s.AppendLine("</TD>");
+                s.AppendLine("</TR>");
             }
-
-            // s &= "<TR>"
-            // s &= "<TD>&nbsp;</TD>"
-            // For i = 1 To dtTable.Columns.Count - 1
-            // s &= "<TD>" & dtTable.Compute("SUM (" & dtTable.Columns(i).ColumnName & ")", "") & "</TD>"
-            // Next
-            // s &= "</TR>"
-            // END OF Footer
-            // .Append("</TR>")
-
-
-
-            // s &= "<DIV ALIGN=""RIGHT""><A HREF=""csv.aspx"" TITLE=""Click here to download Excel CSV"">Download Excel file (.CSV)</A> <A HREF=""csv.aspx""><img border=""0"" align=""absmiddle"" width=""16"" height=""16"" src=""../images/xls.gif""></img></A></DIV>"
-            s.Append("</TABLE>");
+            s.AppendLine("</TABLE>");
             return s.ToString();
         }
 
@@ -2311,31 +2060,30 @@ namespace gds
               }
 
               {
-                  var withBlock = this.TreeLocations1;
-                  withBlock.DatasetNumber = _datasetNumber;
-                  withBlock.IsEnglish = _isEnglish;
-                  withBlock.IsSecondLevelVisible = true;
-                  withBlock.DivTitleString = "Pilih Propinsi/Kabupaten";
-                  withBlock.DivTitleStringEn = "Province/District Selection";
-                  withBlock.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                  withBlock.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                  withBlock.DivTitleAdditionalAttr = "onclick=\"sh0('dlroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+                  TreeLocations1.DatasetNumber = _datasetNumber;
+                  TreeLocations1.IsEnglish = _isEnglish;
+                  TreeLocations1.IsSecondLevelVisible = true;
+                  TreeLocations1.DivTitleString = "Pilih Propinsi/Kabupaten";
+                  TreeLocations1.DivTitleStringEn = "Province/District Selection";
+                  TreeLocations1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeLocations1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeLocations1.DivTitleAdditionalAttr = "onclick=\"sh0('dlroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
 
               }
 
               {
-                  var withBlock1 = this.TreeVars1;
-                  withBlock1.DatasetNumber = _datasetNumber;
-                  withBlock1.GdsTable = oGt;
-                  withBlock1.IsEnglish = _isEnglish;
-                  withBlock1.DivTitleString = "Pilih dari daftar kuesioner " + oGt.Desc;
-                  withBlock1.DivTitleStringEn = oGt.Desc_En + " questionnaires list";
-                  withBlock1.IsContVarOnly = _isContVarOnly;
-                  withBlock1.IsSecondLevelVisible = true;
-                  withBlock1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                  withBlock1.DivContentStyle = "padding:0px 10px 0px 10px;";
-                  withBlock1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                  withBlock1.DivTitleAdditionalAttr = "onclick=\"sh0('dvroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+                  //var withBlock1 = this.TreeVars1;
+                  TreeVars1.DatasetNumber = _datasetNumber;
+                  TreeVars1.GdsTable = oGt;
+                  TreeVars1.IsEnglish = _isEnglish;
+                  TreeVars1.DivTitleString = "Pilih dari daftar kuesioner " + oGt.Desc;
+                  TreeVars1.DivTitleStringEn = oGt.Desc_En + " questionnaires list";
+                  TreeVars1.IsContVarOnly = _isContVarOnly;
+                  TreeVars1.IsSecondLevelVisible = true;
+                  TreeVars1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeVars1.DivContentStyle = "padding:0px 10px 0px 10px;";
+                  TreeVars1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeVars1.DivTitleAdditionalAttr = "onclick=\"sh0('dvroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
 
               }
 
@@ -2353,24 +2101,16 @@ namespace gds
 
               if (Request.Params["c"] == "1")
               {
-                  this.TreeLocations1.Visible = false;
-                  this.TreeComparators1.Visible = false;
-                  this.TreeVars1.IsSecondLevelVisible = true;
+                  TreeLocations1.Visible = false;
+                  TreeComparators1.Visible = false;
+                  TreeVars1.IsSecondLevelVisible = true;
               }
           }
 
           public void SetUI()
           {
-              if (bEn)
-              {
-                  btnNext.Value = commonModule.NEXTSTRINGEN;
-                  btnPrev.Value = commonModule.PREVSTRINGEN;
-              }
-              else
-              {
-                  btnNext.Value = commonModule.NEXTSTRING;
-                  btnPrev.Value = commonModule.PREVSTRING;
-              }
+              btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
+              btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
 
               if (!string.IsNullOrEmpty(Request.Params["c"]))
               {
@@ -2388,22 +2128,11 @@ namespace gds
 
           public void ShowResultAv()
           {
-              // Dim oDt As DataTable = GetDataAv(BuildSqlAvFinal)
-              // Me.DataGrid1.Visible = False
-              // Me.Literal1.Text = DrawTable(oDt, "grid") 'sesuaikan dengan file .css
-              // Me.LiteralToolTip.Text = WriteToolTipDiv()
-              // If isChartVisible Then
-              // CreateChartCatSumm(oDt)
-              // End If
-              // Dim dg1 As New DataGrid
-              // Me.PlaceHolder1.Controls.Add(dg1)
-              // dg1.DataSource = oDt
-              // dg1.DataBind()
 
               DataTable[] oDt = GetDataAv2(BuildSqlAvFinal());
-              this.DataGrid1.Visible = false;
-              this.Literal1.Text = DrawTable2(oDt[0], oDt[1], "grid"); // sesuaikan dengan file .css
-              this.LiteralToolTip.Text =WriteToolTipDiv();
+              DataGrid1.Visible = false;
+              Literal1.Text = DrawTable2(oDt[0], oDt[1], "grid"); // sesuaikan dengan file .css
+              LiteralToolTip.Text =WriteToolTipDiv();
               if (isChartVisible)
               {
                   CreateChartCatSumm(oDt[1]);
@@ -2415,13 +2144,11 @@ namespace gds
           public void ShowResultCat()
           {
               DataTable oDt = GetDataCat(BuildSqlCatFinal());
-              this.DataGrid1.Visible = false;
-              this.Literal1.Text = DrawTable(oDt, "grid"); // sesuaikan dengan file .css
-              this.Literal1.Text += WriteToolTipDiv();
+              DataGrid1.Visible = false;
+              Literal1.Text = DrawTable(oDt, "grid"); // sesuaikan dengan file .css
+              Literal1.Text += WriteToolTipDiv();
               if (isChartVisible)
-              {
                   CreateChartCat(oDt);
-              }
           }
 
           public void ShowResultCont()
@@ -2490,11 +2217,11 @@ namespace gds
               }
 
               DataTable oDt = GetDataCont(sb.ToString());
-              this.DataGrid1.Visible = true;
-              this.DataGrid1.Caption = "<DIV STYLE=\"background-color:#AAAAFF;font:bold 10pt Arial;\">" + (bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc) + "</DIV><DIV STYLE=\"background-color:#AAAAFF;font:bold 8pt Arial;\">" + (bEn? oGv.Desc_En: oGv.Desc) + "</DIV>";
-              this.DataGrid1.DataSource = oDt;
-              this.DataGrid1.DataBind();
-              this.Literal1.Text += WriteToolTipDiv();
+              DataGrid1.Visible = true;
+              DataGrid1.Caption = "<DIV STYLE=\"background-color:#AAAAFF;font:bold 10pt Arial;\">" + (bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc) + "</DIV><DIV STYLE=\"background-color:#AAAAFF;font:bold 8pt Arial;\">" + (bEn? oGv.Desc_En: oGv.Desc) + "</DIV>";
+              DataGrid1.DataSource = oDt;
+              DataGrid1.DataBind();
+              Literal1.Text += WriteToolTipDiv();
               if (isChartVisible)
               {
                   CreateChartCont(oDt);

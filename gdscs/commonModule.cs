@@ -9,11 +9,12 @@ using System.Security;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
-using Microsoft.VisualBasic;
+//using Microsoft.VisualBasic;
 namespace gds
 {
     public static class commonModule
@@ -29,8 +30,13 @@ namespace gds
         public static string PREVSTRINGEN = "<< Back";
         public static void RedirectError(Exception ex)
         {
-            System.Web.HttpContext.Current.Session["errMsg"] = "Exception: " + DateTime.Now + Strings.Chr(10) + ex.Message + Strings.Chr(10) + System.Web.HttpContext.Current.Request.Url.ToString() + Strings.Chr(10) + ex.StackTrace;
-            System.Web.HttpContext.Current.Response.Redirect("err.aspx");
+            HttpContext.Current.Session["errMsg"] = "Exception: " + DateTime.Now + (char)10 + ex.Message + (char)10 + System.Web.HttpContext.Current.Request.Url.ToString() + (char)10 + ex.StackTrace;
+            HttpContext.Current.Response.Redirect("err.aspx");
+        }
+
+        public static string Right(string original, int numberCharacters)
+        {
+            return original.Substring(original.Length - numberCharacters);
         }
         public static string ConvertBytes(long Bytes)
         {
@@ -49,16 +55,14 @@ namespace gds
         public static string SetDbSafeString(string inputStr)
         {
             string s;
-            s = System.Web.HttpContext.Current.Server.HtmlEncode(inputStr.Trim());
+            s = HttpContext.Current.Server.HtmlEncode(inputStr.Trim());
             s = s.Replace("'", "''");
             s = s.Replace("\"", "&quot;");
             return s;
         }
         public static string GetDbSafeString(string inputStr)
         {
-            string s;
-            s = System.Web.HttpContext.Current.Server.HtmlDecode(inputStr.Trim());
-            return s;
+            return HttpContext.Current.Server.HtmlDecode(inputStr.Trim());
         }
 
         public static bool IsInAdminsRole()
@@ -87,7 +91,6 @@ namespace gds
         }
         public static string GetConnString()
         {
-
             return ConfigurationManager.AppSettings["sqlConnStr"];
         }
         public static DataTable GetData(string connString, string sql)
@@ -101,8 +104,8 @@ namespace gds
         public static string WriteXLS(params Control[] ctl)
         {
             //Control c;
-            System.IO.StringWriter tw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter hw = new System.Web.UI.HtmlTextWriter(tw);
+            StringWriter tw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(tw);
             foreach (Control c in ctl)
                 c.RenderControl(hw);
             // Me.Literal3.RenderControl(hw)
@@ -118,13 +121,13 @@ namespace gds
             string s;
             s = commonModule.WriteXLS(controls);
             {
-                var withBlock = HttpContext.Current.Response;
-                withBlock.ContentType = "application/vnd.ms-excel";
-                withBlock.AddHeader("content-disposition", "inline; filename=" + fileName);
-                withBlock.Charset = "";
-                withBlock.Write(s);
-                withBlock.Flush();
-                withBlock.End();
+                var response = HttpContext.Current.Response;
+                response.ContentType = "application/vnd.ms-excel";
+                response.AddHeader("content-disposition", "inline; filename=" + fileName);
+                response.Charset = "";
+                response.Write(s);
+                response.Flush();
+                response.End();
             }
         }
 
@@ -144,13 +147,14 @@ namespace gds
                 }
                 else
                 {
-                    sResult += Strings.Chr(10);
-                    if (sResult.Split(Strings.Chr(10)).Length > 0)
-                        sResult = s(sResult.Split(Strings.Chr(10))[1], w, fontSize);
+                    sResult += Environment.NewLine;
+                    if (sResult.Split((char)10).Length > 0)
+                        sResult = s(sResult.Split((char)10)[1], w, fontSize);
                     break;
                 }
             }
-            sResult += Strings.Right(input, (input.Length + 1) - j);
+            //sResult += Strings.Right(input, (input.Length + 1) - j);
+            sResult += commonModule.Right(input, (input.Length + 1) - j);
             return sResult;
         }
 
@@ -162,27 +166,28 @@ namespace gds
             long k = 0;
             long j = 0;
             long count = 0;
-            BufferCrLf = Strings.Split(Expression, Strings.Chr(10).ToString());
-            for (k = 0; k <= Information.UBound(BufferCrLf); k++)
+            BufferCrLf = Expression.Split((char)10);
+            for (k = 0; k <= BufferCrLf.Length - 1; k++)
             {
-                if (Strings.Len(BufferCrLf[k]) <= Length)
-                    Buffer = Buffer + BufferCrLf[k] + Strings.Chr(10);
+
+                if (BufferCrLf[k].Length <= Length)
+                    Buffer = Buffer + BufferCrLf[k] + (char)10;
                 else
                 {
-                    BufferSpace = Strings.Split(BufferCrLf[k], " ");
-                    for (j = 0; j <= Information.UBound(BufferSpace); j++)
+                    BufferSpace = BufferCrLf[k].Split(' ');
+                    for (j = 0; j <= BufferSpace.Length - 1; j++)
                     {
-                        count += Strings.Len(BufferSpace[j]) + 1;
+                        count += BufferSpace[j].Length + 1;
                         if ((count <= Length))
                             Buffer = Buffer + BufferSpace[j] + " ";
                         else
                         {
                             count = 0;
-                            Buffer = Buffer + Strings.Chr(10) + BufferSpace[j] + " ";
-                            count = Strings.Len(BufferSpace[j]) + 1;
+                            Buffer = Buffer + (char)10 + BufferSpace[j] + " ";
+                            count = BufferSpace[j].Length + 1;
                         }
                     }
-                    Buffer = Buffer + Strings.Chr(10);
+                    Buffer = Buffer + (char)10;
                 }
             }
             return Buffer;
@@ -203,12 +208,12 @@ namespace gds
                 }
                 else
                 {
-                    sResult += Strings.Chr(10);
+                    sResult += (char)10;
                     break;
                 }
             }
 
-            sResult += Strings.Right(text, (text.Length + 1) - ii);
+            sResult += commonModule.Right(text, (text.Length + 1) - ii);
             return sResult;
         }
         enum BasicCompType : int
@@ -248,25 +253,16 @@ namespace gds
         }
         public string VarDescEn
         {
-            get
-            {
-                return _varDescEn;
-            }
+            get { return _varDescEn; }
         }
 
         public string DataSetDesc
         {
-            get
-            {
-                return _dataSetDesc;
-            }
+            get { return _dataSetDesc; }
         }
         public string DataSetDescEn
         {
-            get
-            {
-                return _dataSetDescEn;
-            }
+            get { return _dataSetDescEn; }
         }
         private string _dataSetDesc;
         private string _dataSetDescEn;
@@ -281,41 +277,40 @@ namespace gds
             DataSet ds = new DataSet();
             da.SelectCommand = cm;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetSurveyHighlight";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@gdsid", SqlDbType.TinyInt);
-                    withBlock1.Add("@varid", SqlDbType.Int);
-                    withBlock1.Add("@gdsdesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc_en", SqlDbType.VarChar, 255);
-                }
-                withBlock.Parameters["@gdsid"].Value = gdsId;
-                withBlock.Parameters["@varid"].Value = varId;
-                withBlock.Parameters["@gdsdesc"].Value = _dataSetDesc;
-                withBlock.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
-                withBlock.Parameters["@vardesc"].Value = _varDesc;
-                withBlock.Parameters["@vardesc_en"].Value = _varDescEn;
 
-                withBlock.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
+                cm.CommandText = "GetSurveyHighlight";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                {
+                    cm.Parameters.Add("@gdsid", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@varid", SqlDbType.Int);
+                    cm.Parameters.Add("@gdsdesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc_en", SqlDbType.VarChar, 255);
+                }
+                cm.Parameters["@gdsid"].Value = gdsId;
+                cm.Parameters["@varid"].Value = varId;
+                cm.Parameters["@gdsdesc"].Value = _dataSetDesc;
+                cm.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
+                cm.Parameters["@vardesc"].Value = _varDesc;
+                cm.Parameters["@vardesc_en"].Value = _varDescEn;
+
+                cm.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
             }
             try
             {
                 da.Fill(ds);
 
                 {
-                    var withBlock = cm;
-                    _dataSetDesc = withBlock.Parameters["@gdsdesc"].Value.ToString();
-                    _dataSetDescEn = withBlock.Parameters["@gdsdesc_en"].Value.ToString();
-                    _varDesc = withBlock.Parameters["@vardesc"].Value.ToString();
-                    _varDescEn = withBlock.Parameters["@vardesc_en"].Value.ToString();
+
+                    _dataSetDesc = cm.Parameters["@gdsdesc"].Value.ToString();
+                    _dataSetDescEn = cm.Parameters["@gdsdesc_en"].Value.ToString();
+                    _varDesc = cm.Parameters["@vardesc"].Value.ToString();
+                    _varDescEn = cm.Parameters["@vardesc_en"].Value.ToString();
                 }
             }
             catch (SqlException ex)
@@ -336,32 +331,30 @@ namespace gds
             DataTable dt = new DataTable();
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetSurveyHighlightByIsland";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetSurveyHighlightByIsland";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@gdsid", SqlDbType.TinyInt);
-                    withBlock1.Add("@varid", SqlDbType.Int);
-                    withBlock1.Add("@islandid", SqlDbType.Int);
-                    withBlock1.Add("@gdsdesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@gdsid", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@varid", SqlDbType.Int);
+                    cm.Parameters.Add("@islandid", SqlDbType.Int);
+                    cm.Parameters.Add("@gdsdesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc_en", SqlDbType.VarChar, 255);
                 }
-                withBlock.Parameters["@gdsid"].Value = gdsId;
-                withBlock.Parameters["@varid"].Value = varId;
-                withBlock.Parameters["@islandid"].Value = islandId;
-                withBlock.Parameters["@gdsdesc"].Value = _dataSetDesc;
-                withBlock.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
-                withBlock.Parameters["@vardesc"].Value = _varDesc;
-                withBlock.Parameters["@vardesc_en"].Value = _varDescEn;
+                cm.Parameters["@gdsid"].Value = gdsId;
+                cm.Parameters["@varid"].Value = varId;
+                cm.Parameters["@islandid"].Value = islandId;
+                cm.Parameters["@gdsdesc"].Value = _dataSetDesc;
+                cm.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
+                cm.Parameters["@vardesc"].Value = _varDesc;
+                cm.Parameters["@vardesc_en"].Value = _varDescEn;
 
-                withBlock.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
+                cm.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
             }
 
             dt.Columns.Add("desc", typeof(string));
@@ -376,20 +369,20 @@ namespace gds
                 {
                     drw = dt.NewRow();
                     if (isEnglish)
-                        drw["desc"] = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]);
+                        drw["desc"] = Convert.IsDBNull(dr["desc_en"]) ? "" : dr["desc_en"];
                     else
-                        drw["desc"] = Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]);
-                    drw["CountNatl"] = Interaction.IIf(Information.IsDBNull(dr["CountNatl"]), 0, dr["CountNatl"]);
+                        drw["desc"] = Convert.IsDBNull(dr["desc"]) ? "" : dr["desc"];
+                    drw["CountNatl"] = Convert.IsDBNull(dr["CountNatl"]) ? 0 : dr["CountNatl"];
                     dt.Rows.Add(drw);
                 }
 
                 cn.Close();
                 {
-                    var withBlock = cm;
-                    _dataSetDesc = withBlock.Parameters["@gdsdesc"].Value.ToString();
-                    _dataSetDescEn = withBlock.Parameters["@gdsdesc_en"].Value.ToString();
-                    _varDesc = withBlock.Parameters["@vardesc"].Value.ToString();
-                    _varDescEn = withBlock.Parameters["@vardesc_en"].Value.ToString();
+
+                    _dataSetDesc = cm.Parameters["@gdsdesc"].Value.ToString();
+                    _dataSetDescEn = cm.Parameters["@gdsdesc_en"].Value.ToString();
+                    _varDesc = cm.Parameters["@vardesc"].Value.ToString();
+                    _varDescEn = cm.Parameters["@vardesc_en"].Value.ToString();
                 }
             }
             catch (SqlException ex)
@@ -410,30 +403,29 @@ namespace gds
             DataTable dt = new DataTable();
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetSurveyHighlight";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@gdsid", SqlDbType.TinyInt);
-                    withBlock1.Add("@varid", SqlDbType.Int);
-                    withBlock1.Add("@gdsdesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@vardesc_en", SqlDbType.VarChar, 255);
-                }
-                withBlock.Parameters["@gdsid"].Value = gdsId;
-                withBlock.Parameters["@varid"].Value = varId;
-                withBlock.Parameters["@gdsdesc"].Value = _dataSetDesc;
-                withBlock.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
-                withBlock.Parameters["@vardesc"].Value = _varDesc;
-                withBlock.Parameters["@vardesc_en"].Value = _varDescEn;
 
-                withBlock.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc"].Direction = ParameterDirection.Output;
-                withBlock.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
+                cm.CommandText = "GetSurveyHighlight";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                {
+                    cm.Parameters.Add("@gdsid", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@varid", SqlDbType.Int);
+                    cm.Parameters.Add("@gdsdesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@gdsdesc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@vardesc_en", SqlDbType.VarChar, 255);
+                }
+                cm.Parameters["@gdsid"].Value = gdsId;
+                cm.Parameters["@varid"].Value = varId;
+                cm.Parameters["@gdsdesc"].Value = _dataSetDesc;
+                cm.Parameters["@gdsdesc_en"].Value = _dataSetDescEn;
+                cm.Parameters["@vardesc"].Value = _varDesc;
+                cm.Parameters["@vardesc_en"].Value = _varDescEn;
+
+                cm.Parameters["@gdsdesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@gdsdesc_en"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc"].Direction = ParameterDirection.Output;
+                cm.Parameters["@vardesc_en"].Direction = ParameterDirection.Output;
             }
 
             dt.Columns.Add("desc", typeof(string));
@@ -448,20 +440,20 @@ namespace gds
                 {
                     drw = dt.NewRow();
                     if (isEnglish)
-                        drw["desc"] = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]);
+                        drw["desc"] = Convert.IsDBNull(dr["desc_en"])? "":dr["desc_en"];
                     else
-                        drw["desc"] = Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]);
-                    drw["CountNatl"] = Interaction.IIf(Information.IsDBNull(dr["CountNatl"]), 0, dr["CountNatl"]);
+                        drw["desc"] = Convert.IsDBNull(dr["desc"])?"":dr["desc"];
+                    drw["CountNatl"] = Convert.IsDBNull(dr["CountNatl"]) ? 0 : dr["CountNatl"];
                     dt.Rows.Add(drw);
                 }
 
                 cn.Close();
                 {
-                    var withBlock = cm;
-                    _dataSetDesc = withBlock.Parameters["@gdsdesc"].Value.ToString();
-                    _dataSetDescEn = withBlock.Parameters["@gdsdesc_en"].Value.ToString();
-                    _varDesc = withBlock.Parameters["@vardesc"].Value.ToString();
-                    _varDescEn = withBlock.Parameters["@vardesc_en"].Value.ToString();
+
+                    _dataSetDesc = cm.Parameters["@gdsdesc"].Value.ToString();
+                    _dataSetDescEn = cm.Parameters["@gdsdesc_en"].Value.ToString();
+                    _varDesc = cm.Parameters["@vardesc"].Value.ToString();
+                    _varDescEn = cm.Parameters["@vardesc_en"].Value.ToString();
                 }
             }
             catch (SqlException ex)
@@ -489,7 +481,7 @@ namespace gds
         private string _kabunm;
         public gdsGeo(string prov, string kabu)
         {
-            string sql = "SELECT     t01prov.prov AS prov , provnm, kabu, kabunm " + " FROM t01prov INNER JOIN " + " t02kabu ON t01prov.prov = t02kabu.prov " + " WHERE t01prov.prov = '" + prov + "' " + Interaction.IIf(kabu != "All", " AND  kabu = '" + kabu + "' ", "");
+            string sql = "SELECT     t01prov.prov AS prov , provnm, kabu, kabunm " + " FROM t01prov INNER JOIN " + " t02kabu ON t01prov.prov = t02kabu.prov " + " WHERE t01prov.prov = '" + prov + "' " + (kabu != "All" ? " AND  kabu = '" + kabu + "' " : "");
             SqlConnection cn = new SqlConnection(commonModule.GetConnString());
             SqlCommand cm = new SqlCommand(sql, cn);
 
@@ -499,10 +491,10 @@ namespace gds
                 SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _prov = Interaction.IIf(Information.IsDBNull(dr["prov"]), "", dr["prov"]).ToString();
-                    _provnm = Interaction.IIf(Information.IsDBNull(dr["provnm"]), "", dr["provnm"]).ToString();
-                    _kabu = Interaction.IIf(Information.IsDBNull(dr["kabu"]), "", dr["kabu"]).ToString();
-                    _kabunm = Interaction.IIf(Information.IsDBNull(dr["kabunm"]), "", dr["kabunm"]).ToString();
+                    _prov = Convert.IsDBNull(dr["prov"])? "":dr["prov"].ToString();
+                    _provnm = Convert.IsDBNull(dr["provnm"])? "": dr["provnm"].ToString();
+                    _kabu = Convert.IsDBNull(dr["kabu"])? "": dr["kabu"].ToString();
+                    _kabunm = Convert.IsDBNull(dr["kabunm"]) ? "" : dr["kabunm"].ToString();
                 }
                 dr.Close();
                 cn.Close();
@@ -519,31 +511,19 @@ namespace gds
 
         public string Prov
         {
-            get
-            {
-                return _prov;
-            }
+            get { return _prov; }
         }
         public string ProvName
         {
-            get
-            {
-                return _provnm;
-            }
+            get { return _provnm; }
         }
         public string Kabu
         {
-            get
-            {
-                return _kabu;
-            }
+            get { return _kabu; }
         }
         public string KabuName
         {
-            get
-            {
-                return _kabunm;
-            }
+            get { return _kabunm; }
         }
     }
 
@@ -566,30 +546,6 @@ namespace gds
         private bool _isContVar;
         private bool _isAdvance;
         private string _criteria;
-        // Sub New(ByVal var_id As Integer)
-        // Dim cn As New SqlConnection(commonModule.GetConnString)
-        // Dim cm As New SqlCommand(" SELECT * FROM gds2_11_var WHERE var_id = " & var_id, cn)
-        // cn.Open()
-        // Dim dr As SqlDataReader = cm.ExecuteReader
-        // If dr.Read Then
-        // _var_id = dr("var_id")
-        // _var_parent = dr("var_parent")
-        // _var = dr("var")
-        // _desc = dr("desc")
-        // _desc_en = dr("desc_en")
-        // _q = dr("q")
-        // _q = dr("q_en")
-        // _tbl = dr("tbl")
-        // _tbl_id = dr("tbl_id")
-        // _lvl = dr("lvl")
-        // _isVisible = Boolean.Parse(dr("_isVisible").ToString)
-        // _isContVar = Boolean.Parse(dr("isContVar").ToString)
-        // End If
-
-        // dr.Close()
-        // cn.Close()
-        // End Sub
-
         public gdsVar(int var_id, string varTbl)
         {
             SqlConnection cn = new SqlConnection(commonModule.GetConnString());
@@ -625,162 +581,71 @@ namespace gds
             }
             dr.Close();
             cn.Close();
-
-
-            //try
-            //{
-            //    cn.Open();
-            //    SqlDataReader dr = cm.ExecuteReader();
-            //    if (dr.Read())
-            //    {
-            //        _var_id = int.Parse(dr["var_id"].ToString());
-            //        _var_parent = int.Parse(dr["var_parent"].ToString());
-            //        _var = dr["var"].ToString();
-            //        _desc = dr["desc"].ToString();
-            //        _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _desc, dr["desc_en"]).ToString();
-            //        _q = Interaction.IIf(Information.IsDBNull(dr["q"]), _desc, dr["q"]).ToString();
-            //        _q_en = Interaction.IIf(Information.IsDBNull(dr["q_en"]), _desc_en, dr["q_en"]).ToString();
-            //        _tbl = dr["tbl"].ToString();
-            //        _tbl_id = dr["tbl_id"].ToString();
-            //        _lvl = int.Parse(dr["lvl"].ToString());
-            //        _isVisible = System.Convert.ToBoolean(dr["isVisible"]);
-            //        _isContVar = System.Convert.ToBoolean(dr["isContVar"]);
-            //        _isAdvance = System.Convert.ToBoolean(dr["isAdvance"]);
-            //        _criteria = Interaction.IIf(Information.IsDBNull(dr["criteria"]), "", dr["criteria"]).ToString();
-            //    }
-            //    cm.CommandText = "SELECT * FROM " + varTbl + " WHERE var_id =" + Interaction.IIf(Information.IsDBNull(dr["var_parent"]), "", _var_parent);
-            //    dr.Close();
-            //    dr = cm.ExecuteReader();
-
-            //    if (dr.Read())
-            //    {
-            //        _var_parent_desc = dr["desc"].ToString();
-            //        _var_parent_desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _var_parent_desc, dr["desc_en"]).ToString();
-            //    }
-            //    dr.Close();
-            //    cn.Close();
-            //}
-            //catch (SqlException ex)
-            //{
-            //    commonModule.RedirectError(ex);
-            //}
-            //catch (Exception ex)
-            //{
-            //    commonModule.RedirectError(ex);
-            //}
         }
 
         public int Var_Id
         {
-            get
-            {
-                return _var_id;
-            }
+            get { return _var_id; }
         }
         public int Var_Parent
         {
-            get
-            {
-                return _var_parent;
-            }
+            get { return _var_parent; }
         }
         public string Var_Parent_Desc
         {
-            get
-            {
-                return _var_parent_desc;
-            }
+            get { return _var_parent_desc; }
         }
         public string Var_Parent_Desc_En
         {
-            get
-            {
-                return _var_parent_desc_en;
-            }
+            get { return _var_parent_desc_en; }
         }
         public int Ord
         {
-            get
-            {
-                return _ord;
-            }
+            get { return _ord; }
         }
         public string Var
         {
-            get
-            {
-                return _var;
-            }
+            get { return _var; }
         }
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
         public string Desc_En
         {
-            get
-            {
-                return _desc_en;
-            }
+            get { return _desc_en; }
         }
         public string Q
         {
-            get
-            {
-                return _q;
-            }
+            get { return _q; }
         }
         public string Q_En
         {
-            get
-            {
-                return _q_en;
-            }
+            get { return _q_en; }
         }
         public string Tbl
         {
-            get
-            {
-                return _tbl;
-            }
+            get { return _tbl; }
         }
         public string Tbl_Id
         {
-            get
-            {
-                return _tbl_id;
-            }
+            get { return _tbl_id; }
         }
         public bool IsVisible
         {
-            get
-            {
-                return _isVisible;
-            }
+            get { return _isVisible; }
         }
         public bool IsContVar
         {
-            get
-            {
-                return _isContVar;
-            }
+            get { return _isContVar; }
         }
         public bool IsAdvance
         {
-            get
-            {
-                return _isAdvance;
-            }
+            get { return _isAdvance; }
         }
         public string Criteria
         {
-            get
-            {
-                return _criteria;
-            }
+            get { return _criteria; }
         }
     }
 
@@ -801,28 +666,6 @@ namespace gds
         private bool _hasKeca;
 
 
-        // Sub New()
-        // Dim cn As New SqlConnection(commonModule.GetConnString)
-        // Dim cm As New SqlCommand(" SELECT * FROM gds2 WHERE gds_id = 11 ", cn)
-        // cn.Open()
-        // Dim dr As SqlDataReader = cm.ExecuteReader
-        // If dr.Read Then
-        // _gdsId = dr("gds_id")
-        // _varTable = dr("vartbl")
-        // _valueTable = dr("valuetbl")
-        // _avTable = dr("avtbl")
-        // _compTable = dr("comptbl")
-        // _desc = dr("desc")
-        // _desc_En = dr("desc_en")
-        // _kabufld = dr("kabufld")
-        // _kabunmfld = dr("kabunmfld")
-        // _provfld = dr("provfld")
-        // _provnmfld = dr("provnmfld")
-        // _baseTable = dr("baseTbl")
-        // End If
-        // dr.Close()
-        // cn.Close()
-        // End Sub
         public gdsTable()
         {
         }
@@ -866,94 +709,55 @@ namespace gds
         }
         public int GdsId
         {
-            get
-            {
-                return _gdsId;
-            }
+            get { return _gdsId; }
         }
         public string VarTable
         {
-            get
-            {
-                return _varTable;
-            }
+            get { return _varTable; }
         }
         public string ValueTable
         {
-            get
-            {
-                return _valueTable;
-            }
+            get { return _valueTable; }
         }
         public string AvTable
         {
-            get
-            {
-                return _avTable;
-            }
+            get { return _avTable; }
         }
         public string CompTable
         {
-            get
-            {
-                return _compTable;
-            }
+            get { return _compTable; }
         }
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
         public string Desc_En
         {
-            get
-            {
-                return _desc_En;
-            }
+            get { return _desc_En; }
         }
         public string ProvFld
         {
-            get
-            {
-                return _provfld;
-            }
+            get { return _provfld; }
         }
         public string ProvNmFld
         {
-            get
-            {
-                return _provnmfld;
-            }
+            get { return _provnmfld; }
         }
         public string KabuFld
         {
-            get
-            {
-                return _kabufld;
-            }
+            get { return _kabufld; }
         }
         public string KabuNmFld
         {
-            get
-            {
-                return _kabunmfld;
-            }
+            get { return _kabunmfld; }
         }
         public string BaseTable
         {
-            get
-            {
-                return _baseTable;
-            }
+            get { return _baseTable; }
         }
         public bool HasKeca
         {
-            get
-            {
-                return _hasKeca;
-            }
+            get { return _hasKeca; }
         }
         public DataTable GetGds2Var()
         {
@@ -986,39 +790,24 @@ namespace gds
     {
         public string Title
         {
-            get
-            {
-                return _Title;
-            }
+            get { return _Title; }
         }
         public string TitleEn
         {
-            get
-            {
-                return _TitleEn;
-            }
+            get { return _TitleEn; }
         }
 
         public string Content
         {
-            get
-            {
-                return _Content;
-            }
+            get { return _Content; }
         }
         public string ContentEn
         {
-            get
-            {
-                return _ContentEn;
-            }
+            get { return _ContentEn; }
         }
         public int panelId
         {
-            get
-            {
-                return _panelId;
-            }
+            get { return _panelId; }
         }
 
         private string _Title;
@@ -1055,25 +844,24 @@ namespace gds
 
         private void GetContentEn(int panelId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetContentEn";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetContentEn";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters["@panelid"].Value = panelId;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters["@panelid"].Value = panelId;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _Title = Interaction.IIf(Information.IsDBNull(dr["title_en"]), "", dr["title_en"]).ToString();
-                    _Content = Interaction.IIf(Information.IsDBNull(dr["content_en"]), "", dr["content_en"]).ToString();
+                    _Title = Convert.IsDBNull(dr["title_en"]) ? "" : dr["title_en"].ToString();
+                    _Content = Convert.IsDBNull(dr["content_en"]) ? "" : dr["content_en"].ToString();
                 }
                 cn.Close();
             }
@@ -1088,25 +876,24 @@ namespace gds
         }
         private void GetContentIna(int panelId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetContentIna";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetContentIna";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters["@panelid"].Value = panelId;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters["@panelid"].Value = panelId;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _Title = Interaction.IIf(Information.IsDBNull(dr["title"]), "", dr["title"]).ToString();
-                    _Content = Interaction.IIf(Information.IsDBNull(dr["content"]), "", dr["content"]).ToString();
+                    _Title = Convert.IsDBNull(dr["title"]) ? "" : dr["title"].ToString();
+                    _Content = Convert.IsDBNull(dr["content"]) ? "" : dr["content"].ToString();
                 }
                 cn.Close();
             }
@@ -1121,29 +908,27 @@ namespace gds
         }
         public int UpdateContent(int panelId, string title, string title_en, string content, string content_en)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateContent";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "UpdateContent";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@panelid", SqlDbType.Int);
-                    withBlock1.Add("@title", SqlDbType.VarChar, 50);
-                    withBlock1.Add("@title_en", SqlDbType.VarChar, 50);
-                    withBlock1.Add("@content", SqlDbType.Text);
-                    withBlock1.Add("@content_en", SqlDbType.Text);
+                    cm.Parameters.Add("@panelid", SqlDbType.Int);
+                    cm.Parameters.Add("@title", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@title_en", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@content", SqlDbType.Text);
+                    cm.Parameters.Add("@content_en", SqlDbType.Text);
                 }
 
-                withBlock.Parameters["@panelid"].Value = panelId;
-                withBlock.Parameters["@title"].Value = Interaction.IIf(title.Length == 0, System.Data.SqlTypes.SqlString.Null, title);
-                withBlock.Parameters["@title_en"].Value = Interaction.IIf(title_en.Length == 0, System.Data.SqlTypes.SqlString.Null, title_en);
-                withBlock.Parameters["@content"].Value = Interaction.IIf(content.Length == 0, System.Data.SqlTypes.SqlString.Null, content);
-                withBlock.Parameters["@content_en"].Value = Interaction.IIf(content_en.Length == 0, System.Data.SqlTypes.SqlString.Null, content_en);
+                cm.Parameters["@panelid"].Value = panelId;
+                cm.Parameters["@title"].Value = title.Length == 0 ? SqlString.Null : title;
+                cm.Parameters["@title_en"].Value = title_en.Length == 0 ? SqlString.Null : title_en;
+                cm.Parameters["@content"].Value = content.Length == 0 ? SqlString.Null : content;
+                cm.Parameters["@content_en"].Value = content_en.Length == 0 ? SqlString.Null : content_en;
             }
             try
             {
@@ -1164,28 +949,27 @@ namespace gds
 
         public int GetContent(int panelId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsReturned = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetContent";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetContent";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters["@panelid"].Value = panelId;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters["@panelid"].Value = panelId;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _Title = Interaction.IIf(Information.IsDBNull(dr["title"]), "", dr["title"]).ToString();
-                    _TitleEn = Interaction.IIf(Information.IsDBNull(dr["title_en"]), "", dr["title_en"]).ToString();
-                    _Content = Interaction.IIf(Information.IsDBNull(dr["content"]), "", dr["content"]).ToString();
-                    _ContentEn = Interaction.IIf(Information.IsDBNull(dr["content_en"]), "", dr["content_en"]).ToString();
+                    _Title = Convert.IsDBNull(dr["title"]) ? "" : dr["title"].ToString();
+                    _TitleEn = Convert.IsDBNull(dr["title_en"]) ? "" : dr["title_en"].ToString();
+                    _Content = Convert.IsDBNull(dr["content"]) ? "" : dr["content"].ToString();
+                    _ContentEn = Convert.IsDBNull(dr["content_en"]) ? "" : dr["content_en"].ToString();
                     iRecordsReturned = 1;
                 }
                 else
@@ -1209,17 +993,15 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetMaxComments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetMaxComments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@maxrecords", SqlDbType.Int);
-                    withBlock1.Add("@isvisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@maxrecords", SqlDbType.Int);
+                    cm.Parameters.Add("@isvisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@maxrecords"].Value = maxRecords;
-                withBlock.Parameters["@isVisible"].Value = isVisible;
+                cm.Parameters["@maxrecords"].Value = maxRecords;
+                cm.Parameters["@isVisible"].Value = isVisible;
             }
             try
             {
@@ -1237,15 +1019,14 @@ namespace gds
         }
         public DataTable GetTop5Comments()
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             DataSet ds = new DataSet();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetTop5Comments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetTop5Comments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             da.SelectCommand = cm;
             try
@@ -1264,15 +1045,14 @@ namespace gds
         }
         public DataTable GetAllComments()
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             DataSet ds = new DataSet();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetAllComments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetAllComments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             da.SelectCommand = cm;
             try
@@ -1291,30 +1071,30 @@ namespace gds
         }
         public int InsertComment(string sender, string email, string url, string comment, DateTime submitdate, int isvisible)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "InsertComment";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+
+                cm.CommandText = "InsertComment";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@sender", SqlDbType.VarChar, 50);
-                    withBlock1.Add("@email", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@comment", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitdate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@isvisible", SqlDbType.TinyInt);
+                    
+                    cm.Parameters.Add("@sender", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@email", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@comment", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitdate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@isvisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@sender"].Value = Interaction.IIf(sender.Length == 0, System.Data.SqlTypes.SqlString.Null, sender);
-                withBlock.Parameters["@email"].Value = Interaction.IIf(email.Length == 0, System.Data.SqlTypes.SqlString.Null, email);
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@comment"].Value = Interaction.IIf(comment.Length == 0, System.Data.SqlTypes.SqlString.Null, comment);
-                withBlock.Parameters["@isvisible"].Value = isvisible;
-                withBlock.Parameters["@submitdate"].Value = submitdate;
+                cm.Parameters["@sender"].Value = sender.Length == 0? SqlString.Null: sender;
+                cm.Parameters["@email"].Value = email.Length == 0 ? SqlString.Null : email;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@comment"].Value = comment.Length == 0 ? SqlString.Null : comment;
+                cm.Parameters["@isvisible"].Value = isvisible;
+                cm.Parameters["@submitdate"].Value = submitdate;
             }
             try
             {
@@ -1335,32 +1115,31 @@ namespace gds
 
         public int UpdateComment(int commentid, string sender, string email, string url, string comment, DateTime submitdate, int isvisible)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateComment";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                
+                cm.CommandText = "UpdateComment";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@commentid", SqlDbType.Int);
-                    withBlock1.Add("@sender", SqlDbType.VarChar, 50);
-                    withBlock1.Add("@email", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@comment", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitdate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@isvisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@commentid", SqlDbType.Int);
+                    cm.Parameters.Add("@sender", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@email", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@comment", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitdate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@isvisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@commentid"].Value = commentid;
-                withBlock.Parameters["@sender"].Value = Interaction.IIf(sender.Length == 0, System.Data.SqlTypes.SqlString.Null, sender);
-                withBlock.Parameters["@email"].Value = Interaction.IIf(email.Length == 0, System.Data.SqlTypes.SqlString.Null, email);
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@comment"].Value = Interaction.IIf(comment.Length == 0, System.Data.SqlTypes.SqlString.Null, comment);
-                withBlock.Parameters["@isvisible"].Value = isvisible;
-                withBlock.Parameters["@submitdate"].Value = submitdate;
+                cm.Parameters["@commentid"].Value = commentid;
+                cm.Parameters["@sender"].Value = sender.Length == 0 ? SqlString.Null : sender;
+                cm.Parameters["@email"].Value = email.Length == 0 ? SqlString.Null : email;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@comment"].Value = comment.Length == 0 ? SqlString.Null : comment;
+                cm.Parameters["@isvisible"].Value = isvisible;
+                cm.Parameters["@submitdate"].Value = submitdate;
             }
             try
             {
@@ -1381,16 +1160,15 @@ namespace gds
 
         public int DeleteComment(int commentId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "DeleteComment";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@commentid", SqlDbType.Int);
-                withBlock.Parameters["@commentid"].Value = commentId;
+                cm.CommandText = "DeleteComment";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@commentid", SqlDbType.Int);
+                cm.Parameters["@commentid"].Value = commentId;
             }
             try
             {
@@ -1410,26 +1188,25 @@ namespace gds
         }
         public int GetGenericContentByIdLang(int panelId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetGenericContentByIdLang";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetGenericContentByIdLang";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters["@panelid"].Value = panelId;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters["@panelid"].Value = panelId;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _Content = Interaction.IIf(Information.IsDBNull(dr["generictext"]), "", dr["generictext"]).ToString();
-                    _ContentEn = Interaction.IIf(Information.IsDBNull(dr["generictext_en"]), "", dr["generictext_en"]).ToString();
+                    _Content = Convert.IsDBNull(dr["generictext"])? "":dr["generictext"].ToString();
+                    _ContentEn = Convert.IsDBNull(dr["generictext_en"]) ? "" : dr["generictext_en"].ToString();
                     iRecordsAffected = 1;
                 }
                 cn.Close();
@@ -1446,25 +1223,24 @@ namespace gds
         }
         public int GetGenericContentById(int panelId, bool inEnglish)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
 
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetGenericContentById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetGenericContentById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters.Add("@en", SqlDbType.TinyInt);
-                withBlock.Parameters["@panelid"].Value = panelId;
-                withBlock.Parameters["@en"].Value = inEnglish ? 1 : 0;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters.Add("@en", SqlDbType.TinyInt);
+                cm.Parameters["@panelid"].Value = panelId;
+                cm.Parameters["@en"].Value = inEnglish ? 1 : 0;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
                     if (inEnglish)
@@ -1489,24 +1265,22 @@ namespace gds
         }
         public int UpdateGenericContentById(int panelId, string genericText, string genericTextEn)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateGenericContentById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "UpdateGenericContentById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@panelid", SqlDbType.Int);
-                    withBlock1.Add("@generictext", SqlDbType.Text);
-                    withBlock1.Add("@generictext_en", SqlDbType.Text);
+                    cm.Parameters.Add("@panelid", SqlDbType.Int);
+                    cm.Parameters.Add("@generictext", SqlDbType.Text);
+                    cm.Parameters.Add("@generictext_en", SqlDbType.Text);
                 }
-                withBlock.Parameters["@panelid"].Value = panelId;
-                withBlock.Parameters["@generictext"].Value = Interaction.IIf(genericText.Length == 0, System.Data.SqlTypes.SqlString.Null, genericText);
-                withBlock.Parameters["@generictext_en"].Value = Interaction.IIf(genericTextEn.Length == 0, System.Data.SqlTypes.SqlString.Null, genericTextEn);
+                cm.Parameters["@panelid"].Value = panelId;
+                cm.Parameters["@generictext"].Value = genericText.Length == 0 ? SqlString.Null : genericText;
+                cm.Parameters["@generictext_en"].Value = genericTextEn.Length == 0 ? SqlString.Null : genericTextEn;
             }
             try
             {
@@ -1527,26 +1301,25 @@ namespace gds
 
         public int GetGenericTitleByIdLang(int panelId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetGenericTitleByIdLang";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetGenericTitleByIdLang";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters["@panelid"].Value = panelId;
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters["@panelid"].Value = panelId;
             }
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
-                    _Title = Interaction.IIf(Information.IsDBNull(dr["generictitle"]), "", dr["generictitle"]).ToString();
-                    _TitleEn = Interaction.IIf(Information.IsDBNull(dr["generictitle_en"]), "", dr["generictitle_en"]).ToString();
+                    _Title = Convert.IsDBNull(dr["generictitle"]) ? "" : dr["generictitle"].ToString();
+                    _TitleEn = Convert.IsDBNull(dr["generictitle_en"]) ? "" : dr["generictitle_en"].ToString();
                     iRecordsAffected = 1;
                 }
                 cn.Close();
@@ -1563,32 +1336,32 @@ namespace gds
         }
         public int GetGenericTitleById(int panelId, bool inEnglish)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
 
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetGenericTitleById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
 
-                withBlock.Parameters.Add("@panelid", SqlDbType.Int);
-                withBlock.Parameters.Add("@en", SqlDbType.TinyInt);
-                withBlock.Parameters["@panelid"].Value = panelId;
-                withBlock.Parameters["@en"].Value = Interaction.IIf(inEnglish, 1, 0);
+                cm.CommandText = "GetGenericTitleById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+
+                cm.Parameters.Add("@panelid", SqlDbType.Int);
+                cm.Parameters.Add("@en", SqlDbType.TinyInt);
+                cm.Parameters["@panelid"].Value = panelId;
+                cm.Parameters["@en"].Value = inEnglish ? 1 : 0;
             }
 
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
                     if (inEnglish)
-                        _Content = Interaction.IIf(Information.IsDBNull(dr["generictitle_en"]), "", dr["generictitle_en"]).ToString();
+                        _Content = Convert.IsDBNull(dr["generictitle_en"])? "":dr["generictitle_en"].ToString();
                     else
-                        _Content = Interaction.IIf(Information.IsDBNull(dr["generictitle"]), "", dr["generictitle"]).ToString();
+                        _Content = Convert.IsDBNull(dr["generictitle"]) ? "" : dr["generictitle"].ToString();
                     iRecordsAffected = 1;
                 }
                 cn.Close();
@@ -1605,24 +1378,23 @@ namespace gds
         }
         public int UpdateGenericTitleById(int panelId, string genericTitle, string genericTitleEn)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsAffected = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateGenericTitleById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+
+                cm.CommandText = "UpdateGenericTitleById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@panelid", SqlDbType.Int);
-                    withBlock1.Add("@generictitle", SqlDbType.VarChar, 50);
-                    withBlock1.Add("@generictitle_en", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@panelid", SqlDbType.Int);
+                    cm.Parameters.Add("@generictitle", SqlDbType.VarChar, 50);
+                    cm.Parameters.Add("@generictitle_en", SqlDbType.VarChar, 50);
                 }
-                withBlock.Parameters["@panelid"].Value = panelId;
-                withBlock.Parameters["@generictitle"].Value = Interaction.IIf(genericTitle.Length == 0, System.Data.SqlTypes.SqlString.Null, genericTitle);
-                withBlock.Parameters["@generictitle_en"].Value = Interaction.IIf(genericTitleEn.Length == 0, System.Data.SqlTypes.SqlString.Null, genericTitleEn);
+                cm.Parameters["@panelid"].Value = panelId;
+                cm.Parameters["@generictitle"].Value = genericTitle.Length == 0 ? SqlString.Null : genericTitle;
+                cm.Parameters["@generictitle_en"].Value = genericTitleEn.Length == 0 ? SqlString.Null : genericTitleEn;
             }
             try
             {
@@ -1661,90 +1433,60 @@ namespace gds
 
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
 
         public string DescEn
         {
-            get
-            {
-                return _desc_en;
-            }
+            get { return _desc_en; }
         }
         public string Var
         {
-            get
-            {
-                return _var;
-            }
+            get { return _var; }
         }
         public int GdsId
         {
-            get
-            {
-                return _gds_id;
-            }
+            get { return _gds_id; }
         }
         public int VarId
         {
-            get
-            {
-                return _var_id;
-            }
+            get { return _var_id; }
         }
 
         public bool IsVisible
         {
-            get
-            {
-                return _isVisible;
-            }
+            get { return _isVisible; }
         }
 
         public bool IsContVar
         {
-            get
-            {
-                return _isContVar;
-            }
+            get { return _isContVar; }
         }
         public bool IsAdvance
         {
-            get
-            {
-                return _isAdvance;
-            }
+            get { return _isAdvance; }
         }
 
         public string Q
         {
-            get
-            {
-                return _q;
-            }
+            get { return _q; }
         }
         public string QEn
         {
-            get
-            {
-                return _q_en;
-            }
+            get { return _q_en; }
         }
         public int getVarByVarId(int gdsId, int varId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsReturned = 0;
 
             cm.CommandText = "getVarByVarId";
             cm.CommandType = CommandType.StoredProcedure;
             cm.Connection = cn;
 
-            System.Data.SqlClient.SqlParameter paramGds_Id = new System.Data.SqlClient.SqlParameter("@gds_id", SqlDbType.TinyInt);
-            System.Data.SqlClient.SqlParameter paramVar_Id = new System.Data.SqlClient.SqlParameter("@var_id", SqlDbType.Int);
+            SqlParameter paramGds_Id = new SqlParameter("@gds_id", SqlDbType.TinyInt);
+            SqlParameter paramVar_Id = new SqlParameter("@var_id", SqlDbType.Int);
 
             paramGds_Id.Value = gdsId;
             paramVar_Id.Value = varId;
@@ -1754,28 +1496,19 @@ namespace gds
             try
             {
                 cn.Open();
-                System.Data.SqlClient.SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
                 if (dr.Read())
                 {
                     _gds_id = gdsId;
                     _var_id = varId;
-                    _desc = commonModule.GetDbSafeString(Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]).ToString());
-                    _desc_en = commonModule.GetDbSafeString(Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]).ToString());
-                    _q = commonModule.GetDbSafeString(Interaction.IIf(Information.IsDBNull(dr["q"]), "", dr["q"]).ToString());
-                    _q_en = commonModule.GetDbSafeString(Interaction.IIf(Information.IsDBNull(dr["q_en"]), "", dr["q_en"]).ToString());
-                    _var = commonModule.GetDbSafeString(Interaction.IIf(Information.IsDBNull(dr["var"]), "", dr["var"]).ToString());
+                    _desc = commonModule.GetDbSafeString(Convert.IsDBNull(dr["desc"]) ? "" : dr["desc"].ToString());
+                    _desc_en = commonModule.GetDbSafeString(Convert.IsDBNull(dr["desc_en"])? "":dr["desc_en"].ToString());
+                    _q = commonModule.GetDbSafeString(Convert.IsDBNull(dr["q"])? "":dr["q"].ToString());
+                    _q_en = commonModule.GetDbSafeString(Convert.IsDBNull(dr["q_en"])? "":dr["q_en"].ToString());
+                    _var = commonModule.GetDbSafeString(Convert.IsDBNull(dr["var"])? "":dr["var"].ToString());
                     _isVisible = dr["isVisible"] == "1" ? true : false;
                     _isContVar = dr["isContVar"] == "1" ? true : false;
                     _isAdvance = dr["isAdvance"] == "1" ? true : false;
-                    // If dr("isVisible") = 1 Then
-                    // Me.chkIsVisible.Checked = True
-                    // End If
-                    // If dr("isContVar") = 1 Then
-                    // Me.chkIsContVar.Checked = True
-                    // End If
-                    // If dr("isAdvance") = 1 Then
-                    // Me.chkIsAdvance.Checked = True
-                    // End If
                     iRecordsReturned = 1;
                 }
                 else
@@ -1794,36 +1527,35 @@ namespace gds
         }
         public int updateVar(int gds_id, int var_id, string var, string desc, string desc_en, bool isVisible, bool isContVar, bool isAdvance, string q, string q_en)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
             int iRecordsReturned = 0;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "updateVar";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
 
-                withBlock.Parameters.Add("@gds_id", SqlDbType.TinyInt);
-                withBlock.Parameters.Add("@var_id", SqlDbType.Int);
-                withBlock.Parameters.Add("@desc", SqlDbType.VarChar, 255);
-                withBlock.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
-                withBlock.Parameters.Add("@q", SqlDbType.Text);
-                withBlock.Parameters.Add("@q_en", SqlDbType.Text);
-                withBlock.Parameters.Add("@var", SqlDbType.VarChar, 50);
-                withBlock.Parameters.Add("@isVisible", SqlDbType.TinyInt);
-                withBlock.Parameters.Add("@isContVar", SqlDbType.TinyInt);
-                withBlock.Parameters.Add("@isAdvance", SqlDbType.TinyInt);
+                cm.CommandText = "updateVar";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
 
-                withBlock.Parameters["@gds_id"].Value = gds_id;
-                withBlock.Parameters["@var_id"].Value = var_id;
-                withBlock.Parameters["@desc"].Value = Interaction.IIf(desc.Length == 0, System.Data.SqlTypes.SqlString.Null, desc);
-                withBlock.Parameters["@desc_en"].Value = Interaction.IIf(desc_en.Length == 0, System.Data.SqlTypes.SqlString.Null, desc_en);
-                withBlock.Parameters["@q"].Value = Interaction.IIf(q.Length == 0, System.Data.SqlTypes.SqlString.Null, q);
-                withBlock.Parameters["@q_en"].Value = Interaction.IIf(q_en.Length == 0, System.Data.SqlTypes.SqlString.Null, q_en);
-                withBlock.Parameters["@var"].Value = Interaction.IIf(var.Length == 0, System.Data.SqlTypes.SqlString.Null, var);
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
-                withBlock.Parameters["@isContVar"].Value = Interaction.IIf(isContVar, 1, 0);
-                withBlock.Parameters["@isAdvance"].Value = Interaction.IIf(isAdvance, 1, 0);
+                cm.Parameters.Add("@gds_id", SqlDbType.TinyInt);
+                cm.Parameters.Add("@var_id", SqlDbType.Int);
+                cm.Parameters.Add("@desc", SqlDbType.VarChar, 255);
+                cm.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
+                cm.Parameters.Add("@q", SqlDbType.Text);
+                cm.Parameters.Add("@q_en", SqlDbType.Text);
+                cm.Parameters.Add("@var", SqlDbType.VarChar, 50);
+                cm.Parameters.Add("@isVisible", SqlDbType.TinyInt);
+                cm.Parameters.Add("@isContVar", SqlDbType.TinyInt);
+                cm.Parameters.Add("@isAdvance", SqlDbType.TinyInt);
+
+                cm.Parameters["@var_id"].Value = var_id;
+                cm.Parameters["@desc"].Value = desc.Length == 0 ? SqlString.Null : desc;
+                cm.Parameters["@desc_en"].Value = desc_en.Length == 0 ? SqlString.Null : desc_en;
+                cm.Parameters["@q"].Value = q.Length == 0 ? SqlString.Null : q;
+                cm.Parameters["@q_en"].Value = q_en.Length == 0 ? SqlString.Null : q_en;
+                cm.Parameters["@var"].Value = var.Length == 0 ? SqlString.Null : var;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
+                cm.Parameters["@isContVar"].Value = isContVar ? 1 : 0;
+                cm.Parameters["@isAdvance"].Value = isAdvance ? 1 : 0;
             }
             try
             {
@@ -1843,16 +1575,16 @@ namespace gds
         }
         public DataSet getVariablesByGdsId(int gdsId)
         {
-            System.Data.SqlClient.SqlConnection cn = new System.Data.SqlClient.SqlConnection(commonModule.GetConnString());
-            System.Data.SqlClient.SqlCommand cm = new System.Data.SqlClient.SqlCommand();
+            SqlConnection cn = new SqlConnection(commonModule.GetConnString());
+            SqlCommand cm = new SqlCommand();
 
             cm.CommandText = "getVariablesByGdsId";
             cm.CommandType = CommandType.StoredProcedure;
             cm.Connection = cn;
-            System.Data.SqlClient.SqlParameter paramGds_id = new System.Data.SqlClient.SqlParameter("@gds_id", SqlDbType.TinyInt);
+            SqlParameter paramGds_id = new SqlParameter("@gds_id", SqlDbType.TinyInt);
             paramGds_id.Value = gdsId;
             cm.Parameters.Add(paramGds_id);
-            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(cm);
+            SqlDataAdapter da = new SqlDataAdapter(cm);
             DataSet ds = new DataSet();
             try
             {
@@ -1878,31 +1610,19 @@ namespace gds
         private bool _isVisible;
         public int CategoryId
         {
-            get
-            {
-                return _categoryid;
-            }
+            get { return _categoryid; }
         }
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
         public string DescEn
         {
-            get
-            {
-                return _desc_en;
-            }
+            get { return _desc_en; }
         }
         public bool IsVisible
         {
-            get
-            {
-                return _isVisible;
-            }
+            get { return _isVisible; }
         }
         public int GetCategoryById(int categoryId)
         {
@@ -1911,12 +1631,11 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetCategoryById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetCategoryById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
             try
             {
@@ -1925,8 +1644,8 @@ namespace gds
                 if (dr.Read())
                 {
                     _categoryid = Convert.ToInt32(dr["categoryid"]);
-                    _desc = Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]).ToString();
-                    _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]).ToString();
+                    _desc = Convert.IsDBNull(dr["desc"]) ? "" : dr["desc"].ToString();
+                    _desc_en = Convert.IsDBNull(dr["desc_en"]) ? "" : dr["desc_en"].ToString();
                     _isVisible = dr["isVisible"] == "1" ? true : false;
                     iRecordsReturned = 1;
                 }
@@ -1949,10 +1668,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetCategories";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetCategories";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -1982,60 +1700,36 @@ namespace gds
         private bool _isVisible;
         public int LinkId
         {
-            get
-            {
-                return _linkId;
-            }
+            get { return _linkId; }
         }
 
         public string Url
         {
-            get
-            {
-                return _url;
-            }
+            get { return _url; }
         }
         public string Title
         {
-            get
-            {
-                return _title;
-            }
+            get { return _title; }
         }
         public string TitleEn
         {
-            get
-            {
-                return _title_en;
-            }
+            get { return _title_en; }
         }
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
         public string DescEn
         {
-            get
-            {
-                return _desc_en;
-            }
+            get { return _desc_en; }
         }
         public DateTime SubmitDate
         {
-            get
-            {
-                return _submitDate;
-            }
+            get { return _submitDate; }
         }
         public bool IsVisible
         {
-            get
-            {
-                return _isVisible;
-            }
+            get { return _isVisible; }
         }
         public DataTable GetAllLinks()
         {
@@ -2044,10 +1738,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetAllLinks";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetAllLinks";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2071,10 +1764,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetVisibleLinks";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetVisibleLinks";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2097,12 +1789,12 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetLinkById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@linkid", SqlDbType.Int);
-                withBlock.Parameters["@linkid"].Value = linkId;
+
+                cm.CommandText = "GetLinkById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@linkid", SqlDbType.Int);
+                cm.Parameters["@linkid"].Value = linkId;
             }
 
             try
@@ -2112,11 +1804,11 @@ namespace gds
                 if (dr.Read())
                 {
                     _linkId = Convert.ToInt32(dr["linkid"]);
-                    _url = Interaction.IIf(Information.IsDBNull(dr["url"]), "", dr["url"]).ToString();
-                    _title = Interaction.IIf(Information.IsDBNull(dr["title"]), "", dr["title"]).ToString();
-                    _title_en = Interaction.IIf(Information.IsDBNull(dr["title_en"]), "", dr["title_en"]).ToString();
-                    _desc = Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]).ToString();
-                    _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]).ToString();
+                    _url = Convert.IsDBNull(dr["url"])? "":dr["url"].ToString();
+                    _title = Convert.IsDBNull(dr["title"])? "":dr["title"].ToString();
+                    _title_en = Convert.IsDBNull(dr["title_en"])? "":dr["title_en"].ToString();
+                    _desc = Convert.IsDBNull(dr["desc"])?"":dr["desc"].ToString();
+                    _desc_en = Convert.IsDBNull(dr["desc_en"])?"":dr["desc_en"].ToString();
                     _submitDate = Convert.ToDateTime(dr["submitDate"]);
                     _isVisible = dr["isVisible"].ToString() == "1" ? true : false;
                     iRecordsReturned = 1;
@@ -2141,29 +1833,27 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateLinks";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "UpdateLinks";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@linkid", SqlDbType.Int);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitDate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@isVisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@linkid", SqlDbType.Int);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitDate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@isVisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@linkid"].Value = linkid;
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@title"].Value = Interaction.IIf(title.Length == 0, System.Data.SqlTypes.SqlString.Null, title);
-                withBlock.Parameters["@title_en"].Value = Interaction.IIf(title_en.Length == 0, System.Data.SqlTypes.SqlString.Null, title_en);
-                withBlock.Parameters["@desc"].Value = Interaction.IIf(desc.Length == 0, System.Data.SqlTypes.SqlString.Null, desc);
-                withBlock.Parameters["@desc_en"].Value = Interaction.IIf(desc_en.Length == 0, System.Data.SqlTypes.SqlString.Null, desc_en);
-                withBlock.Parameters["@submitDate"].Value = submitDate;
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
+                cm.Parameters["@linkid"].Value = linkid;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@title"].Value = title.Length == 0 ? SqlString.Null : title;
+                cm.Parameters["@title_en"].Value = title_en.Length == 0 ? SqlString.Null : title_en;
+                cm.Parameters["@desc"].Value = desc.Length == 0 ? SqlString.Null : desc;
+                cm.Parameters["@desc_en"].Value = desc_en.Length == 0 ? SqlString.Null : desc_en;
+                cm.Parameters["@submitDate"].Value = submitDate;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
             }
             try
             {
@@ -2188,12 +1878,11 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "deleteLinks";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@linkid", SqlDbType.Int);
-                withBlock.Parameters["@linkid"].Value = linkid;
+                cm.CommandText = "deleteLinks";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@linkid", SqlDbType.Int);
+                cm.Parameters["@linkid"].Value = linkid;
             }
             try
             {
@@ -2218,31 +1907,29 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "InsertLink";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "InsertLink";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@linkid", SqlDbType.Int);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitDate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@isVisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@linkid", SqlDbType.Int);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitDate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@isVisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@linkid"].Direction = ParameterDirection.Output;
+                cm.Parameters["@linkid"].Direction = ParameterDirection.Output;
 
-                withBlock.Parameters["@linkid"].Value = linkid;
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@title"].Value = Interaction.IIf(title.Length == 0, System.Data.SqlTypes.SqlString.Null, title);
-                withBlock.Parameters["@title_en"].Value = Interaction.IIf(title_en.Length == 0, System.Data.SqlTypes.SqlString.Null, title_en);
-                withBlock.Parameters["@desc"].Value = Interaction.IIf(desc.Length == 0, System.Data.SqlTypes.SqlString.Null, desc);
-                withBlock.Parameters["@desc_en"].Value = Interaction.IIf(desc_en.Length == 0, System.Data.SqlTypes.SqlString.Null, desc_en);
-                withBlock.Parameters["@submitDate"].Value = submitDate;
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
+                cm.Parameters["@linkid"].Value = linkid;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@title"].Value = title.Length == 0 ? SqlString.Null : title;
+                cm.Parameters["@title_en"].Value = title_en.Length == 0 ? SqlString.Null : title_en;
+                cm.Parameters["@desc"].Value = desc.Length == 0 ? SqlString.Null : desc;
+                cm.Parameters["@desc_en"].Value = desc_en.Length == 0 ? SqlString.Null : desc_en;
+                cm.Parameters["@submitDate"].Value = submitDate;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
             }
             try
             {
@@ -2282,103 +1969,61 @@ namespace gds
         private bool _isVisible;
         public int DocumentId
         {
-            get
-            {
-                return _documentid;
-            }
+            get { return _documentid; }
         }
         public int CategoryId
         {
-            get
-            {
-                return _categoryid;
-            }
+            get { return _categoryid; }
         }
         public string Url
         {
-            get
-            {
-                return _url;
-            }
+            get { return _url; }
         }
         public string Title
         {
-            get
-            {
-                return _title;
-            }
+            get { return _title; }
         }
         public string TitleEn
         {
-            get
-            {
-                return _title_en;
-            }
+            get { return _title_en; }
         }
         public string TitleAlt
         {
-            get
-            {
-                return _titlealt;
-            }
+            get { return _titlealt; }
         }
         public string TitleAltEn
         {
-            get
-            {
-                return _titlealt_en;
-            }
+            get { return _titlealt_en; }
         }
         public string Desc
         {
-            get
-            {
-                return _desc;
-            }
+            get { return _desc; }
         }
         public string DescEn
         {
-            get
-            {
-                return _desc_en;
-            }
+            get { return _desc_en; }
         }
         public int Size
         {
-            get
-            {
-                return _size;
-            }
+            get { return _size; }
         }
 
         public int W
         {
-            get
-            {
-                return _w;
-            }
+            get { return _w; }
         }
 
         public int H
         {
-            get
-            {
-                return _h;
-            }
+            get { return _h; }
         }
         public DateTime SubmitDate
         {
-            get
-            {
-                return _submitDate;
-            }
+            get { return _submitDate; }
         }
         public bool IsVisible
         {
-            get
-            {
-                return _isVisible;
-            }
+            get { return _isVisible; }
         }
         public DataTable GetDocuments()
         {
@@ -2387,10 +2032,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2414,10 +2058,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataSet ds = new DataSet();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2440,10 +2083,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetVisibleDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetVisibleDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2467,10 +2109,9 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataSet ds = new DataSet();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetVisibleDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetVisibleDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
             }
             try
             {
@@ -2493,12 +2134,11 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetDocumentsByCategoryId";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetDocumentsByCategoryId";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
             try
             {
@@ -2522,12 +2162,11 @@ namespace gds
             DataSet ds = new DataSet();
             DataTable dt = null;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetDocumentsByCategoryId";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetDocumentsByCategoryId";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
             try
             {
@@ -2553,12 +2192,11 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetVisibleDocumentsByCategoryId";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetVisibleDocumentsByCategoryId";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
 
             try
@@ -2582,12 +2220,11 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataSet ds = new DataSet();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetVisibleDocumentsByCategoryId";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetVisibleDocumentsByCategoryId";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
 
             try
@@ -2612,12 +2249,11 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetTop3VisibleDocumentsByCategoryId";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@categoryid", SqlDbType.Int);
-                withBlock.Parameters["@categoryid"].Value = categoryId;
+                cm.CommandText = "GetTop3VisibleDocumentsByCategoryId";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                cm.Parameters["@categoryid"].Value = categoryId;
             }
 
             try
@@ -2641,12 +2277,11 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetDocumentById";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@documentid", SqlDbType.Int);
-                withBlock.Parameters["@documentid"].Value = documentId;
+                cm.CommandText = "GetDocumentById";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@documentid", SqlDbType.Int);
+                cm.Parameters["@documentid"].Value = documentId;
             }
 
             try
@@ -2657,13 +2292,13 @@ namespace gds
                 {
                     _documentid = int.Parse(dr["documentid"].ToString());
                     _categoryid = int.Parse(dr["categoryid"].ToString());
-                    _url = Interaction.IIf(Information.IsDBNull(dr["url"]), "", dr["url"]).ToString();
-                    _title = Interaction.IIf(Information.IsDBNull(dr["title"]), "", dr["title"]).ToString();
-                    _title_en = Interaction.IIf(Information.IsDBNull(dr["title_en"]), "", dr["title_en"]).ToString();
-                    _titlealt = Interaction.IIf(Information.IsDBNull(dr["titlealt"]), "", dr["titlealt"]).ToString();
-                    _titlealt_en = Interaction.IIf(Information.IsDBNull(dr["titlealt_en"]), "", dr["titlealt_en"]).ToString();
-                    _desc = Interaction.IIf(Information.IsDBNull(dr["desc"]), "", dr["desc"]).ToString();
-                    _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), "", dr["desc_en"]).ToString();
+                    _url = Convert.IsDBNull(dr["url"]) ? "" : dr["url"].ToString();
+                    _title = Convert.IsDBNull(dr["title"]) ? "" : dr["title"].ToString();
+                    _title_en = Convert.IsDBNull(dr["title_en"]) ? "" : dr["title_en"].ToString();
+                    _titlealt = Convert.IsDBNull(dr["titlealt"]) ? "" : dr["titlealt"].ToString();
+                    _titlealt_en = Convert.IsDBNull(dr["titlealt_en"]) ? "" : dr["titlealt_en"].ToString();
+                    _desc = Convert.IsDBNull(dr["desc"]) ? "" : dr["desc"].ToString();
+                    _desc_en = Convert.IsDBNull(dr["desc_en"])?"":dr["desc_en"].ToString();
                     _submitDate = DateTime.Parse(dr["submitDate"].ToString());
                     _size = int.Parse(dr["size"].ToString());
                     _w = int.Parse(dr["w"].ToString());
@@ -2691,19 +2326,17 @@ namespace gds
             SqlDataAdapter da = new SqlDataAdapter(cm);
             DataTable dt = new DataTable();
             {
-                var withBlock = cm;
-                withBlock.CommandText = "GetMaxDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "GetMaxDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@maxrecords", SqlDbType.Int);
-                    withBlock1.Add("@categoryid", SqlDbType.Int);
-                    withBlock1.Add("@isvisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@maxrecords", SqlDbType.Int);
+                    cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                    cm.Parameters.Add("@isvisible", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@maxrecords"].Value = maxRecords;
-                withBlock.Parameters["@categoryId"].Value = categoryId;
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
+                cm.Parameters["@maxrecords"].Value = maxRecords;
+                cm.Parameters["@categoryId"].Value = categoryId;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
             }
             try
             {
@@ -2727,43 +2360,41 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "UpdateDocuments";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "UpdateDocuments";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@documentid", SqlDbType.Int);
-                    withBlock1.Add("@categoryid", SqlDbType.Int);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@titlealt", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@titlealt_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitDate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@size", SqlDbType.Int);
-                    withBlock1.Add("@w", SqlDbType.Int);
-                    withBlock1.Add("@h", SqlDbType.Int);
-                    withBlock1.Add("@isVisible", SqlDbType.TinyInt);
-                    withBlock1.Add("@isChecked", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@documentid", SqlDbType.Int);
+                    cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@titlealt", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@titlealt_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitDate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@size", SqlDbType.Int);
+                    cm.Parameters.Add("@w", SqlDbType.Int);
+                    cm.Parameters.Add("@h", SqlDbType.Int);
+                    cm.Parameters.Add("@isVisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@isChecked", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@documentid"].Value = documentid;
-                withBlock.Parameters["@categoryid"].Value = categoryid;
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@title"].Value = Interaction.IIf(title.Length == 0, System.Data.SqlTypes.SqlString.Null, title);
-                withBlock.Parameters["@title_en"].Value = Interaction.IIf(title_en.Length == 0, System.Data.SqlTypes.SqlString.Null, title_en);
-                withBlock.Parameters["@titlealt"].Value = Interaction.IIf(titlealt.Length == 0, System.Data.SqlTypes.SqlString.Null, titlealt);
-                withBlock.Parameters["@titlealt_en"].Value = Interaction.IIf(titlealt_en.Length == 0, System.Data.SqlTypes.SqlString.Null, titlealt_en);
-                withBlock.Parameters["@desc"].Value = Interaction.IIf(desc.Length == 0, System.Data.SqlTypes.SqlString.Null, desc);
-                withBlock.Parameters["@desc_en"].Value = Interaction.IIf(desc_en.Length == 0, System.Data.SqlTypes.SqlString.Null, desc_en);
-                withBlock.Parameters["@submitDate"].Value = submitDate;
-                withBlock.Parameters["@size"].Value = size;
-                withBlock.Parameters["@w"].Value = w;
-                withBlock.Parameters["@h"].Value = h;
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
-                withBlock.Parameters["@isChecked"].Value = Interaction.IIf(isChecked, 1, 0);
+                cm.Parameters["@documentid"].Value = documentid;
+                cm.Parameters["@categoryid"].Value = categoryid;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@title"].Value = title.Length == 0 ? SqlString.Null : title;
+                cm.Parameters["@title_en"].Value = title_en.Length == 0 ? SqlString.Null : title_en;
+                cm.Parameters["@titlealt"].Value = titlealt.Length == 0 ? SqlString.Null : titlealt;
+                cm.Parameters["@titlealt_en"].Value = titlealt_en.Length == 0 ? SqlString.Null : titlealt_en;
+                cm.Parameters["@desc"].Value = desc.Length == 0 ? SqlString.Null : desc;
+                cm.Parameters["@desc_en"].Value = desc_en.Length == 0 ? SqlString.Null : desc_en;
+                cm.Parameters["@submitDate"].Value = submitDate;
+                cm.Parameters["@size"].Value = size;
+                cm.Parameters["@w"].Value = w;
+                cm.Parameters["@h"].Value = h;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
+                cm.Parameters["@isChecked"].Value = isChecked ? 1 : 0;
             }
             try
             {
@@ -2788,44 +2419,42 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "InsertDocument";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
+                cm.CommandText = "InsertDocument";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
                 {
-                    var withBlock1 = withBlock.Parameters;
-                    withBlock1.Add("@documentid", SqlDbType.Int);
-                    withBlock1.Add("@categoryid", SqlDbType.Int);
-                    withBlock1.Add("@url", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@title_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@titlealt", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@titlealt_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@desc_en", SqlDbType.VarChar, 255);
-                    withBlock1.Add("@submitDate", SqlDbType.SmallDateTime);
-                    withBlock1.Add("@size", SqlDbType.Int);
-                    withBlock1.Add("@w", SqlDbType.Int);
-                    withBlock1.Add("@h", SqlDbType.Int);
-                    withBlock1.Add("@isVisible", SqlDbType.TinyInt);
-                    withBlock1.Add("@isChecked", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@documentid", SqlDbType.Int);
+                    cm.Parameters.Add("@categoryid", SqlDbType.Int);
+                    cm.Parameters.Add("@url", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@title_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@titlealt", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@titlealt_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@desc_en", SqlDbType.VarChar, 255);
+                    cm.Parameters.Add("@submitDate", SqlDbType.SmallDateTime);
+                    cm.Parameters.Add("@size", SqlDbType.Int);
+                    cm.Parameters.Add("@w", SqlDbType.Int);
+                    cm.Parameters.Add("@h", SqlDbType.Int);
+                    cm.Parameters.Add("@isVisible", SqlDbType.TinyInt);
+                    cm.Parameters.Add("@isChecked", SqlDbType.TinyInt);
                 }
-                withBlock.Parameters["@documentid"].Direction = ParameterDirection.Output;
+                cm.Parameters["@documentid"].Direction = ParameterDirection.Output;
 
-                withBlock.Parameters["@categoryid"].Value = categoryid;
-                withBlock.Parameters["@url"].Value = Interaction.IIf(url.Length == 0, System.Data.SqlTypes.SqlString.Null, url);
-                withBlock.Parameters["@title"].Value = Interaction.IIf(title.Length == 0, System.Data.SqlTypes.SqlString.Null, title);
-                withBlock.Parameters["@title_en"].Value = Interaction.IIf(title_en.Length == 0, System.Data.SqlTypes.SqlString.Null, title_en);
-                withBlock.Parameters["@titlealt"].Value = Interaction.IIf(titlealt.Length == 0, System.Data.SqlTypes.SqlString.Null, titlealt);
-                withBlock.Parameters["@titlealt_en"].Value = Interaction.IIf(titlealt_en.Length == 0, System.Data.SqlTypes.SqlString.Null, titlealt_en);
-                withBlock.Parameters["@desc"].Value = Interaction.IIf(desc.Length == 0, System.Data.SqlTypes.SqlString.Null, desc);
-                withBlock.Parameters["@desc_en"].Value = Interaction.IIf(desc_en.Length == 0, System.Data.SqlTypes.SqlString.Null, desc_en);
-                withBlock.Parameters["@submitDate"].Value = submitDate;
-                withBlock.Parameters["@size"].Value = size;
-                withBlock.Parameters["@w"].Value = w;
-                withBlock.Parameters["@h"].Value = h;
-                withBlock.Parameters["@isVisible"].Value = Interaction.IIf(isVisible, 1, 0);
-                withBlock.Parameters["@isChecked"].Value = Interaction.IIf(isChecked, 1, 0);
+                cm.Parameters["@categoryid"].Value = categoryid;
+                cm.Parameters["@url"].Value = url.Length == 0 ? SqlString.Null : url;
+                cm.Parameters["@title"].Value = title.Length == 0 ? SqlString.Null : title;
+                cm.Parameters["@title_en"].Value = title_en.Length == 0 ? SqlString.Null : title_en;
+                cm.Parameters["@titlealt"].Value = titlealt.Length == 0 ? SqlString.Null : titlealt;
+                cm.Parameters["@titlealt_en"].Value = titlealt_en.Length == 0 ? SqlString.Null : titlealt_en;
+                cm.Parameters["@desc"].Value = desc.Length == 0 ? SqlString.Null : desc;
+                cm.Parameters["@desc_en"].Value = desc_en.Length == 0 ? SqlString.Null : desc_en;
+                cm.Parameters["@submitDate"].Value = submitDate;
+                cm.Parameters["@size"].Value = size;
+                cm.Parameters["@w"].Value = w;
+                cm.Parameters["@h"].Value = h;
+                cm.Parameters["@isVisible"].Value = isVisible ? 1 : 0;
+                cm.Parameters["@isChecked"].Value = isChecked ? 1 : 0;
             }
             try
             {
@@ -2852,12 +2481,11 @@ namespace gds
             int iRecordsReturned = 0;
             SqlDataReader dr;
             {
-                var withBlock = cm;
-                withBlock.CommandText = "DeleteDocument";
-                withBlock.CommandType = CommandType.StoredProcedure;
-                withBlock.Connection = cn;
-                withBlock.Parameters.Add("@documentid", SqlDbType.Int);
-                withBlock.Parameters["@documentid"].Value = documentid;
+                cm.CommandText = "DeleteDocument";
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Connection = cn;
+                cm.Parameters.Add("@documentid", SqlDbType.Int);
+                cm.Parameters["@documentid"].Value = documentid;
             }
             try
             {

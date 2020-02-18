@@ -66,6 +66,8 @@
     <Content Include="gallery\IH073991.jpg" />
     <Content Include="gallery\RR011829.jpg" />
     <Content Include="gallery\YM016025.jpg" />
+    <Content Include="gds.aspx" />
+    <Content Include="gdsid.aspx" />
     <Content Include="highlight.xml" />
     <Content Include="imgd.aspx" />
     <Content Include="panelAnalysis.ascx" />
@@ -535,6 +537,20 @@
     </Compile>
     <Compile Include="err.aspx.designer.cs">
       <DependentUpon>err.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gds.aspx.cs">
+      <DependentUpon>gds.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gds.aspx.designer.cs">
+      <DependentUpon>gds.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gdsid.aspx.cs">
+      <DependentUpon>gdsid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gdsid.aspx.designer.cs">
+      <DependentUpon>gdsid.aspx</DependentUpon>
     </Compile>
     <Compile Include="imgd.aspx.cs">
       <DependentUpon>imgd.aspx</DependentUpon>
