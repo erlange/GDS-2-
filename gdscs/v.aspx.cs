@@ -24,22 +24,6 @@ namespace gds
                 SetUI();
                 GetRequest();
             }
-            // getDsProv()
-            // If bEn Then
-            // If Request.Params("c") = 1 Then
-            // Me.lblContent.Text = "In this page, you can compare two continuous variables to determine the correlation between them.<br>Please select 2 choices from the questionnaires list below, then click <b>Next &gt;&gt;</b> to see the result."
-            // Else
-            // Me.lblContent.Text = "In this page, you can analyze one selected variable from the Questionnaires List for a province/district. You can compare the result with one or more comparators from the Comparators List, then click <b>Next &gt;&gt;</b> to see the result."
-            // End If
-
-// Else
-            // If Request.Params("c") = 1 Then
-            // Me.lblContent.Text = "Analisis ini memungkinkan Anda untuk membandingkan dua variabel untuk menentukan korelasi antara keduanya.<br>Pilihlah dua variabel dari daftar kuesioner berikut ini, kemudian tekan tombol <b>Lanjut &gt;&gt;</b> untuk menampilkan hasilnya."
-            // Else
-            // Me.lblContent.Text = "Anda dapat melihat hasil survey dari suatu variabel/kuesioner yang Anda pilih dari daftar kuesioner berikut ini untuk suatu propinsi/kabupaten.<br>Pilihlah salah satu kabupaten atau propinsi, lalu pilih salah satu variabel dari daftar kuesioner. Anda dapat juga membandingkan hasilnya dengan memilih satu pembanding atau lebih dari daftar pembanding, kemudian tekan tombol <b>Lanjut &gt;&gt;</b> untuk menampilkan hasilnya."
-
-// End If
-            // End If
             catch (Exception ex)
             {
                 string newLine = System.Environment.NewLine;
@@ -52,39 +36,24 @@ namespace gds
 
         public void SetUI()
         {
-            if (bEn)
-            {
-                this.btnNext.Value = commonModule.NEXTSTRINGEN;
-                this.btnPrev.Value = commonModule.PREVSTRINGEN;
-                this.lblTreeDs.Text = "Select a Survey Dataset: ";
-            }
-            else
-            {
-                this.btnNext.Value = commonModule.NEXTSTRING;
-                this.btnPrev.Value = commonModule.PREVSTRING;
-                this.lblTreeDs.Text = "Pilihan Dataset Survey: ";
-            }
+            btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
+            btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
+            lblTreeDs.Text = bEn ? "Select a Survey Dataset: " : "Pilihan Dataset Survey: ";
 
             if (Request.Params["c"] != null)
             {
                 if (Request.Params["c"].ToString() == "1")
-                {
                     isSingleVar = false;
-                }
                 else
-                {
                     isSingleVar = true;
-                }
             }
             else
-            {
                 isSingleVar = true;
-            }
 
-            this.pTitleV.Visible = true;
-            this.pTextV.Visible = true;
-            this.pTitleV.PanelId = 8;
-            this.pTextV.PanelId = 6;
+            pTitleV.Visible = true;
+            pTextV.Visible = true;
+            pTitleV.PanelId = 8;
+            pTextV.PanelId = 6;
         }
 
         public void GetRequest()
@@ -94,43 +63,29 @@ namespace gds
             bool _isContVarOnly = false;
             int mode;
             if (Request.Params["m"] != null)
-            {
                 mode = Convert.ToInt32(Request.Params["m"]);
-            }
             else
-            {
                 mode = 0;
-            }
 
             if (Request.Params["ds"] != null)
             {
                 if (Request.Params["ds"] != "")
-                {
                     _datasetNumber = Convert.ToInt32(Request.QueryString["ds"]);
-                }
             }
             else
-            {
                 _datasetNumber = 11;
-            }
 
             iDs = _datasetNumber;
             if (Request.Params["r"] != "")
-            {
                 iR = Request.Params["r"];
-            }
 
             if (Request.Params["c"] == "1")
-            {
                 _isContVarOnly = true;
-            }
             else if (Request.Params["c"] == "2")
             {
                 var i = default(int);
                 if (Request.Params["lstds2"] != "")
-                {
                     i = Convert.ToInt32(Request.Params["lstds2"]);
-                }
 
                 Response.Redirect("scrmkr.aspx?ds=" + i.ToString());
             }
@@ -138,13 +93,9 @@ namespace gds
             {
                 
                 if (Request.Params["r"] == "All" & (Request.Params["d"] == "" | Request.Params["d"] == null))
-                {
                     TreeLocations1.SelectedID = "All~Natl";
-                }
                 else
-                {
                     TreeLocations1.SelectedID = Request.Params["r"] + "~All";
-                }
 
                 TreeLocations1.DatasetNumber = _datasetNumber;
                 TreeLocations1.IsEnglish = _isEnglish;
@@ -158,7 +109,6 @@ namespace gds
             }
 
             {
-
                 TreeVars1.DatasetNumber = _datasetNumber;
                 TreeVars1.GdsTable = new gdsTable(_datasetNumber);
                 TreeVars1.IsEnglish = _isEnglish;
@@ -188,9 +138,9 @@ namespace gds
 
             if (Convert.ToInt32(Request.Params["c"]) == 1)
             {
-                this.TreeLocations1.Visible = false;
-                this.TreeComparators1.Visible = false;
-                this.TreeVars1.IsSecondLevelVisible = true;
+                TreeLocations1.Visible = false;
+                TreeComparators1.Visible = false;
+                TreeVars1.IsSecondLevelVisible = true;
             }
         }
 

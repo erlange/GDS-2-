@@ -595,47 +595,79 @@ namespace gds
             SqlConnection cn = new SqlConnection(commonModule.GetConnString());
             SqlCommand cm = new SqlCommand(" SELECT * FROM " + varTbl + " WHERE var_id = " + var_id, cn);
 
-            try
+            cn.Open();
+            SqlDataReader dr = cm.ExecuteReader();
+            if (dr.Read())
             {
-                cn.Open();
-                SqlDataReader dr = cm.ExecuteReader();
-                if (dr.Read())
-                {
-                    _var_id = int.Parse(dr["var_id"].ToString());
-                    _var_parent = int.Parse(dr["var_parent"].ToString());
-                    _var = dr["var"].ToString();
-                    _desc = dr["desc"].ToString();
-                    _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _desc, dr["desc_en"]).ToString();
-                    _q = Interaction.IIf(Information.IsDBNull(dr["q"]), _desc, dr["q"]).ToString();
-                    _q_en = Interaction.IIf(Information.IsDBNull(dr["q_en"]), _desc_en, dr["q_en"]).ToString();
-                    _tbl = dr["tbl"].ToString();
-                    _tbl_id = dr["tbl_id"].ToString();
-                    _lvl = int.Parse(dr["lvl"].ToString());
-                    _isVisible = System.Convert.ToBoolean(dr["isVisible"]);
-                    _isContVar = System.Convert.ToBoolean(dr["isContVar"]);
-                    _isAdvance = System.Convert.ToBoolean(dr["isAdvance"]);
-                    _criteria = Interaction.IIf(Information.IsDBNull(dr["criteria"]), "", dr["criteria"]).ToString();
-                }
-                cm.CommandText = "SELECT * FROM " + varTbl + " WHERE var_id =" + Interaction.IIf(Information.IsDBNull(dr["var_parent"]), "", _var_parent);
-                dr.Close();
-                dr = cm.ExecuteReader();
+                _var_id = int.Parse(dr["var_id"].ToString());
+                _var_parent = int.Parse(dr["var_parent"].ToString());
+                _var = dr["var"].ToString();
+                _desc = dr["desc"].ToString();
+                _desc_en = Convert.IsDBNull(dr["desc_en"]) ? _desc : dr["desc_en"].ToString();
+                _q = Convert.IsDBNull(dr["q"]) ? _desc : dr["q"].ToString();
+                _q_en = Convert.IsDBNull(dr["q_en"]) ? _desc_en : dr["q_en"].ToString();
+                _tbl = dr["tbl"].ToString();
+                _tbl_id = dr["tbl_id"].ToString();
+                _lvl = int.Parse(dr["lvl"].ToString());
+                _isVisible = System.Convert.ToBoolean(dr["isVisible"]);
+                _isContVar = System.Convert.ToBoolean(dr["isContVar"]);
+                _isAdvance = System.Convert.ToBoolean(dr["isAdvance"]);
+                _criteria = Convert.IsDBNull(dr["criteria"]) ? "" : dr["criteria"].ToString();
+            }
+            cm.CommandText = "SELECT * FROM " + varTbl + " WHERE var_id =" + (Convert.IsDBNull(dr["var_parent"]) ? "" : _var_parent.ToString());
+            dr.Close();
+            dr = cm.ExecuteReader();
 
-                if (dr.Read())
-                {
-                    _var_parent_desc = dr["desc"].ToString();
-                    _var_parent_desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _var_parent_desc, dr["desc_en"]).ToString();
-                }
-                dr.Close();
-                cn.Close();
-            }
-            catch (SqlException ex)
+            if (dr.Read())
             {
-                commonModule.RedirectError(ex);
+                _var_parent_desc = dr["desc"].ToString();
+                _var_parent_desc_en = Convert.IsDBNull(dr["desc_en"]) ? _var_parent_desc : dr["desc_en"].ToString();
             }
-            catch (Exception ex)
-            {
-                commonModule.RedirectError(ex);
-            }
+            dr.Close();
+            cn.Close();
+
+
+            //try
+            //{
+            //    cn.Open();
+            //    SqlDataReader dr = cm.ExecuteReader();
+            //    if (dr.Read())
+            //    {
+            //        _var_id = int.Parse(dr["var_id"].ToString());
+            //        _var_parent = int.Parse(dr["var_parent"].ToString());
+            //        _var = dr["var"].ToString();
+            //        _desc = dr["desc"].ToString();
+            //        _desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _desc, dr["desc_en"]).ToString();
+            //        _q = Interaction.IIf(Information.IsDBNull(dr["q"]), _desc, dr["q"]).ToString();
+            //        _q_en = Interaction.IIf(Information.IsDBNull(dr["q_en"]), _desc_en, dr["q_en"]).ToString();
+            //        _tbl = dr["tbl"].ToString();
+            //        _tbl_id = dr["tbl_id"].ToString();
+            //        _lvl = int.Parse(dr["lvl"].ToString());
+            //        _isVisible = System.Convert.ToBoolean(dr["isVisible"]);
+            //        _isContVar = System.Convert.ToBoolean(dr["isContVar"]);
+            //        _isAdvance = System.Convert.ToBoolean(dr["isAdvance"]);
+            //        _criteria = Interaction.IIf(Information.IsDBNull(dr["criteria"]), "", dr["criteria"]).ToString();
+            //    }
+            //    cm.CommandText = "SELECT * FROM " + varTbl + " WHERE var_id =" + Interaction.IIf(Information.IsDBNull(dr["var_parent"]), "", _var_parent);
+            //    dr.Close();
+            //    dr = cm.ExecuteReader();
+
+            //    if (dr.Read())
+            //    {
+            //        _var_parent_desc = dr["desc"].ToString();
+            //        _var_parent_desc_en = Interaction.IIf(Information.IsDBNull(dr["desc_en"]), _var_parent_desc, dr["desc_en"]).ToString();
+            //    }
+            //    dr.Close();
+            //    cn.Close();
+            //}
+            //catch (SqlException ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //}
+            //catch (Exception ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //}
         }
 
         public int Var_Id

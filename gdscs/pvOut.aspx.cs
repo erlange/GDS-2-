@@ -89,38 +89,26 @@ namespace gds
                     var_parent_desc = bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc;
                     contflg = Convert.ToInt32(oGv.IsContVar);
                     ViewState["desc"] = desc;
-                    // getDsProv()
 
-                    // Response.Write(oGv.Var & "," & oGv.Desc)
-                    // Response.Write("<BR>")
-                    // Response.Write("Kabupaten = " & oGg.KabuName)
-                    // Response.Write("<BR>")
-                    // Response.Write("Propinsi = " & oGg.ProvName)
-                    // Response.Write("<BR>")
-                    // Response.Write("Question = " & oGv.Q)
-                    // Response.Write("<BR>")
-
-                    // Response.Write("Q_En = " & oGv.Q_En)
-                    // Response.Write("<BR>")
                     if (Trace.IsEnabled)
                     {
                         {
-                            var withBlock = Trace;
-                            withBlock.Warn("oGv.Var", oGv.Var);
-                            withBlock.Warn("oGv.Var_Id", oGv.Var_Id.ToString());
-                            withBlock.Warn("oGv.Desc", oGv.Desc);
-                            withBlock.Warn("oGv.Desc_En", oGv.Desc_En);
-                            withBlock.Warn("oGv.Q", oGv.Q);
-                            withBlock.Warn("oGv.Q_En", oGv.Q_En);
-                            withBlock.Warn("oGv.Tbl", oGv.Tbl);
-                            withBlock.Warn("oGv.Tbl_Id", oGv.Tbl_Id);
-                            withBlock.Warn("oGv.IsContVar", oGv.IsContVar.ToString());
-                            withBlock.Warn("lang?", (bEn? "English": "Bahasa"));
+                            //var withBlock = Trace;
+                            Trace.Warn("oGv.Var", oGv.Var);
+                            Trace.Warn("oGv.Var_Id", oGv.Var_Id.ToString());
+                            Trace.Warn("oGv.Desc", oGv.Desc);
+                            Trace.Warn("oGv.Desc_En", oGv.Desc_En);
+                            Trace.Warn("oGv.Q", oGv.Q);
+                            Trace.Warn("oGv.Q_En", oGv.Q_En);
+                            Trace.Warn("oGv.Tbl", oGv.Tbl);
+                            Trace.Warn("oGv.Tbl_Id", oGv.Tbl_Id);
+                            Trace.Warn("oGv.IsContVar", oGv.IsContVar.ToString());
+                            Trace.Warn("lang?", (bEn ? "English" : "Bahasa"));
                         }
                     }
 
-                    this.WebChartViewer1.Visible = isChartVisible;
-                    this.WebChartViewer2.Visible = isChartVisible;
+                    WebChartViewer1.Visible = isChartVisible;
+                    WebChartViewer2.Visible = isChartVisible;
 
                     // If bEn Then
                     // Title1.InnerHtml = "GDS-2 Result - " & oGt.Desc_En & ". " & oGv.Desc_En
@@ -934,44 +922,33 @@ namespace gds
             string sColName;
             var dtPercent = new DataTable();
             dtPercent = dtTable.Clone();
-            for (int i = 1, loopTo = dtPercent.Columns.Count - 1; i <= loopTo; i++)
+            for (int i = 1; i < dtPercent.Columns.Count; i++)
                 dtPercent.Columns[i].DataType = typeof(float);
-            for (int iRow = 0, loopTo1 = dtTable.Rows.Count - 1; iRow <= loopTo1; iRow++)
+            for (int iRow = 0; iRow < dtTable.Rows.Count; iRow++)
             {
                 DataRow dr = dtPercent.NewRow();
-                for (int iCol = 0, loopTo2 = dtTable.Columns.Count - 1; iCol <= loopTo2; iCol++)
+                for (int iCol = 0; iCol < dtTable.Columns.Count; iCol++)
                 {
                     if (iCol > 0)
                     {
                         int iTotal = Convert.ToInt32(dtTable.Compute("SUM ([" + dtTable.Columns[iCol].ColumnName + "])", ""));
                         if (iTotal > 0)
-                        {
-                            dr[iCol] = Convert.ToInt32(dtTable.Rows[iRow][iCol]) / iTotal;
-                        }
+                            dr[iCol] = Convert.ToDouble(Convert.ToInt32(dtTable.Rows[iRow][iCol]) / iTotal);
                         else
-                        {
                             dr[iCol] = 0;
-                        }
                     }
                     else
-                    {
                         dr[iCol] = dtTable.Rows[iRow][iCol];
-                    }
                 }
-
                 dtPercent.Rows.Add(dr);
             }
 
-            for (int i = 1, loopTo3 = dtTable.Columns.Count - 1; i <= loopTo3; i++)
+            for (int i = 1; i < dtTable.Columns.Count; i++)
             {
                 if (dtTable.Columns[i].ColumnName.IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
-                {
                     sColName = dtTable.Columns[i].ColumnName.Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
-                }
                 else
-                {
                     sColName = dtTable.Columns[i].ColumnName;
-                }
 
                 sColName = sColName.Replace("Count", "").Replace(" ", "\n");
                 Labels[i - 1] = sColName;
@@ -1023,22 +1000,16 @@ namespace gds
             // layer.setLegend(Chart.ReverseLegend)
             txtLabel = c.xAxis().setLabels(Labels);
             if (bEn)
-            {
                 c.yAxis().setTitle("Percentage", "Arialbd.ttf", 10);
-            }
             else
-            {
                 c.yAxis().setTitle("Persentase", "Arialbd.ttf", 10);
-            }
 
             c.yAxis().setLabelFormat("{={value}*100} %");
             // txtLabel.setFontAngle(45)
             WebChartViewer1.Image = c.makeWebImage(Chart.PNG);
             // sHover = " TITLE='{xLabel} : " & vbCrLf & " - {dataSetName} " & vbCrLf & vbTab & "Count = {value}" & vbCrLf & vbTab & "Percent= {percent} %' "
             if (bEn)
-            {
                 sHover = " onmouseover='ci(\"tip\",\"{dataSetName}<BR>&nbsp;&nbsp;&nbsp;Percentage = {percent|1}%\");' onmousemove='cm(\"tip\");' onmouseout='ch(\"tip\");'  ";   // {percent|1} means 1 decimal digit
-            }
             else
             {
                 sHover = " onmouseover='ci(\"tip\",\"{dataSetName}<BR>&nbsp;&nbsp;&nbsp;Persentase = {percent|1}%\");' onmousemove='cm(\"tip\");' onmouseout='ch(\"tip\");'  ";
@@ -1063,13 +1034,15 @@ namespace gds
             string sT;
             DataTable dtPlot;
             PlotArea plotArea;
-            var gradColor = new[] { 0, 0xCCCCFF, 128, 0xFFFFFF, 256, 0xCCCCFF };
+            int[] gradColor = new[] { 0, 0xCCCCFF, 128, 0xFFFFFF, 256, 0xCCCCFF };
             // Dim gradColor() As Integer = {0, &HFFCCFF, 128, &HFFFFFF, 256, &HFFCCFF}
             string sColName;
-            var dtPercent = new DataTable();
+            DataTable dtPercent = new DataTable();
             dtPercent = dtTable.Clone();
+
             for (int i = 1, loopTo = dtPercent.Columns.Count - 1; i <= loopTo; i++)
                 dtPercent.Columns[i].DataType = typeof(float);
+
             for (int iRow = 0, loopTo1 = dtTable.Rows.Count - 1; iRow <= loopTo1; iRow++)
             {
                 DataRow dr = dtPercent.NewRow();
@@ -1079,18 +1052,12 @@ namespace gds
                     {
                         int iTotal = Convert.ToInt32(dtTable.Compute("SUM ([" + dtTable.Columns[iCol].ColumnName + "])", ""));
                         if (iTotal > 0)
-                        {
-                            dr[iCol] = Convert.ToInt32(dtTable.Rows[iRow][iCol]) / iTotal;
-                        }
+                            dr[iCol] = Convert.ToSingle(dtTable.Rows[iRow][iCol]) / Convert.ToSingle(iTotal);
                         else
-                        {
                             dr[iCol] = 0;
-                        }
                     }
                     else
-                    {
                         dr[iCol] = dtTable.Rows[iRow][iCol];
-                    }
                 }
 
                 dtPercent.Rows.Add(dr);
@@ -1099,13 +1066,9 @@ namespace gds
             for (int i = 1, loopTo3 = dtTable.Columns.Count - 1; i <= loopTo3; i++)
             {
                 if (dtComp.Columns[i].ColumnName.IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
-                {
                     sColName = dtComp.Columns[i].ColumnName.Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
-                }
                 else
-                {
                     sColName = dtComp.Columns[i].ColumnName;
-                }
 
                 sColName = sColName.Replace("Count", "").Replace(" ", "\n");
                 Labels[i - 1] = sColName;
@@ -1170,9 +1133,7 @@ namespace gds
             WebChartViewer1.Image = c.makeWebImage(Chart.PNG);
             // sHover = " TITLE='{xLabel} : " & vbCrLf & " - {dataSetName} " & vbCrLf & vbTab & "Count = {value}" & vbCrLf & vbTab & "Percent= {percent} %' "
             if (bEn)
-            {
                 sHover = " onmouseover='ci(\"tip\",\"{dataSetName}<BR>&nbsp;&nbsp;&nbsp;Percentage = {percent|1}%\");' onmousemove='cm(\"tip\");' onmouseout='ch(\"tip\");'  ";   // {percent|1} means 1 decimal digit
-            }
             else
             {
                 sHover = " onmouseover='ci(\"tip\",\"{dataSetName}<BR>&nbsp;&nbsp;&nbsp;Persentase = {percent|1}%\");' onmousemove='cm(\"tip\");' onmouseout='ch(\"tip\");'  ";
@@ -2296,38 +2257,26 @@ namespace gds
               // var_id = astr(5)
               // sDist = astr(0)
               // sRegn = astr(1)
-              if (Request.Params["d"] != "")
-              {
+              if (!string.IsNullOrEmpty(Request.Params["d"]))
                   sDist = Request.Params["d"];
-              }
               else
-              {
                   sDist = "Natl";
-              }
 
-              if (Request.Params["r"] != "")
-              {
+              if (!string.IsNullOrEmpty(Request.Params["r"]))
                   sRegn = Request.Params["r"];
-              }
               else
-              {
                   sRegn = "All";
-              }
 
               if (!bEn)
-              {
                   System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-              }
 
-              if (Request.Params["v"] != "")
+              if (!string.IsNullOrEmpty(Request.Params["v"]))
               {
                   var_id = Request.Params["v"];
                   return true;
               }
               else
-              {
                   return false;
-              }
 
               // 0 = sDist
               // 1 = sRegn
@@ -2344,7 +2293,8 @@ namespace gds
               bool _isEnglish = bEn;
               int _datasetNumber;
               bool _isContVarOnly = false;
-              TreeLocations1.SelectedID = Request.Params["r"].ToString() + "~" + Request.Params["d"].ToString();
+              //TreeLocations1.SelectedID = Request.Params["r"].ToString() + "~" + Request.Params["d"].ToString();
+              TreeLocations1.SelectedID = sRegn + "~" + sDist;
               TreeVars1.SelectedID = Request.Params["v"];
               if (Request.Params["ds"] != "")
               {
@@ -2422,15 +2372,18 @@ namespace gds
                   btnPrev.Value = commonModule.PREVSTRING;
               }
 
-              if (char.IsNumber(Request.Params["c"], 0))
+              if (!string.IsNullOrEmpty(Request.Params["c"]))
               {
-                  if (Convert.ToInt32(Request.Params["c"]) == 1)
-                      isSingleVar = false;
+                  if (char.IsNumber(Request.Params["c"], 0))
+                  {
+                      if (Convert.ToInt32(Request.Params["c"]) == 1)
+                          isSingleVar = false;
+                      else
+                          isSingleVar = true;
+                  }
                   else
                       isSingleVar = true;
               }
-              else
-                  isSingleVar = true;
           }
 
           public void ShowResultAv()

@@ -14,20 +14,13 @@ namespace gds
             if (Request.UrlReferrer.ToString() != "")
             {
                 if (Request.Params["en"] == "1")
-                {
                      Session["en"] = 1;
-                }
                 else
-                {
                     Session["en"] = 0;
-                }
                 Response.Redirect(Request.UrlReferrer.ToString(), true);
             }
             else
-            {
                 Response.Redirect("default.aspx", true);
-                // 
-            }
         }
     }
 }

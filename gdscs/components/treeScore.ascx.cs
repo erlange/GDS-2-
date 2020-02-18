@@ -41,13 +41,9 @@ namespace gds
         public void GetRequest()
         {
             if (Request.Params["ds"] != null)
-            {
                 iDs = Convert.ToInt32(Request.Params["ds"]);
-            }
             else
-            {
                 iDs = 11;
-            }
 
             sProv = Request.Params["r"] != "" ? Request.Params["r"] : "11";
             sKabu = Request.Params["d"] != "" ? Request.Params["d"] : "11";
@@ -72,18 +68,12 @@ namespace gds
                 if (bEn)
                 {
                     if (tbl.Rows[i].IsNull("desc_en"))
-                    {
                         desc = tbl.Rows[i]["desc"].ToString();
-                    }
                     else
-                    {
                         desc = tbl.Rows[i]["desc_en"].ToString();
-                    }
                 }
                 else
-                {
                     desc = tbl.Rows[i]["desc"].ToString();
-                }
 
                 switch (tbl.Rows[i]["lvl"].ToString())
                 {
@@ -103,33 +93,17 @@ namespace gds
                         {
                             if (!(Request.Params[Name] == null))
                             {
-                                // If Request.Params(Name).Split("~")(0) = tbl.Rows(i)("var_id") Then
-                                // .AppendFormat("<OPTION SELECTED VALUE=""{0}~{1}~{0}~{3}"" CLASS=""i4"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", New String() {tbl.Rows(i)("var_id"), 0, desc, tbl.Rows(i)("isReversed")})
-                                // Else
-                                // .AppendFormat("<OPTION VALUE=""{0}~{1}~{0}~{3}"" CLASS=""i4"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", New String() {tbl.Rows(i)("var_id"), 0, desc, tbl.Rows(i)("isReversed")})
-                                // End If
-                                // Else
-                                // .AppendFormat("<OPTION VALUE=""{0}~{1}~{0}~{3}"" CLASS=""i4"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", New String() {tbl.Rows(i)("var_id"), 0, desc, tbl.Rows(i)("isReversed")})
-
-
                                 if (Request.Params[Name].Split('~')[0] == tbl.Rows[i]["var_id"].ToString())
-                                {
                                     sb.AppendFormat("<OPTION SELECTED VALUE=\"{0}~{1}~{0}~{3}\" CLASS=\"i4\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", new object[] { tbl.Rows[i]["var_id"], 0, desc, 0 });
-                                }
                                 else
-                                {
                                     sb.AppendFormat("<OPTION VALUE=\"{0}~{1}~{0}~{3}\" CLASS=\"i4\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", new object[] { tbl.Rows[i]["var_id"], 0, desc, 0 });
-                                }
                             }
                             else
-                            {
                                 sb.AppendFormat("<OPTION VALUE=\"{0}~{1}~{0}~{3}\" CLASS=\"i4\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}", new object[] { tbl.Rows[i]["var_id"], 0, desc, 0 });
-                            }
 
                             break;
                         }
                 }
-
                 sb.AppendLine();
             }
 
@@ -152,28 +126,23 @@ namespace gds
             // .Append("<FORM NAME=""frmVar"" METHOD=""GET""> ")
             sb.Append("<TR><TD CLASS=\"pnlVar\">");
             if (bEn)
-            {
                 sb.AppendFormat("<B>{0} Variable Selection</B>", oGt.Desc_En);
-            }
             else
-            {
                 sb.AppendFormat("<B>Pilihan Variabel {0}</B>", oGt.Desc);
-            }
 
             sb.Append("</TD><TD CLASS=\"pnlVar\">");
             sb.Append("&nbsp;");
             sb.Append("</TD><TD>");
-            if (bEn)
-                sb.Append("<B>Weighting Value</B>");
-            else
-                sb.Append("<B>Nilai Bobot</B>");
 
+            sb.Append(bEn ? "<B>Weighting Value</B>" : "<B>Nilai Bobot</B>");
+            
             sb.Append("</TD></TR>");
             sb.Append("<TR><TD CLASS=\"pnlVar\">");
             sb.Append(this.WriteOpt("v0", dt));
             sb.Append("</TD><TD CLASS=\"pnlVar\">");
             sb.Append("<DIV CLASS=\"err\" ID=\"errv0\"></DIV>");
             sb.Append("</TD><TD>");
+
             if (Request.Params["vt0"] != null)
                 sb.AppendFormat("<INPUT TYPE=\"text\" NAME=\"vt0\"  VALUE=\"{0}\" TABINDEX=\"10\" onchange=\"vt('vt0');\" SIZE=\"2\" MAXLENGTH=\"4\">", Request.Params["vt0"].ToString());
             else
@@ -254,14 +223,11 @@ namespace gds
             sb.Append("<INPUT TYPE=\"hidden\" NAME=\"d\" VALUE=\"" + sKabu + "\"></INPUT> ");
             sb.Append("<INPUT TYPE=\"hidden\" NAME=\"r\" VALUE=\"" + sProv + "\"></INPUT> ");
             sb.Append("<INPUT TYPE=\"hidden\" NAME=\"ds\" VALUE=\"" + iDs + "\"></INPUT> ");
+
             if (bEn)
-            {
                 sb.Append("<TR BGCOLOR=\"#DDDDDD\"><TD COLSPAN=\"4\" ALIGN=\"CENTER\"><INPUT CLASS=\"hnd\" TYPE=\"checkbox\" NAME=\"ch\" ID=\"ch\" VALUE=\"1\" CHECKED><LABEL FOR=\"ch\">Plot with chart?</LABEL></INPUT></TD></TR>");
-            }
             else
-            {
                 sb.Append("<TR BGCOLOR=\"#DDDDDD\"><TD COLSPAN=\"4\" ALIGN=\"CENTER\"><INPUT CLASS=\"hnd\" TYPE=\"checkbox\" NAME=\"ch\" ID=\"ch\" VALUE=\"1\" CHECKED><LABEL FOR=\"ch\">Tampilkan chart?</LABEL></INPUT></TD></TR>");
-            }
 
             sb.Append("<TR BGCOLOR=\"#EEEEEE\"><TD COLSPAN=\"4\" ALIGN=\"CENTER\">");
             if (bEn)
@@ -280,19 +246,6 @@ namespace gds
 
             sb.Append("</TD></TR>");
             this.Literal2.Text += sb.ToString();
-            // Catch ex As Exception
-            // bErr = True
-            // sErr = ex.Message
-            // Finally
-            // If bErr Then
-            // Dim sMsg As String
-            // sMsg = "<H3>Error(s) Occured</H3><HR>"
-            // sMsg &= sErr
-            // sMsg &= "<BR><BR>Please <A HREF=""scrMkr.aspx"">click here</A> to go to the <A HREF=""scrMkr.aspx"">variable selection page</A> and correct these errors."
-            // Me.Literal1.Text = sMsg
-            // End If
-
-            // End Try
         }
 
 

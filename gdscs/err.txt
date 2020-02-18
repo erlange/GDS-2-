@@ -175,3 +175,15 @@ http://localhost/gdscs/pvOut.aspx?TreeDs1:ds=11&l=13~All&cp1=1&r=13&d=All&ds=11&
    at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
    at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619
+Exception: 18/02/2020 19:14:48
+Invalid attempt to read when no data is present.
+http://localhost/gdscs/pvOut.aspx?ds=24
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619
+Exception: 18/02/2020 19:18:30
+Invalid attempt to read when no data is present.
+http://localhost/gdscs/pvOut.aspx?ds=11
+   at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619

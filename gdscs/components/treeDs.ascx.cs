@@ -39,13 +39,9 @@ namespace gds
         {
             bEn = commonModule.IsEnglish();
             if (Request.Params["ds"] != null)
-            {
                 iDs = int.Parse(Request.Params["ds"]);
-            }
             else
-            {
                 iDs = 11;
-            }
         }
 
         public void GetDs()
@@ -56,12 +52,12 @@ namespace gds
             if (bEn)
             {
                 sql = "SELECT gds_id,desc_en FROM gds2 WHERE isVisible=1;SELECT prov,provnm FROM t01prov";
-                this.ds.Items.Add(new ListItem("- Select a Survey Dataset -", "11"));
+                ds.Items.Add(new ListItem("- Select a Survey Dataset -", "11"));
             }
             else
             {
                 sql = "SELECT  gds_id,[desc] FROM gds2 WHERE isVisible=1;SELECT prov,provnm FROM t01prov";
-                this.ds.Items.Add(new ListItem("- Pilih Dataset -", "11"));
+                ds.Items.Add(new ListItem("- Pilih Dataset -", "11"));
             }
 
             var cm = new SqlCommand(sql, cn);
@@ -75,7 +71,7 @@ namespace gds
                     li.Selected = true;
                 }
 
-                this.ds.Items.Add(li);
+                ds.Items.Add(li);
             }
 
             dr.Close();

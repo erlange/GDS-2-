@@ -35,240 +35,119 @@ namespace gds
 
         public string SelectedID
         {
-            get
-            {
-                return _SelectedID;
-            }
-
-            set
-            {
-                _SelectedID = value;
-            }
+            get{return _SelectedID;}
+            set{_SelectedID = value;}
         }
 
         public bool IsContVarOnly
         {
-            get
-            {
-                return _IsContVarOnly;
-            }
-
-            set
-            {
-                _IsContVarOnly = value;
-            }
+            get{return _IsContVarOnly;}
+            set{_IsContVarOnly = value;}
         }
 
         public bool IsEnglish
         {
-            get
-            {
-                return _IsEnglish;
-            }
-
-            set
-            {
-                _IsEnglish = value;
-            }
+            get{return _IsEnglish;}
+            set{_IsEnglish = value;}
         }
 
         public int DatasetNumber
         {
-            get
-            {
-                return _DataSetNumber;
-            }
-
-            set
-            {
-                _DataSetNumber = value;
-            }
+            get{return _DataSetNumber;}
+            set{_DataSetNumber = value;}
         }
 
         public bool IsSecondLevelVisible
         {
-            get
-            {
-                return _IsSecondLevelVisible;
-            }
-
-            set
-            {
-                _IsSecondLevelVisible = value;
-            }
+            get{return _IsSecondLevelVisible;}
+            set{_IsSecondLevelVisible = value;}
         }
 
         public string DivContainerClass
         {
-            get
-            {
-                return _DivContainerClass;
-            }
-
-            set
-            {
-                _DivContainerClass = value;
-            }
+            get{return _DivContainerClass;}
+            set{_DivContainerClass = value;}
         }
 
         public string DivContainerStyle
         {
-            get
-            {
-                return _DivContainerStyle;
-            }
-
-            set
-            {
-                _DivContainerStyle = value;
-            }
+            get { return _DivContainerStyle; }
+            set { _DivContainerStyle = value; }
         }
 
         public string DivContentStyle
         {
-            get
-            {
-                return _DivContentStyle;
-            }
-
-            set
-            {
-                _DivContentStyle = value;
-            }
+            get { return _DivContentStyle; }
+            set { _DivContentStyle = value; }
         }
 
         public string DivTitleStyle
         {
-            get
-            {
-                return _DivTitleStyle;
-            }
-
-            set
-            {
-                _DivTitleStyle = value;
-            }
+            get { return _DivTitleStyle; }
+            set { _DivTitleStyle = value; }
         }
 
         public string DivContentClass
         {
-            get
-            {
-                return _DivContentClass;
-            }
-
-            set
-            {
-                _DivContentClass = value;
-            }
+            get { return _DivContentClass; }
+            set { _DivContentClass = value; }
         }
 
         public string DivTitleString
         {
-            get
-            {
-                return _DivTitleString;
-            }
-
-            set
-            {
-                _DivTitleString = value;
-            }
+            get { return _DivTitleString; }
+            set { _DivTitleString = value; }
         }
 
         public string DivTitleStringEn
         {
-            get
-            {
-                return _DivTitleStringEn;
-            }
-
-            set
-            {
-                _DivTitleStringEn = value;
-            }
+            get { return _DivTitleStringEn; }
+            set { _DivTitleStringEn = value; }
         }
 
         public string DivTitleClass
         {
-            get
-            {
-                return _DivTitleClass;
-            }
-
-            set
-            {
-                _DivTitleClass = value;
-            }
+            get { return _DivTitleClass; }
+            set { _DivTitleClass = value; }
         }
 
         public string DivContainerAdditionalAttr
         {
-            get
-            {
-                return _DivContainerAdditionalAttr;
-            }
-
-            set
-            {
-                _DivContainerAdditionalAttr = value;
-            }
+            get { return _DivContainerAdditionalAttr; }
+            set { _DivContainerAdditionalAttr = value; }
         }
 
         public string DivContentAdditionalAttr
         {
-            get
-            {
-                return _DivContentAdditionalAttr;
-            }
-
-            set
-            {
-                _DivContentAdditionalAttr = value;
-            }
+            get { return _DivContentAdditionalAttr; }
+            set { _DivContentAdditionalAttr = value; }
         }
 
         public string DivTitleAdditionalAttr
         {
-            get
-            {
-                return _DivTitleAdditionalAttr;
-            }
-
-            set
-            {
-                _DivTitleAdditionalAttr = value;
-            }
+            get { return _DivTitleAdditionalAttr; }
+            set { _DivTitleAdditionalAttr = value; }
         }
 
         public gdsTable GdsTable
         {
-            get
-            {
-                return _GdsTable;
-            }
-
-            set
-            {
-                _GdsTable = value;
-            }
+            get { return _GdsTable; }
+            set { _GdsTable = value; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                string s = BuildVarTreeRoots(_IsEnglish);
-                this.Literal1.Text = s;
-            }
-            catch (SqlException ex)
-            {
-                commonModule.RedirectError(ex);
-            }
-            catch (Exception ex)
-            {
-                commonModule.RedirectError(ex);
-            }
+            string s = BuildVarTreeRoots(_IsEnglish);
+            Literal1.Text = s;
+            //try
+            //{
+            //    string s = BuildVarTreeRoots(_IsEnglish);
+            //    Literal1.Text = s;
+            //}
+            //catch (Exception ex)
+            //{
+            //    commonModule.RedirectError(ex);
+            //}
         }
 
         private string BuildVarTreeRoots(bool isEnglish)
@@ -282,7 +161,6 @@ namespace gds
             DataTable dt = commonModule.GetData(commonModule.GetConnString(), sql);
 
             {
-
                 // DivContainer
                 sb.AppendFormat("<DIV STYLE=\"{0}\" {1} {2}>"
                     , (_DivContainerStyle != ""? _DivContainerStyle: "cursor:hand")
@@ -407,23 +285,6 @@ namespace gds
                         fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding:0px 0px 0px 30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new string[] { var_id.ToString(), desc });
                     else
                     {
-                        ;/* Cannot convert LocalDeclarationStatementSyntax, System.NotSupportedException: StaticKeyword not supported!
-   at ICSharpCode.CodeConverter.CSharp.SyntaxKindExtensions.ConvertToken(SyntaxKind t, TokenContext context)
-   at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifier(SyntaxToken m, TokenContext context)
-   at ICSharpCode.CodeConverter.CSharp.CommonConversions.<ConvertModifiersCore>d__15.MoveNext()
-   at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
-   at Microsoft.CodeAnalysis.SyntaxTokenList.CreateNode(IEnumerable`1 tokens)
-   at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiers(IEnumerable`1 modifiers, TokenContext context, Boolean isVariableOrConst)
-   at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.MethodBodyVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-   at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-   at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-   at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.ConvertWithTrivia(SyntaxNode node)
-   at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-
-Input: 
-                            Static ii As Integer = 0
-
- */
                         if (ii == 0 | _SelectedID == var_id.ToString())
                         {
                             fsOut.AppendFormat("<DIV CLASS=\"i4\" STYLE=\"padding:0px 0px 0px 30px;\" >");

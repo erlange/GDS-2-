@@ -63,7 +63,6 @@ namespace gds
         {
             pTextTw.PanelId = 7;
             Main();
-
         }
 
         private void BuildChart(DataTable tbl)
@@ -139,45 +138,23 @@ namespace gds
             // & " onmouseover=""ci('District = {field0}<BR>&nbsp;&nbsp;" & Replace(Replace(gdsvardesc(0), "'", "\'"), """", "\""") & " : {x}<BR>&nbsp;&nbsp;" & Replace(Replace(gdsvardesc(1), "'", "\'"), """", "\""") & " : {value} ');"" onmousemove=""cm();"" onmouseout=""ch();""  "
 
             string sTipLabel;
-            if (Request.Params["pr"] != "")
-            {
+            if (Request.Params["pr"] != null)
                 sTipLabel = bEn? "Kecamatan": "Kecamatan";
-            }
             else
-            {
                 sTipLabel = bEn ? "Province" : "Propinsi";
-            }
 
             if (bEn)
-            {
                 s0 = " onmouseover=\"ci('tip','" + sTipLabel + " = {field0}<BR>&nbsp;&nbsp;" + gdsvardesc[0].Replace("'", @"\'").Replace("\"", @"\""") + " : {x|2,.}<BR>&nbsp;&nbsp;" + gdsvardesc[1].Replace("'", @"\'").Replace("\"", @"\""") + " : {value|2,.} ');\" onmousemove=\"cm('tip');\" onmouseout=\"ch('tip');\"  ";
-            }
             else
-            {
                 s0 = " onmouseover=\"ci('tip','" + sTipLabel + " = {field0}<BR>&nbsp;&nbsp;" + gdsvardesc[0].Replace("'", @"\'").Replace("\"", @"\""") + " : {x|2.,}<BR>&nbsp;&nbsp;" + gdsvardesc[1].Replace("'", @"\'").Replace("\"", @"\""") + " : {value|2.,} ');\" onmousemove=\"cm('tip');\" onmouseout=\"ch('tip');\"  ";
-            }
-
-            // commented out as requested
-            // s1 = "TITLE='Trend : " _
-            // & Chr(10) & vbTab & "Slope = {slope|4} " _
-            // & Chr(10) & vbTab & "y-Intercept = {intercept|4} " _
-            // & Chr(10) & vbTab & "Correlation coeff. = {corr|4} " _
-            // & Chr(10) & vbTab & "Std. Err. = {stderr|4}'" _
-            // & " onmouseover=""ci('Trend : <BR>&nbsp;&nbsp;Slope = {slope|4}<BR>&nbsp;&nbsp;y-Intercept = {intercept|4}<BR>&nbsp;&nbsp;Correlation coeff. = {corr|4}<BR>&nbsp;&nbsp;Std. Err. = {stderr|4}');"" onmousemove=""cm();"" onmouseout=""ch();""  "
-            // s1 = " onmouseover=""ci('Trend : <BR>&nbsp;&nbsp;Slope = {slope|4}<BR>&nbsp;&nbsp;y-Intercept = {intercept|4}<BR>&nbsp;&nbsp;Correlation coeff. = {corr|4}<BR>&nbsp;&nbsp;Std. Err. = {stderr|4}');"" onmousemove=""cm();"" onmouseout=""ch();""  "
 
             if (bEn)
-            {
                 s1 = " onmouseover=\"ci('tip','Trend : <BR>&nbsp;&nbsp;Slope = {slope|2,.}<BR>&nbsp;&nbsp;y-Intercept = {intercept|2,.}<BR>&nbsp;&nbsp;R<SUP>2</SUP> = " + Math.Pow(sCorr, 2).ToString("0.00") + "');\" onmousemove=\"cm('tip');\" onmouseout=\"ch('tip');\"  ";
-            }
             else
-            {
                 s1 = " onmouseover=\"ci('tip','Garis Tren : <BR>&nbsp;&nbsp;Kemiringan(Slope) = {slope|2.,}<BR>&nbsp;&nbsp;y-Intercept = {intercept|2.,}<BR>&nbsp;&nbsp;R<SUP>2</SUP> = " + Math.Pow(sCorr, 2).ToString( "0.00") + "');\" onmousemove=\"cm('tip');\" onmouseout=\"ch('tip');\"  ";
-            }
 
             WebChartViewer1.ImageMap = scatter1.getHTMLImageMap("javascript:void(null)", " ", s0) + trend1.getHTMLImageMap("javascript:void(null)", " ", s1);
 
-            // End If
 
             var sbT = new StringBuilder();
             sbT.AppendFormat("<TABLE BORDER=\"0\"  WIDTH=\"100%\" STYLE=\"border:solid 1pt black;\">");
@@ -186,20 +163,6 @@ namespace gds
             sbT.AppendFormat("<TR BGCOLOR=\"#EEEEEE\"><TD CLASS=\"H8\"><I>R<SUP>2</SUP></I></TD><TD ALIGN=\"right\" CLASS=\"H8\">{0}</TD></TR>", Math.Pow(sCorr, 2).ToString("0.0000"));
             sbT.AppendFormat("</TABLE>");
             this.literalFooter.Text = sbT.ToString();
-
-            // DataGrid1.Caption &= sbT.ToString
-
-            // With Me.Literal4
-            // '.Text &= "<DIV STYLE=""font-size:11px;"">Right-click mouse button to save chart as picture." & IIf(bIE, "<BR>Move mouse over the chart for details.</DIV>", "") _
-            // .Text &= "<DIV STYLE=""font-size:11px;"">Right-click mouse button to save chart as picture." & "<BR>Move mouse over the chart for details.</DIV>" _
-            // & "<BR><TABLE BORDER=""0""  STYLE=""border:solid 1pt black;"">" _
-            // & "<TR BGCOLOR=""#EEEEEE""><TD><I>Slope</TD></I><TD ALIGN=""right"">" & FormatNumber(sSlope, 2) & "</TD></TR>" _
-            // & "<TR BGCOLOR=""#e6e6fa""><TD><I>Y-Intercept</TD></I><TD ALIGN=""right"">" & FormatNumber(sY, 2) & "</TD></TR>" _
-            // & "<TR BGCOLOR=""#EEEEEE""><TD><I>R<SUP>2</SUP></I></TD><TD ALIGN=""right"">" & FormatNumber(sCorr ^ 2, 4) & " </TD></TR>" _
-            // & "</TABLE>"
-            // ' & "<TR BGCOLOR=""#EEEEEE""><TD><I>Correlation Coeff.</I></TD><TD ALIGN=""right"">" & FormatNumber(sCorr, 4) & " </TD></TR>" _
-            // '& "<TR BGCOLOR=""#e6e6fa""><TD><I>Std. Error</I></TD><TD ALIGN=""right"">" & FormatNumber(sStdErr, 4) & "</TD></TR>" _
-            // End With
         }
 
         private string BuildSqlCommon(string v1, string v2, int ds)
@@ -217,14 +180,8 @@ namespace gds
                 fSql.AppendFormat(" SELECT [desc] ,criteria,tbl,var FROM {0} WHERE var_id = '{1}' ; ", oGt.VarTable, v1);
                 fSql.AppendFormat(" SELECT [desc]  ,criteria,tbl, var FROM {0} WHERE var_id = '{1}'  ", oGt.VarTable, v2);
             }
-            // Case Else
-            // fSql.AppendFormat(" SELECT gdsvardesc ,w1,null, gdsvar FROM {0} WHERE gdsid = '{1}' ; ", sQryVarDsc, v1)
-            // fSql.AppendFormat(" SELECT gdsvardesc ,w1,null, gdsvar FROM {0} WHERE gdsid = '{1}'  ", sQryVarDsc, v2)
-            // End Select
             if (Trace.IsEnabled)
-            {
                 Trace.Warn("BuildSqlCommon()", fSql.ToString());
-            }
 
             return fSql.ToString();
         }
@@ -237,8 +194,7 @@ namespace gds
             sNum1 = Convert.ToInt16(s1);
             if (sNum1 > 0)
             {
-                //sDup1 = Strings.StrDup(sNum1 - 1, "9");
-                sDup1 = sNum1.ToString().PadRight(sNum1 - 1, '9');
+                sDup1 = string.Empty.PadRight(sNum1 - 1, '9');
                 sRes1 = " AND " + v1 + " NOT IN (" + sDup1 + "6, " + sDup1 + "7, " + sDup1 + "8, " + sDup1 + "9) ";
             }
             else
@@ -249,45 +205,14 @@ namespace gds
             sNum2 = Convert.ToInt16(s2);
             if (sNum2 > 0)
             {
-                //sDup2 = Strings.StrDup(sNum2 - 1, "9");
-                sDup2 = sNum2.ToString().PadRight(sNum2 - 1, '9');
+                sDup2 = string.Empty.PadRight(sNum2 - 1, '9');
                 sRes2 = " AND " + v2 + " NOT IN (" + sDup2 + "6, " + sDup2 + "7, " + sDup2 + "8, " + sDup2 + "9) ";
             }
             else
-            {
                 sRes2 = " ";
-            }
 
             fSql = new StringBuilder();
             {
-                //var withBlock = fSql;
-                // .Append(" SELECT t1.District, t1.Mean1, t2.Mean2 FROM ")
-                // .Append("	(SELECT  " & sQryDistrict & " AS District")
-                // .Append("	, AVG(CAST(" & v1 & " AS MONEY)) AS Mean1 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v1 & " Is Not null) ")
-                // .Append(sWhere(0))
-                // .Append(sRes1)
-                // .Append("	 GROUP BY  " & sQryDistrict & "  ) t1 ")
-                // .Append(" INNER JOIN ")
-                // .Append("	(SELECT  " & sQryDistrict & "  AS District ")
-                // .Append("	, AVG(CAST(" & v2 & " AS MONEY)) as Mean2 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v2 & " Is Not null) ")
-                // .Append(sWhere(1))
-                // .Append(sRes2)
-                // .Append("	GROUP BY  " & sQryDistrict & "  ) t2 ")
-                // .Append(" ON t1.District = t2.District ")
-                // .Append(" ORDER BY Mean2 DESC ")
-
-
-                // Beware! COALESCE is SQL2K specific (Access doesn't understand)
-                // .Append(" SELECT t0.District, COALESCE(t1.Mean1,0)AS Mean1, COALESCE(t2.Mean2,0) AS Mean2 FROM ")
-
-                // If iDs = 11 Or iDs = 12 Then
-                // tb1 = sQryTable
-                // tb2 = sQryTable
-                // End If
                 fSql.AppendLine(" SELECT t0.KabuNm,  t1.Mean1 , t2.Mean2 , t0.kabu FROM ");
                 fSql.AppendFormat(" (	SELECT DISTINCT prov+kabu As 'kabu',kabunm AS 'KabuNm' FROM {0}) t0 ", oGt.BaseTable);
                 fSql.AppendLine(" LEFT JOIN ");
@@ -315,7 +240,6 @@ namespace gds
                 fSql.AppendLine(" ORDER BY Mean1 DESC ");
             }
 
-            // Me.Literal5.Text = fSql.ToString		 'Debugging purpose
             if (Trace.IsEnabled)
             {
                 Trace.Warn("BuildSqlKabu()", fSql.ToString());
@@ -332,57 +256,23 @@ namespace gds
             sNum1 = Convert.ToInt16(s1);
             if (sNum1 > 0)
             {
-                //sDup1 = Strings.StrDup(sNum1 - 1, "9");
-                sDup1 = sNum1.ToString().PadRight(sNum1 - 1, '9');
+                sDup1 = string.Empty.PadRight(sNum1 - 1, '9');
                 sRes1 = " AND " + v1 + " NOT IN (" + sDup1 + "6, " + sDup1 + "7, " + sDup1 + "8, " + sDup1 + "9) ";
             }
             else
-            {
                 sRes1 = " ";
-            }
 
             sNum2 = Convert.ToInt16(s2);
             if (sNum2 > 0)
             {
-                //sDup2 = Strings.StrDup(sNum2 - 1, "9");
-                sDup2 = sNum2.ToString().PadRight(sNum2 - 1, '9');
+                sDup2 = string.Empty.PadRight(sNum2 - 1, '9');
                 sRes2 = " AND " + v2 + " NOT IN (" + sDup2 + "6, " + sDup2 + "7, " + sDup2 + "8, " + sDup2 + "9) ";
             }
             else
-            {
                 sRes2 = " ";
-            }
 
             fSql = new StringBuilder();
             {
-                //var withBlock = fSql;
-                // .Append(" SELECT t1.District, t1.Mean1, t2.Mean2 FROM ")
-                // .Append("	(SELECT  " & sQryDistrict & " AS District")
-                // .Append("	, AVG(CAST(" & v1 & " AS MONEY)) AS Mean1 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v1 & " Is Not null) ")
-                // .Append(sWhere(0))
-                // .Append(sRes1)
-                // .Append("	 GROUP BY  " & sQryDistrict & "  ) t1 ")
-                // .Append(" INNER JOIN ")
-                // .Append("	(SELECT  " & sQryDistrict & "  AS District ")
-                // .Append("	, AVG(CAST(" & v2 & " AS MONEY)) as Mean2 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v2 & " Is Not null) ")
-                // .Append(sWhere(1))
-                // .Append(sRes2)
-                // .Append("	GROUP BY  " & sQryDistrict & "  ) t2 ")
-                // .Append(" ON t1.District = t2.District ")
-                // .Append(" ORDER BY Mean2 DESC ")
-
-
-                // Beware! COALESCE is SQL2K specific (Access doesn't understand)
-                // .Append(" SELECT t0.District, COALESCE(t1.Mean1,0)AS Mean1, COALESCE(t2.Mean2,0) AS Mean2 FROM ")
-
-                // If iDs = 11 Or iDs = 12 Then
-                // tb1 = sQryTable
-                // tb2 = sQryTable
-                // End If
                 fSql.AppendLine(" SELECT t0.KecaNm,  t1.Mean1 , t2.Mean2 , t0.keca FROM ");
                 fSql.AppendFormat(" (	SELECT DISTINCT prov+kabu+keca As 'keca',kecanm AS 'KecaNm' FROM {0}) t0 ", oGt.BaseTable);
                 fSql.AppendLine(" LEFT JOIN ");
@@ -426,57 +316,23 @@ namespace gds
             sNum1 = Convert.ToInt16(s1);
             if (sNum1 > 0)
             {
-                //sDup1 = Strings.StrDup(sNum1 - 1, "9");
-                sDup1 = sNum1.ToString().PadRight(sNum1 - 1, '9');
+                sDup1 = string.Empty.PadRight(sNum1 - 1, '9');
                 sRes1 = " AND " + v1 + " NOT IN (" + sDup1 + "6, " + sDup1 + "7, " + sDup1 + "8, " + sDup1 + "9) ";
             }
             else
-            {
                 sRes1 = " ";
-            }
 
             sNum2 = Convert.ToInt16(s2);
             if (sNum2 > 0)
             {
-                //sDup2 = Strings.StrDup(sNum2 - 1, "9");
-                sDup2 = sNum2.ToString().PadRight(sNum2 - 1, '9');
+                sDup2 = string.Empty.PadRight(sNum2 - 1, '9');
                 sRes2 = " AND " + v2 + " NOT IN (" + sDup2 + "6, " + sDup2 + "7, " + sDup2 + "8, " + sDup2 + "9) ";
             }
             else
-            {
                 sRes2 = " ";
-            }
 
             fSql = new StringBuilder();
             {
-                //var withBlock = fSql;
-                // .Append(" SELECT t1.District, t1.Mean1, t2.Mean2 FROM ")
-                // .Append("	(SELECT  " & sQryDistrict & " AS District")
-                // .Append("	, AVG(CAST(" & v1 & " AS MONEY)) AS Mean1 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v1 & " Is Not null) ")
-                // .Append(sWhere(0))
-                // .Append(sRes1)
-                // .Append("	 GROUP BY  " & sQryDistrict & "  ) t1 ")
-                // .Append(" INNER JOIN ")
-                // .Append("	(SELECT  " & sQryDistrict & "  AS District ")
-                // .Append("	, AVG(CAST(" & v2 & " AS MONEY)) as Mean2 ")
-                // .Append("	FROM " & sQryTable)
-                // .Append("	WHERE(" & v2 & " Is Not null) ")
-                // .Append(sWhere(1))
-                // .Append(sRes2)
-                // .Append("	GROUP BY  " & sQryDistrict & "  ) t2 ")
-                // .Append(" ON t1.District = t2.District ")
-                // .Append(" ORDER BY Mean2 DESC ")
-
-
-                // Beware! COALESCE is SQL2K specific (Access doesn't understand)
-                // .Append(" SELECT t0.District, COALESCE(t1.Mean1,0)AS Mean1, COALESCE(t2.Mean2,0) AS Mean2 FROM ")
-
-                // If iDs = 11 Or iDs = 12 Then
-                // tb1 = sQryTable
-                // tb2 = sQryTable
-                // End If
                 fSql.Append(" SELECT t0.ProvNm,  t1.Mean1 , t2.Mean2 , t0.prov FROM ");
                 fSql.Append(" (	SELECT prov,provnm AS 'ProvNm' FROM t01Prov  ) t0 ");
                 fSql.Append(" LEFT JOIN ");
@@ -501,7 +357,6 @@ namespace gds
                 fSql.Append(" ORDER BY Mean1 DESC ");
             }
 
-            // Me.Literal5.Text = fSql.ToString		 'Debugging purpose
             if (Trace.IsEnabled)
             {
                 Trace.Warn("BuildSqlProv()", fSql.ToString());
@@ -534,9 +389,7 @@ namespace gds
             gdsvardesc[1] = dr.IsDBNull(0) ? "" : dr[0].ToString();
             sWhere[1] = dr.IsDBNull(1) ? "" : " AND " + dr[1].ToString();
             // gdsvardesc(1) = RemoveLeadingChars(gdsvardesc(1))
-            // If iDs = 2 Or iDs = 3 Then
             gdstbl[1] = dr[2].ToString();
-            // End If
 
             gdsvar[1] = dr[3].ToString();
             dr.Close();
@@ -544,10 +397,8 @@ namespace gds
                 cm.CommandText = BuildSqlKabu(gdsvar[0], gdsvar[1], exstr[0], exstr[1], gdstbl[0], gdstbl[1]);
             else
             {
-                if (Request.Params["pr"] != "")
-                {
+                if (Request.Params["pr"] != null)
                     cm.CommandText = BuildSqlKeca(gdsvar[0], gdsvar[1], exstr[0], exstr[1], gdstbl[0], gdstbl[1], Request.Params["pr"]);
-                }
                 else
                 {
                     // Change from prov lvl into kabu lvl by request
@@ -555,7 +406,6 @@ namespace gds
                     cm.CommandText = BuildSqlKabu(gdsvar[0], gdsvar[1], exstr[0], exstr[1], gdstbl[0], gdstbl[1]);
                 }
             }
-
 
 
             dr = cm.ExecuteReader();
@@ -605,69 +455,30 @@ namespace gds
         public void GetRequest()
         {
             bEn = commonModule.IsEnglish();
-            if (bEn)
-            {
-                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            }
-            else
-            {
-                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-            }
+            System.Threading.Thread.CurrentThread.CurrentCulture = bEn ? new CultureInfo("en-US") : new CultureInfo("id-ID");
 
-            if (bEn)
-            {
-                nextString = "OK";
-                prevString = "<< Previous";
-                chString = "Show chart";
-            }
-            else
-            {
-                nextString = "OK";
-                prevString = "<< Kembali";
-                chString = "Tampilkan dengan chart";
-            }
+            nextString = bEn ? "OK" : "OK";
+            prevString = bEn ? "<< Previous" : "<< Kembali";
+            chString = bEn ? "Show chart" : "Tampilkan dengan chart";
+
 
             if (Request.Params["ch"] == "1")
-            {
                 ch = true;
-            }
             else
-            {
                 ch = false;
-            }
 
             sCh = ch.ToString();
             if (Request.Params["ds"] != null)
-            {
                 iDs = int.Parse(Request.Params["ds"]);
-            }
             else
-            {
                 iDs = 11;
-            }
 
-            // If Not Request.Params("c") Is Nothing Then
-            // If Int32.Parse(Request.Params("c")) = 1 Then
-            // _isContVarOnly = True
-            // c = 1
-            // submitString = String.Format("return dist3(0,{0});", lang)
-            // actionString = "pvOut.aspx"
-            // Else
-            // _isContVarOnly = False
-            // c = 0
-            // submitString = String.Format("return mz(0,{0},{1})", c, lang)
-            // actionString = "twOut.aspx"
-            // End If
-            // Else
-            // _isContVarOnly = False
-            // End If
             _isContVarOnly = true;
             c = 1;
             submitString = string.Format("return mz(0,{0},{1})", c, (bEn ? 1 : 0));
+
             if (Request.QueryString["sw"] != "" | (Request.QueryString["sw"] != null))
-            {
                 bSwap = true;
-            }
 
             if (Request.Params["v"] != null)
             {
@@ -705,10 +516,7 @@ namespace gds
         public void InitTrees()
         {
 
-            // TreeVars1.SelectedID = Request.Params("v")
-
             {
-                //var withBlock = this.TreeVars1;
                 TreeVars1.DatasetNumber = iDs;
                 TreeVars1.GdsTable = oGt;
                 TreeVars1.DivTitleString = "Pilih dari daftar kuesioner " + oGt.Desc;
@@ -720,37 +528,23 @@ namespace gds
                 TreeVars1.DivContentStyle = "padding:0px 10px 0px 10px;";
                 TreeVars1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
                 TreeVars1.DivTitleAdditionalAttr = "onclick=\"sh0('dvroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
-
             }
-
             TreeVars1.IsSecondLevelVisible = _isContVarOnly;
         }
 
         public void SetUI()
         {
-            if (bEn)
-            {
-                this.btnNext.Value = commonModule.NEXTSTRINGEN;
-                this.btnPrev.Value = commonModule.PREVSTRINGEN;
-            }
-            else
-            {
-                this.btnNext.Value = commonModule.NEXTSTRING;
-                this.btnPrev.Value = commonModule.PREVSTRING;
-            }
+            btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
+            btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
 
             if (Request.Params["c"] != null)
             {
                 if (char.IsNumber(Request.Params["c"], 0))
                 {
                     if (int.Parse(Request.Params["c"]) == 1)
-                    {
                         isSingleVar = false;
-                    }
                     else
-                    {
                         isSingleVar = true;
-                    }
                 }
                 else
                     isSingleVar = true;
@@ -842,10 +636,8 @@ namespace gds
                 var colMean1 = new BoundColumn();
                 colMean1.DataField = dt.Columns[1].ColumnName; // Mean1
                 colMean1.ItemStyle.HorizontalAlign = HorizontalAlign.Right;
-                if (bEn)
-                    colMean1.DataFormatString = "{0:###,###,##0.00}";
-                else
-                    colMean1.DataFormatString = "{0:N}";
+
+                colMean1.DataFormatString = bEn ? "{0:###,###,##0.00}" : "{0:N}";
 
                 colMean1.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 colMean1.HeaderText = "Mean1";
@@ -865,29 +657,22 @@ namespace gds
                     oGg = new gdsGeo(Request.Params["pr"], "All");
                     DataGrid1.Caption += string.Format("<DIV STYLE=\"background-color:#EEEEEE;border:solid 1px #CCCCFF;font:bold 9pt Arial;padding:4px 4px 4px 4px;text-align:left;\">Propinsi {0}</DIV>", oGg.ProvName);                }
 
-                this.DataGrid1.AllowSorting = true;
-                this.DataGrid1.DataSource = dt.DefaultView;
-                this.DataGrid1.DataBind();
+                DataGrid1.AllowSorting = true;
+                DataGrid1.DataSource = dt.DefaultView;
+                DataGrid1.DataBind();
                 if (ch)
                 {
                     this.WebChartViewer1.Visible = true;
-                    // Me.Webchartviewer2.Visible = True
+                    // Webchartviewer2.Visible = True
                     this.BuildChart(dt);
-                    // Me.BuildChartMirror(dt)
+                    // BuildChartMirror(dt)
                 }
 
-                // Me.Literal2.Text = WriteRef()
                 this.Literal2.Text += WriteDiv();
             }
 
-            if (isValidRequest)
-            {
-                this.pTextTw.Visible = false;
-            }
-            else
-            {
-                this.pTextTw.Visible = true;
-            }
+            this.pTextTw.Visible = isValidRequest ? false : true;
+
         }
 
     }

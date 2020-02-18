@@ -93,13 +93,9 @@ namespace gds
             string sHover;
             // ************* BEGIN Ini semua gara-gara sorting
             if ((sortType ?? "") == "ASC")
-            {
                 table.DefaultView.Sort = sortBy + " DESC";
-            }
             else if ((sortType ?? "") == "DESC")
-            {
                 table.DefaultView.Sort = sortBy + " ASC";
-            }
 
             table.DefaultView.Sort = sortBy + " " + sortType;
             ChartDirector.TextBox txtTitle;
@@ -114,13 +110,9 @@ namespace gds
             c = new XYChart(460, h, 0xFFFFFF, 0xCCCCCC, 1);
             // c = New XYChart(460, 600, &HFFFFFF, &HCCCCCC, 1)
             if (Request.Params["pr"] != null)
-            {
                 txtTitle = c.addTitle(bEn? "Score On Each 'Kecamatan' in " + (char)10 + oGg.ProvName: "Score Masing-masing Kecamatan " + (char)10 + "di Propinsi " + oGg.ProvName, "arialbd.ttf", 10);
-            }
             else
-            {
                 txtTitle = c.addTitle(bEn ? "Score On Each Province" : "Score Masing-masing Propinsi", "arialbd.ttf", 10);
-            }
 
             txtTitle.setBackground(c.gradientColor(INTGRADBLEUINV, 180, INTRATIO), -1, 0);
 
@@ -173,7 +165,7 @@ namespace gds
             ChartDirector.TextBox textbox;
             ChartDirector.TextBox tb2;
             string sHover;
-            // ************* BEGIN Ini semua gara-gara sorting
+            // ************* BEGIN sorting
             if ((sortType ?? "") == "ASC")
             {
                 table.DefaultView.Sort = sortBy + " DESC";
@@ -191,7 +183,7 @@ namespace gds
                 data[iRow] = Convert.ToDouble(table.DefaultView[table.Rows.Count - 1 - iRow]["Score"]);
                 labels[iRow] = table.DefaultView[table.Rows.Count - 1 - iRow]["distName"].ToString();
             }
-            // ************* END  Ini semua gara-gara sorting
+            // ************* END  sorting
 
             c = new XYChart(460, h, 0xFFFFFF, 0xCCCCCC, 1);
             // c = New XYChart(460, 600, &HFFFFFF, &HCCCCCC, 1)
@@ -242,22 +234,19 @@ namespace gds
         {
             dt = BuildTable();
             dtResult = BuildTableResult(dt);
-            if (Trace.IsEnabled)
-            {
-                //Trace.Warn("BEFORE viewstate(\"sortBy\")", ViewState["sortBy"].ToString());
-                //Trace.Warn("BEFORE viewstate(\"sortType\")", ViewState["sortType"].ToString());
-            }
+            //if (Trace.IsEnabled)
+            //{
+            //    Trace.Warn("BEFORE viewstate(\"sortBy\")", ViewState["sortBy"].ToString());
+            //    Trace.Warn("BEFORE viewstate(\"sortType\")", ViewState["sortType"].ToString());
+            //}
 
             if (ViewState["sortBy"] == null )
-            {
                 ViewState["sortBy"] = "Score";
-            }
 
             if (ViewState["sortType"] == null )
-            {
                 ViewState["sortType"] = "DESC";
-            }
             // dtResult.DefaultView.Sort = "Score DESC"
+
             if (Trace.IsEnabled)
             {
                 Trace.Warn("AFTER viewstate(\"sortBy\")", ViewState["sortBy"].ToString());
@@ -279,15 +268,12 @@ namespace gds
                 colDistName = new BoundColumn();
                 ((BoundColumn)colDistName).DataField = "distName";
                 if (Request.Params["pr"] != "")
-                {
                     colDistName.HeaderText = bEn ? "Kecamatan" : "Kecamatan";
-                }
                 else
                 {
                     // colDistName.HeaderText = IIf(bEn, "Province", "Propinsi")
                     colDistName.HeaderText = bEn ? "District" : "Kabupaten";
                 }
-
                 colDistName.SortExpression = "distName";
             }
             else
@@ -304,9 +290,7 @@ namespace gds
                 }
 
                 if (Request.Params["pr"] != "")
-                {
                     colDistName.HeaderText = bEn ? "Kecamatan" : "Kecamatan";
-                }
                 else
                 {
                     // colDistName.HeaderText = IIf(bEn, "Province", "Propinsi")
@@ -604,19 +588,6 @@ namespace gds
                         fsOut.Append("<TD ALIGN=\"RIGHT\">" + (i + 1) + ".</TD>");
                         fsOut.Append("<TD>" + gdsvardesc[i] + "</TD>");
                         fsOut.Append("<TD ALIGN=\"RIGHT\">" + numWeight[i] + "</TD>");
-                        // If Me.revVarFlg(i) = 1 Then
-                        // If bEn Then
-                        // .Append("<TD ALIGN=""RIGHT"" BGCOLOR=""#EEEEEE"">Yes</TD>")
-                        // Else
-                        // .Append("<TD ALIGN=""RIGHT"" BGCOLOR=""#EEEEEE"">Ya</TD>")
-                        // End If
-                        // Else
-                        // If bEn Then
-                        // .Append("<TD ALIGN=""RIGHT"">No</TD>")
-                        // Else
-                        // .Append("<TD ALIGN=""RIGHT"">Tidak</TD>")
-                        // End If
-                        // End If
                         fsOut.Append("</TR>");
                     }
                     // iVarCount += 1
@@ -630,16 +601,8 @@ namespace gds
                         fsOut.Append("</TR>");
                     }
                 }
-                // .Append("<TR align=""center"" BGCOLOR=""#EEEEEE"">")
-                // If bEn Then
-                // .Append("<TD COLSPAN=""4"" ALIGN=""RIGHT"">* <B>Reversed Value</B> means the higher the value, the lower the score.</TD>")
-                // Else
-                // .Append("<TD COLSPAN=""4"" ALIGN=""RIGHT"">* <B>Nilai Terbalik</B> berarti semakin tinggi nilainya, score-nya semakin kecil</TD>")
-                // End If
-                // .Append("</TR>")
                 fsOut.Append("</TABLE>");
             }
-
             return fsOut.ToString();
         }
 
@@ -652,20 +615,14 @@ namespace gds
             for (iC = 0; iC < gdsid.Length; iC++)
             {
                 if (bEn)
-                {
                     fsOut.AppendFormat(" SELECT var,[desc_en],criteria,tbl FROM {0}", oGt.VarTable);
-                }
                 else
-                {
                     fsOut.AppendFormat(" SELECT var,[desc],criteria,tbl FROM {0}", oGt.VarTable);
-                }
 
                 fsOut.AppendFormat(" WHERE ");
                 fsOut.AppendFormat(" var_id = '{0}' ", gdsid[iC]);
                 if (iC < gdsid.Length - 1)
-                {
                     fsOut.Append(" UNION ALL ");
-                }
             }
 
             return fsOut.ToString();
@@ -695,10 +652,9 @@ namespace gds
                     fsOut.AppendLine(" WHERE " + gdsvar[i] + " IS NOT NULL ");
                     fsOut.AppendLine(" AND prov ='" + whereProv + "'");
                     fsOut.AppendLine(sWhereEx[i]);
+
                     if (exstr[i] > 0)
-                    {
                         fsOut.AppendLine(" AND " + gdsvar[i] + "  NOT IN ('" + string.Empty.PadRight(exstr[i] - 1, '9') + "6','" + string.Empty.PadRight(exstr[i] - 1, '9') + "7','" + string.Empty.PadRight(exstr[i] - 1, '9') + "8','" + string.Empty.PadRight(exstr[i] - 1, '9') + "9') ");
-                    }
                     
                     fsOut.AppendLine(" GROUP BY  prov+kabu+keca  "); // XTREME!! make sure the prov+kabu+keca exist in the tbl
                     fsOut.AppendLine(" ) v" + i);
@@ -711,9 +667,7 @@ namespace gds
             }
 
             if (Trace.IsEnabled)
-            {
                 Trace.Warn("WriteSqlAvg", fsOut.ToString());
-            }
 
             return fsOut.ToString();
         }
@@ -724,9 +678,7 @@ namespace gds
             fsOut = new StringBuilder("SELECT vv.distName ");
             {
                 for (i = 0; i < iVarCount; i++)
-                {
                     fsOut.AppendLine(", v" + i + "." + gdsvar[i]);
-                }
 
                 fsOut.AppendLine(" , vv.dist");
                 fsOut.AppendLine(" FROM ( SELECT DISTINCT  " + oGt.KabuFld + " AS 'dist', kabunm AS 'distName' FROM " + oGt.BaseTable + " )  vv");
