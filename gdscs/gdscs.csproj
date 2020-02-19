@@ -61,6 +61,7 @@
     <Content Include="components\treeVars.ascx" />
     <Content Include="components\treeVars2.ascx" />
     <Content Include="contacts.aspx" />
+    <Content Include="def2.aspx" />
     <Content Include="gallery.aspx" />
     <Content Include="links.aspx" />
     <Content Include="na.aspx" />
@@ -199,15 +200,6 @@
     <Content Include="images\template_16.gif" />
     <Content Include="images\template_17.gif" />
     <Content Include="images\template_18.gif" />
-    <Content Include="images\theme1.bmp" />
-    <Content Include="images\theme2.bmp" />
-    <Content Include="images\theme3.bmp" />
-    <Content Include="images\theme4.bmp" />
-    <Content Include="images\theme5.bmp" />
-    <Content Include="images\theme6.bmp" />
-    <Content Include="images\theme7.bmp" />
-    <Content Include="images\theme8.bmp" />
-    <Content Include="images\theme9.bmp" />
     <Content Include="images\top.gif" />
     <Content Include="images\topleft.gif" />
     <Content Include="images\topleft.png" />
@@ -393,19 +385,6 @@
     <Content Include="pvOut.aspx" />
     <Content Include="s.aspx" />
     <Content Include="s.css" />
-    <Content Include="s00.css" />
-    <Content Include="s01.css" />
-    <Content Include="s02.css" />
-    <Content Include="s03.css" />
-    <Content Include="s04.css" />
-    <Content Include="s05.css" />
-    <Content Include="s06.css" />
-    <Content Include="s07.css" />
-    <Content Include="s08.css" />
-    <Content Include="s09.css" />
-    <Content Include="s10.css" />
-    <Content Include="s11.css" />
-    <Content Include="s12.css" />
     <Content Include="sc.aspx" />
     <Content Include="sc.js" />
     <Content Include="script.js" />
@@ -414,11 +393,6 @@
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="setLang.aspx" />
     <Content Include="ShowImg.aspx" />
-    <Content Include="ss.css" />
-    <Content Include="Styles.css" />
-    <Content Include="sWB.css" />
-    <Content Include="sWBsafe.css" />
-    <Content Include="s_Orig.css" />
     <Content Include="tw.aspx" />
     <Content Include="v.aspx" />
     <Content Include="Web.config" />
@@ -428,6 +402,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="WebForm1.aspx" />
     <Content Include="webTree\1_0\images\folder.gif" />
     <Content Include="webTree\1_0\images\folderfav.gif" />
     <Content Include="webTree\1_0\images\folderfavopen.gif" />
@@ -544,12 +519,33 @@
     <Compile Include="contacts.aspx.designer.cs">
       <DependentUpon>contacts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="def2.aspx.cs">
+      <DependentUpon>def2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="def2.aspx.designer.cs">
+      <DependentUpon>def2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gallery.aspx.cs">
       <DependentUpon>gallery.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="gallery.aspx.designer.cs">
       <DependentUpon>gallery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gds.Master.cs">
+      <DependentUpon>Gds.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gds.Master.designer.cs">
+      <DependentUpon>Gds.Master</DependentUpon>
+    </Compile>
+    <Compile Include="left.master.cs">
+      <DependentUpon>left.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="left.master.designer.cs">
+      <DependentUpon>left.master</DependentUpon>
     </Compile>
     <Compile Include="links.aspx.cs">
       <DependentUpon>links.aspx</DependentUpon>
@@ -790,25 +786,25 @@
     <Compile Include="v.aspx.designer.cs">
       <DependentUpon>v.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gallery\Thumbs.db" />
+    <Content Include="Gds.Master" />
     <None Include="images\BannerBitmap.psd" />
     <None Include="images\descript.ion" />
     <None Include="images\dsf.ai" />
-    <None Include="images\GDS2 Logo.psd" />
-    <None Include="images\indo.psd" />
-    <None Include="images\indoLayers.psd" />
-    <None Include="images\indoProvinces.psd" />
-    <None Include="images\palette.psd" />
-    <None Include="images\palettePrint.psd" />
-    <None Include="images\palettOriginal.psd" />
-    <None Include="images\tabs.psd" />
     <None Include="images\Thumbs.db" />
-    <None Include="images\topMenu.psd" />
+    <Content Include="left.master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
