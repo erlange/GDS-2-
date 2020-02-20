@@ -1,2 +1,0 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/left.master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="gds.WebForm1" %>
-<asp:Content ID="asdad" ContentPlaceHolderID="Content1" runat=server>sdfsdfsfds</asp:Content>

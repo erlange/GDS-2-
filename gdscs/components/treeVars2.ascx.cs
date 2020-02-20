@@ -285,7 +285,7 @@ namespace gds
                         fsOut.AppendFormat("<LABEL FOR=\"zz{0}\"><DIV CLASS=\"i4\" STYLE=\"padding:0px 0px 0px 30px;\" ><INPUT  TYPE=\"radio\" ID=\"zz{0}\" NAME=\"v\" VALUE=\"{0}\" >{1}</DIV></LABEL>", new string[] { var_id.ToString(), desc });
                     else
                     {
-                        if (ii == 0 | _SelectedID == var_id.ToString())
+                        if (ii == 0 || _SelectedID == var_id.ToString())
                         {
                             fsOut.AppendFormat("<DIV CLASS=\"i4\" STYLE=\"padding:0px 0px 0px 30px;\" >");
                             fsOut.AppendFormat("<table class=\"tv\">"); // remove TABLE

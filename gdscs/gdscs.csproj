@@ -394,6 +394,7 @@
     <Content Include="setLang.aspx" />
     <Content Include="ShowImg.aspx" />
     <Content Include="tw.aspx" />
+    <Content Include="v_old.aspx" />
     <Content Include="v.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -402,7 +403,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="WebForm1.aspx" />
     <Content Include="webTree\1_0\images\folder.gif" />
     <Content Include="webTree\1_0\images\folderfav.gif" />
     <Content Include="webTree\1_0\images\folderfavopen.gif" />
@@ -518,6 +518,13 @@
     </Compile>
     <Compile Include="contacts.aspx.designer.cs">
       <DependentUpon>contacts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="leftOpt.master.cs">
+      <DependentUpon>leftOpt.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="leftOpt.master.designer.cs">
+      <DependentUpon>leftOpt.master</DependentUpon>
     </Compile>
     <Compile Include="def2.aspx.cs">
       <DependentUpon>def2.aspx</DependentUpon>
@@ -779,6 +786,13 @@
     <Compile Include="tw.aspx.designer.cs">
       <DependentUpon>tw.aspx</DependentUpon>
     </Compile>
+    <Compile Include="v_old.aspx.cs">
+      <DependentUpon>v_old.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="v_old.aspx.designer.cs">
+      <DependentUpon>v_old.aspx</DependentUpon>
+    </Compile>
     <Compile Include="v.aspx.cs">
       <DependentUpon>v.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -786,18 +800,12 @@
     <Compile Include="v.aspx.designer.cs">
       <DependentUpon>v.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="leftOpt.master" />
     <None Include="gallery\Thumbs.db" />
     <Content Include="Gds.Master" />
     <None Include="images\BannerBitmap.psd" />

@@ -1,6 +1,7 @@
-﻿<%@ Master Language="C#" MasterPageFile="~/Gds.Master" AutoEventWireup="true" CodeBehind="left.master.cs" Inherits="gds.left" %>
+﻿<%@ Master Language="C#" MasterPageFile="~/Gds.Master" AutoEventWireup="true" CodeBehind="leftOpt.master.cs"
+    Inherits="gds.leftOptMaster" %>
 
-<%@ Register TagPrefix="uc1" TagName="mnuLeft" Src="mnuLeft.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="panelAnalysis" Src="panelAnalysis.ascx" %>
 <%@ Register src="panelSearchHtml.ascx" tagname="panelsearchhtml" tagprefix="uc1" %>
 
 <asp:Content ID="ContentHead1" ContentPlaceHolderID="HeadPlaceHolder1" runat="server">
@@ -12,17 +13,17 @@
                 valign="top" nowrap width="192">
                 <!-- BEGIN Panel -->
                 <!-- END Panel -->
-                <uc1:mnuLeft ID="MnuLeft1" runat="server"></uc1:mnuLeft>
+                <uc1:panelanalysis ID="PanelAnalysis1" runat="server">
+                </uc1:panelanalysis>
                 <br>
-                <uc1:panelsearchhtml id="PanelSearchHtml1" runat="server"></uc1:panelsearchhtml>
                 <!-- BEGIN Panel -->
+                <uc1:panelsearchhtml id="PanelSearchHtml1" runat="server"></uc1:panelsearchhtml>
                 <!-- END Panel -->
             </td>
             <td valign="top" width="344" style="width: 562px">
                 <!-- BEGIN Panel -->
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
-
                 <!-- END Panel -->
             </td>
         </tr>

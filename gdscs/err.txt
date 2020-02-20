@@ -187,3 +187,18 @@ http://localhost/gdscs/pvOut.aspx?ds=11
    at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)
    at System.Data.SqlClient.SqlDataReader.get_Item(String name)
    at gds.gdsVar..ctor(Int32 var_id, String varTbl) in C:\gdscs\gdscs\commonModule.cs:line 619
+   at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse)
+   at System.Web.HttpResponse.Redirect(String url)
+   at gds.v2.GetRequest() in C:\gdscs\gdscs\v2.aspx.cs:line 114
+   at gds.v2.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v2.aspx.cs:line 32
+http://localhost/gdscs/v2.aspx?ds=26
+2/20/2020 11:47:07 PM
+   at gds.VarSelectPage.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 29
+http://localhost/gdscs/v.aspx?r=61&ds=11
+2/21/2020 1:06:15 AM
+   at gds.VarSelectPage.Page_Load(Object sender, EventArgs e) in C:\gdscs\gdscs\v.aspx.cs:line 29
+http://localhost/gdscs/v.aspx
+2/21/2020 1:07:42 AM

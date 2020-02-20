@@ -1,33 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace gds
 {
-    public partial class VarSelectPage : System.Web.UI.Page
+    public partial class gds2_v_old : System.Web.UI.Page
     {
-        protected string submitString;
-        protected string actionString;
-        protected string chString;
-
         protected bool isSingleVar;
         protected int iDs;
         string iR;
         protected bool bEn;
-        protected int c;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                mnuTop TopMenu1 = (mnuTop)Master.Master.FindControl("TopMenu1");
-                mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
-                
                 bEn = commonModule.IsEnglish();
                 MnuBottom1.SetSelectedIndex(2);
-                TopMenu1.SetSelectedIndex(2);
+                MnuTop1.SetSelectedIndex(2);
                 SetUI();
                 GetRequest();
             }
@@ -43,7 +36,6 @@ namespace gds
 
         public void SetUI()
         {
-
             btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
             btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
             lblTreeDs.Text = bEn ? "Select a Survey Dataset: " : "Pilihan Dataset Survey: ";
@@ -57,22 +49,6 @@ namespace gds
             }
             else
                 isSingleVar = true;
-
-
-            int l = bEn ? 1 : 0;
-            if (isSingleVar)
-            {
-                submitString = string.Format("return dist3('frmV',{0});", l);
-                actionString = "pvOut.aspx";
-            }
-            else
-            {
-                submitString = string.Format("return mz('frmV',{0},{1})", c, l);
-                actionString = "tw.aspx";
-            }
-
-            chString = bEn ? "Show chart" : "Tampilkan dengan chart";
-            c = Request.Params["c"] == "1" ? 1 : 0;
 
             pTitleV.Visible = true;
             pTextV.Visible = true;
@@ -115,7 +91,7 @@ namespace gds
             }
 
             {
-
+                
                 if (Request.Params["r"] == "All" & (Request.Params["d"] == "" | Request.Params["d"] == null))
                     TreeLocations1.SelectedID = "All~Natl";
                 else
@@ -167,5 +143,8 @@ namespace gds
                 TreeVars1.IsSecondLevelVisible = true;
             }
         }
+
+
+
     }
 }

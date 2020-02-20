@@ -136,7 +136,7 @@ function dist3(f,l)
 {
 	var sArr='';
 	var el = document.forms[f];
-	var iCnt = 0;var sArr;
+	var iCnt = 0; var sArr;
 	for (var i=0;i<el.l.length;i++)
 	{
 		if (el.l[i].checked)

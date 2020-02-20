@@ -548,11 +548,12 @@ namespace gds
         private string _criteria;
         public gdsVar(int var_id, string varTbl)
         {
+            string s = " SELECT * FROM " + varTbl + " WHERE var_id = " + var_id;
             SqlConnection cn = new SqlConnection(commonModule.GetConnString());
-            SqlCommand cm = new SqlCommand(" SELECT * FROM " + varTbl + " WHERE var_id = " + var_id, cn);
+            SqlCommand cm = new SqlCommand(s, cn);
 
             cn.Open();
-            SqlDataReader dr = cm.ExecuteReader();
+                SqlDataReader dr = cm.ExecuteReader();
             if (dr.Read())
             {
                 _var_id = int.Parse(dr["var_id"].ToString());
