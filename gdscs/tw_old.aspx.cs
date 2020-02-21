@@ -7,19 +7,13 @@ using System.Web.UI.WebControls;
 
 namespace gds
 {
-    public partial class ScatterPage : System.Web.UI.Page
+    public partial class tw_old : System.Web.UI.Page
     {
         protected int iDs;
         protected bool bEn;
 
-        protected panelGenericTitle pTitleTw;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
-            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
-            //panelGenericTitle pTitleTw = (panelGenericTitle)
-
             MnuBottom1.SetSelectedIndex(2);
             MnuTop1.SetSelectedIndex(2);
 

@@ -10,70 +10,88 @@
 namespace gds {
     
     
-    public partial class pvOut {
+    public partial class sc_old {
         
         /// <summary>
-        /// frmServer control.
+        /// MnuTop1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmServer;
+        protected global::gds.mnuTop MnuTop1;
         
         /// <summary>
-        /// WebChartViewer2 control.
+        /// LangBar1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ChartDirector.WebChartViewer WebChartViewer2;
+        protected global::gds.langBar1 LangBar1;
         
         /// <summary>
-        /// WebChartViewer1 control.
+        /// lstds control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ChartDirector.WebChartViewer WebChartViewer1;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect lstds;
         
         /// <summary>
-        /// Literal1 control.
+        /// lstr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect lstr;
         
         /// <summary>
-        /// PlaceHolder1 control.
+        /// lstds2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect lstds2;
         
         /// <summary>
-        /// DataGrid1 control.
+        /// PanelAnalysis1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid DataGrid1;
+        protected global::gds.panelAnalysis PanelAnalysis1;
         
         /// <summary>
-        /// LiteralToolTip control.
+        /// PanelSearchHtml1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralToolTip;
+        protected global::gds.panelSearchHtml PanelSearchHtml1;
+        
+        /// <summary>
+        /// pTitleSc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.panelGenericTitle pTitleSc;
+        
+        /// <summary>
+        /// TreeScoreOut1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.treeScoreOut TreeScoreOut1;
         
         /// <summary>
         /// TreeDs1 control.
@@ -85,21 +103,39 @@ namespace gds {
         protected global::gds.treeDs TreeDs1;
         
         /// <summary>
-        /// btnPrev control.
+        /// TreeScore1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnPrev;
+        protected global::gds.treeScore TreeScore1;
         
         /// <summary>
-        /// btnNext control.
+        /// PanelCopyright1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputSubmit btnNext;
+        protected global::gds.panelCopyright PanelCopyright1;
+        
+        /// <summary>
+        /// MnuBottom1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.mnuBottom MnuBottom1;
+        
+        /// <summary>
+        /// PanelToolTip1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.panelToolTip PanelToolTip1;
     }
 }

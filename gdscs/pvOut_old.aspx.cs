@@ -12,22 +12,13 @@ using System.Globalization;
 using ChartDirector;
 namespace gds
 {
-    public partial class pvOut : System.Web.UI.Page
+    public partial class pvOut_old : System.Web.UI.Page
     {
         protected bool bEn;
 
         protected treeComparators TreeComparators1;
         protected treeVars TreeVars1;
         protected treeLocations TreeLocations1;
-        protected panelResultToolBar PanelResultToolBar1;
-
-        protected string submitString;
-        protected string actionString;
-        protected string chString;
-        protected int c;
-        protected int l;
-
-        
         private const int INTLEGENDHEIGHT = 16;
         private const int INTBOTTOMTEXTHEIGHT = 20;
         private const int INTBASEHEIGHT = 400;
@@ -58,6 +49,8 @@ namespace gds
         private int[] iColors = new[] { 0xAAFFAA, 0xCCCCFF, 0xFFFFAA, 0xFFCC66, 0xFFFF, 0xFF99FF, 0xDDFF55, 0xFF82BA, 0xB7AA, 0x777EFF, 0x63E600, 0xC0C0C0, 0xFF8640, 0x10C4E2, 0xE9D0A4, 0x85B660, 0xD2A08D, 0xCC91FF, 0xD8E2E6, 0xFF00, 0xFFFFFF, 0xAAFFAA, 0xCCCCFF, 0xFFFFAA, 0xFFCC66, 0xFFFF, 0xFF99FF, 0xDDFF55, 0xFF82BA, 0xB7AA, 0x777EFF, 0x63E600, 0xC0C0C0, 0xFF8640, 0x10C4E2, 0xE9D0A4, 0x85B660, 0xD2A08D, 0xCC91FF, 0xD8E2E6, 0xFF00, 0xFFFFFF };
         protected HtmlGenericControl Title1;
         protected int iR;
+        protected mnuBottom MnuBottom1;
+        protected mnuTop MnuTop1;
         protected bool isSingleVar;
         private panelResultToolBar _PanelResultToolBar1;
         protected bool isValidRequest;
@@ -66,22 +59,19 @@ namespace gds
         {
             //try
             {
-                mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
-                mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
-
                 MnuBottom1.SetSelectedIndex(2);
                 MnuTop1.SetSelectedIndex(2);
                 isValidRequest = GetValidRequest();
                 SetUI();
                 oGt = new gdsTable(iDs);
                 InitTrees();
-
+                
                 if (isValidRequest)
                 {
                     oGv = new gdsVar(Convert.ToInt32(var_id), oGt.VarTable);
                     oGg = new gdsGeo(sRegn, sDist);
-                    desc = bEn ? oGv.Desc_En : oGv.Desc;
-                    var_parent_desc = bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc;
+                    desc = bEn? oGv.Desc_En: oGv.Desc;
+                    var_parent_desc = bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc;
                     contflg = Convert.ToInt32(oGv.IsContVar);
                     ViewState["desc"] = desc;
 
@@ -283,7 +273,7 @@ namespace gds
             string r = System.Environment.NewLine;
             if (sDist == "All") // All districts in a province
             {
-                IncComp(ref sComp, ref sCompCounter, (bEn ? "Province" : "Propinsi"), 1); // The Prov
+                IncComp(ref sComp, ref sCompCounter, (bEn? "Province": "Propinsi"), 1); // The Prov
                 sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, oGg.ProvName, null, oGg.Prov, null, oGt.ProvFld, null, null, BasicCompType.Province));
                 sb.Append(r);
                 IncComp(ref sComp, ref sCompCounter, (bEn ? "National" : "Nasional"), 1); // All Prov
@@ -292,13 +282,13 @@ namespace gds
             }
             else if (sDist == "Natl") // All provinces
             {
-                IncComp(ref sComp, ref sCompCounter, (bEn ? "National" : "Nasional"), 1); // All Prov
-                sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, (bEn ? "National" : "Nasional"), null, null, null, null, null, null, BasicCompType.National));
+                IncComp(ref sComp, ref sCompCounter, (bEn? "National": "Nasional"), 1); // All Prov
+                sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, (bEn? "National": "Nasional"), null, null, null, null, null, null, BasicCompType.National));
                 sb.Append(r);
             }
             else // single district
             {
-                IncComp(ref sComp, ref sCompCounter, (bEn ? "District" : "Kabupaten"), 1); // The Kabu
+                IncComp(ref sComp, ref sCompCounter, (bEn? "District": "Kabupaten"), 1); // The Kabu
                 sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, oGg.KabuName, oGg.Kabu, oGg.Prov, oGt.KabuFld, oGt.ProvFld, null, null, BasicCompType.District));
                 sb.Append(r);
                 IncComp(ref sComp, ref sCompCounter, (bEn ? "Province" : "Propinsi"), 1); // The Prov
@@ -306,7 +296,7 @@ namespace gds
                 sb.Append(r);
                 sb.Append(r);
                 IncComp(ref sComp, ref sCompCounter, "", 1); // All Prov
-                sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, (bEn ? "National" : "Nasional"), null, null, null, null, null, null, BasicCompType.National));
+                sb.Append(BuildSqlAvDetail(oGt.AvTable, oGv.Tbl_Id, oGv.Var, oGv.Tbl, (bEn? "National": "Nasional"), null, null, null, null, null, null, BasicCompType.National));
                 sb.Append(r);
             }
 
@@ -753,12 +743,12 @@ namespace gds
                 // sColName = Replace(dtTable.Columns(i).ColumnName, "Count", "")
                 sColName = dtTable.Columns[i].Caption.Replace("Count", ""); // this time we make use of caption
                 sColName = sColName.Replace("Below7", "0-6~yrs of schooling.");
-                sColName = sColName.Replace("Above7", "7+~yrs of schooling.");
-                sColName = sColName.Replace("Worsened", "Worsened economic condition");
-                sColName = sColName.Replace("Improved", "Improved economic condition");
+                sColName = sColName.Replace( "Above7", "7+~yrs of schooling.");
+                sColName = sColName.Replace( "Worsened", "Worsened economic condition");
+                sColName = sColName.Replace( "Improved", "Improved economic condition");
                 sColName = sColName.Replace("_", " ");
                 sColName = sColName.Replace(" ", "\n");
-                sColName = sColName.Replace("~", " ");
+                sColName = sColName.Replace( "~", " ");
                 Labels[i - 1] = sColName;
             }
 
@@ -786,7 +776,7 @@ namespace gds
             }   // single district
 
             string sTemp1 = commonModule.WrapString((bEn ? oGv.Desc_En : oGv.Desc), intWidth, 10);
-            string sTemp2 = commonModule.WrapString((bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc), intWidth, 10);
+            string sTemp2 = commonModule.WrapString((bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc), intWidth, 10);
             tb = c.addTitle(sTemp2 + (char)10 + sTemp1, "arialbd.ttf", 10, 0xFF);
 
             // tb.setBackground(c.gradientColor(New Integer() {0, &H5555EE, 30, &HDDDDFF, (tb.getHeight / 2), &HFFFFFF, tb.getHeight - 3, &HDDDDFF, tb.getHeight, &H5555EE}, 180, tb.getHeight), -1, 1)
@@ -816,10 +806,10 @@ namespace gds
                 layer.addDataSet(table.getCol(i), iColors[i], Server.HtmlDecode(dtTable.Rows[i][0].ToString()));
             layer.setBorderColor(-1, 1);
             layer.setDataLabelStyle().setAlignment(Chart.Center);
-            layer.setDataLabelFormat((bEn ? "{percent|1,.} %" : "{percent|1.,} %")); // Format percentage with 1 decimal digit
+            layer.setDataLabelFormat((bEn? "{percent|1,.} %": "{percent|1.,} %")); // Format percentage with 1 decimal digit
             layer.setLegend(Chart.ReverseLegend);
             txtLabel = c.xAxis().setLabels(Labels);
-            c.yAxis().setTitle((bEn ? "Percentage" : "Persentase"), "Arialbd.ttf", 10);
+            c.yAxis().setTitle((bEn? "Percentage": "Persentase"), "Arialbd.ttf", 10);
             // txtLabel.setFontAngle(45)
             // Dim WebChartViewer1 As New ChartDirector.WebChartViewer
             c.setAntiAlias(true, 1);
@@ -1029,7 +1019,7 @@ namespace gds
             // layer.setBarGap(Chart.TouchBar)
             // layer.setBarWidth((dtTable.Rows.Count * 20) + 10, 20)
 
-            sT = bEn ? oGv.Desc_En : oGv.Desc;
+            sT = bEn? oGv.Desc_En: oGv.Desc;
             sT = commonModule.FormatByLength(sT, 60);
             sT = sT.Replace("<B>", "").Replace("</B>", "");
             tb = c.addTitle(sT, "arialbd.ttf", 10, 0xFF);
@@ -1154,8 +1144,8 @@ namespace gds
                 // sT &= Chr(10) & IIf(bEn, "District ", " ") & oGg.KabuName & " )"
             }   // single district
 
-            string sTemp1 = commonModule.WrapString(bEn ? oGv.Desc_En : oGv.Desc, intWidth, 10);
-            string sTemp2 = commonModule.WrapString(bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc, intWidth, 10);
+            string sTemp1 =commonModule. WrapString(bEn? oGv.Desc_En: oGv.Desc, intWidth, 10);
+            string sTemp2 = commonModule.WrapString(bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc, intWidth, 10);
             // Dim sTitle As String = WrapString(sTemp1 & "(" & sTemp2 & ")", intWidth, 10)
             // Dim sTitle As String = WrapString(sTemp1, intWidth, 10)
             tb = c.addTitle(sTemp2 + (char)10 + sTemp1, "arialbd.ttf", 10, 0xFF);
@@ -1228,7 +1218,7 @@ namespace gds
             BarLayer.setBorderColor(-1, 1);
             if (Convert.ToInt32(dtTable.Compute("AVG(Mean)", "")) < 100000)
             {
-                BarLayer.setDataLabelFormat(bEn ? "{value|1,.}" : "{value|1.,}");     // Format percentage with 1 decimal digit
+                BarLayer.setDataLabelFormat(bEn? "{value|1,.}": "{value|1.,}");     // Format percentage with 1 decimal digit
                 BarLayer.setDataLabelStyle().setAlignment(Chart.Center);
                 BarLayer.setDataLabelStyle().setFontAngle(90);
             }
@@ -1237,10 +1227,10 @@ namespace gds
             c.xAxis().setLabels(labels).setFontAngle(45);
 
             // c.yAxis().setLabelStyle("arialbd.ttf")
-            c.yAxis().setLabelFormat(bEn ? "{value|1,.}" : "{value|1.,}");
+            c.yAxis().setLabelFormat(bEn? "{value|1,.}": "{value|1.,}");
             c.yAxis().setTitle("Mean", "Arialbd.ttf", 10, 0x0);
 
-            string sTemp1 = commonModule.WrapString(bEn ? oGv.Desc_En : oGv.Desc, intWidth, 10);
+            string sTemp1 = commonModule.WrapString(bEn? oGv.Desc_En: oGv.Desc, intWidth, 10);
             string sTemp2 = commonModule.WrapString(bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc, intWidth, 10);
             // Dim sTitle As String = WrapString(sTemp1 & "(" & sTemp2 & ")", intWidth, 10)
             tb = c.addTitle(sTemp2 + ((char)10 + sTemp1), "arialbd.ttf", 10, 0xFF);
@@ -1350,15 +1340,15 @@ namespace gds
                 {
                     sColName = dtTable.Columns[i].Caption.Replace("Count", "");
                     sColName = sColName.Replace("Below7", "0-6");
-                    sColName = sColName.Replace("Above7", "7+");
-                    sColName = sColName.Replace("Not_Participate", "No");
-                    sColName = sColName.Replace("Participate", "Yes");
-                    sColName = sColName.Replace("Has_Civil_Servants", "Yes");
-                    sColName = sColName.Replace("No_Civil_Servants", "No");
-                    sColName = sColName.Replace("Has_Links", "Yes");
-                    sColName = sColName.Replace("No_Links", "No");
-                    sColName = sColName.Replace("Not_Aware_Of_Voice", "No");
-                    sColName = sColName.Replace("Aware_Of_Voice", "Yes");
+                    sColName = sColName.Replace( "Above7", "7+");
+                    sColName = sColName.Replace( "Not_Participate", "No");
+                    sColName = sColName.Replace( "Participate", "Yes");
+                    sColName = sColName.Replace( "Has_Civil_Servants", "Yes");
+                    sColName = sColName.Replace( "No_Civil_Servants", "No");
+                    sColName = sColName.Replace( "Has_Links", "Yes");
+                    sColName = sColName.Replace( "No_Links", "No");
+                    sColName = sColName.Replace( "Not_Aware_Of_Voice", "No");
+                    sColName = sColName.Replace( "Aware_Of_Voice", "Yes");
                     sColName = sColName.Replace("_", " ");
 
                     s.Append("<TD COLSPAN=\"2\" BGCOLOR=\"#E6E6FA\"class=\"H11b\">" + sColName + "</TD>");
@@ -1430,7 +1420,7 @@ namespace gds
                                         }
                                     case 4:
                                         {
-                                            s.AppendLine("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString("#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
+                                            s.AppendLine("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble( dtTable.Rows[i][i2] )/Convert.ToDouble( dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString( "#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
                                 }
@@ -1499,8 +1489,8 @@ namespace gds
             {
                 s.AppendLine("<TR>");
                 s.AppendLine("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
-                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn ? oGv.Q_En : oGv.Q));
-                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn ? oGt.Desc_En + " Survey Data" : "Data Survei " + oGt.Desc));
+                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn? oGv.Q_En: oGv.Q));
+                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn? oGt.Desc_En + " Survey Data": "Data Survei " + oGt.Desc));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8\">{0}</DIV>", "Governance and Decentralization Survey 2 (GDS2) - Indonesia");
                 // .Append("<SUP>++</SUP> Overall (National)")		  'uncomment this Kalo ternyata comparator nya per dist/regn
                 s.AppendLine("</TD>");
@@ -1511,7 +1501,7 @@ namespace gds
             return s.ToString();
         }
 
-        string DrawTable2(DataTable dtTable, DataTable dtTablePct, string cssClass)
+         string DrawTable2(DataTable dtTable, DataTable dtTablePct, string cssClass)
         {
             short iRow = default(short), iCol;
             StringBuilder s;
@@ -1591,17 +1581,17 @@ namespace gds
                     // s &= "<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">Category</TD>"
                     // .Append("<TD BGCOLOR=""#FFEEFF"" ROWSPAN=""2"">&nbsp;</TD>")
                     // Else	'comm out
-                    sColName = dtTable.Columns[i].Caption.Replace("Count", "");
-                    sColName = sColName.Replace("Below7", "0-6");
-                    sColName = sColName.Replace("Above7", "7+");
-                    sColName = sColName.Replace("Not_Participate", "No");
-                    sColName = sColName.Replace("Participate", "Yes");
-                    sColName = sColName.Replace("Has_Civil_Servants", "Yes");
-                    sColName = sColName.Replace("No_Civil_Servants", "No");
-                    sColName = sColName.Replace("Has_Links", "Yes");
-                    sColName = sColName.Replace("No_Links", "No");
-                    sColName = sColName.Replace("Not_Aware_Of_Voice", "No");
-                    sColName = sColName.Replace("Aware_Of_Voice", "Yes");
+                    sColName = dtTable.Columns[i].Caption.Replace( "Count", "");
+                    sColName = sColName.Replace( "Below7", "0-6");
+                    sColName = sColName.Replace( "Above7", "7+");
+                    sColName = sColName.Replace( "Not_Participate", "No");
+                    sColName = sColName.Replace( "Participate", "Yes");
+                    sColName = sColName.Replace( "Has_Civil_Servants", "Yes");
+                    sColName = sColName.Replace( "No_Civil_Servants", "No");
+                    sColName = sColName.Replace( "Has_Links", "Yes");
+                    sColName = sColName.Replace( "No_Links", "No");
+                    sColName = sColName.Replace( "Not_Aware_Of_Voice", "No");
+                    sColName = sColName.Replace( "Aware_Of_Voice", "Yes");
                     sColName = sColName.Replace("_", " ");
 
                     s.AppendLine("<TD COLSPAN=\"2\" BGCOLOR=\"#E6E6FA\"class=\"H11b\">" + sColName + "</TD>");
@@ -1671,7 +1661,7 @@ namespace gds
                                     case 0:
                                         {
                                             // If Not oGv.IsAdvance Then
-                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + Convert.ToDouble(dtTablePct.Rows[i][i2]).ToString("#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
+                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + Convert.ToDouble(dtTablePct.Rows[i][i2]).ToString( "#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
                                             break;
                                         }
                                     // End If
@@ -1700,12 +1690,12 @@ namespace gds
                                 {
                                     case 0:
                                         {
-                                            s.Append("<TD BGCOLOR=\"#EEEEEE\">" + (Convert.ToDouble(dtTablePct.Rows[i][i2])).ToString("#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
+                                            s.Append("<TD BGCOLOR=\"#EEEEEE\">" + (Convert.ToDouble(dtTablePct.Rows[i][i2])).ToString( "#,##0.0%") + "</TD>");           // Percentage Format with 1 decimal digits
                                             break;
                                         }
                                     case 4:
                                         {
-                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString("#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
+                                            s.Append("<TD BGCOLOR=\"#FFEEFF\">" + (Convert.ToDouble(dtTable.Rows[i][i2]) / Convert.ToDouble(dtTable.Rows[dtTable.Rows.Count - 1][i2])).ToString( "#,##0.0%") + "</TD>");            // Percentage Format with 1 decimal digits
                                             break;
                                         }
                                 }
@@ -1731,7 +1721,7 @@ namespace gds
                             if (!oGv.IsAdvance)
                                 s.AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM([" + dtTable.Columns[i2].ColumnName + "])", ""));
                             // .AppendFormat("<TD>{0:#,###,##0}</TD>", dtTable.Compute("SUM(" & dtTable.Columns(i2).ColumnName & ")", ""))
-
+                            
                             s.Append("<TD>&nbsp;</TD>");
                         }
                     }
@@ -1747,8 +1737,8 @@ namespace gds
             {
                 s.AppendLine("<TR>");
                 s.AppendLine("<TD COLSPAN=\"" + (dtTable.Columns.Count * 2 - 1) + "\">");
-                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn ? oGv.Q_En : oGv.Q));
-                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn ? oGt.Desc_En + " Survey Data" : "Data Survei " + oGt.Desc));
+                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H9i\">\"{0}\"</DIV>", (bEn? oGv.Q_En: oGv.Q));
+                s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8b\">{0}</DIV>", (bEn? oGt.Desc_En + " Survey Data": "Data Survei " + oGt.Desc));
                 s.AppendFormat("<DIV ALIGN=\"center\" CLASS=\"H8\">{0}</DIV>", "Governance and Decentralization Survey 2 (GDS2) - Indonesia");
                 // .Append("<SUP>++</SUP> Overall (National)")		  'uncomment this Kalo ternyata comparator nya per dist/regn
                 s.AppendLine("</TD>");
@@ -1758,7 +1748,7 @@ namespace gds
             return s.ToString();
         }
 
-        string DrawTableCont(DataTable dtTable)
+         string DrawTableCont(DataTable dtTable)
         {
             short iRow;
             short iCol;
@@ -1774,510 +1764,487 @@ namespace gds
             return sb.ToString();
         }
 
-        DataTable GetDataAv(string sql)
-        {
-            var dt = new DataTable(); // this DataTable will make use of column caption
-            var cn = new SqlConnection(commonModule.GetConnString());
-            var cm = new SqlCommand(sql, cn);
-            cn.Open();
-            SqlDataReader dr;
-            dr = cm.ExecuteReader();
-            dt.Columns.Add(dr.GetName(1), dr.GetFieldType(1));
-            dt.Columns.Add(dr.GetName(2), dr.GetFieldType(2));
-            DataRow drw;
-            while (dr.Read())
-            {
-                drw = dt.NewRow();
-                drw[0] = dr[1]; // ambil field [desc]
-                drw[1] = dr[2]; // ambil field [value]
-                dt.Rows.Add(drw);
-                if (Trace.IsEnabled)
-                {
-                    Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
-                }
-            }
+         DataTable GetDataAv(string sql)
+         {
+             var dt = new DataTable(); // this DataTable will make use of column caption
+             var cn = new SqlConnection(commonModule.GetConnString());
+             var cm = new SqlCommand(sql, cn);
+             cn.Open();
+             SqlDataReader dr;
+             dr = cm.ExecuteReader();
+             dt.Columns.Add(dr.GetName(1), dr.GetFieldType(1));
+             dt.Columns.Add(dr.GetName(2), dr.GetFieldType(2));
+             DataRow drw;
+             while (dr.Read())
+             {
+                 drw = dt.NewRow();
+                 drw[0] = dr[1]; // ambil field [desc]
+                 drw[1] = dr[2]; // ambil field [value]
+                 dt.Rows.Add(drw);
+                 if (Trace.IsEnabled)
+                 {
+                     Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
+                 }
+             }
 
-            int iRowsCount = dt.Rows.Count;
-            int iColsCount = dt.Columns.Count;
-            if (dr.NextResult())
-            {
-                do
-                {
-                    dt.Columns.Add(dr.GetName(2), typeof(int));
-                    iColsCount += 1;
-                    for (int i = 0, loopTo = iRowsCount - 1; i <= loopTo; i++)
-                    {
-                        dr.Read();
-                        dt.Rows[i][iColsCount - 1] = dr[2]; // adds rows (from the field [desc])to the last created columns in the dt
-                        if (Trace.IsEnabled)
-                        {
-                            Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
-                        }
-                    }
+             int iRowsCount = dt.Rows.Count;
+             int iColsCount = dt.Columns.Count;
+             if (dr.NextResult())
+             {
+                 do
+                 {
+                     dt.Columns.Add(dr.GetName(2), typeof(int));
+                     iColsCount += 1;
+                     for (int i = 0, loopTo = iRowsCount - 1; i <= loopTo; i++)
+                     {
+                         dr.Read();
+                         dt.Rows[i][iColsCount - 1] = dr[2]; // adds rows (from the field [desc])to the last created columns in the dt
+                         if (Trace.IsEnabled)
+                         {
+                             Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
+                         }
+                     }
 
-                    if (dr.GetName(2).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
-                    {
-                        dt.Columns[iColsCount - 1].Caption = dr.GetName(2).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
-                    }
-                    else
-                    {
-                        dt.Columns[iColsCount - 1].Caption = dr.GetName(2);
-                    }
-                }
-                while (dr.NextResult());
-            }
+                     if (dr.GetName(2).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
+                     {
+                         dt.Columns[iColsCount - 1].Caption = dr.GetName(2).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
+                     }
+                     else
+                     {
+                         dt.Columns[iColsCount - 1].Caption = dr.GetName(2);
+                     }
+                 }
+                 while (dr.NextResult());
+             }
 
-            dr.Close();
-            cn.Close();
-            return dt;
-        }
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
 
-        public DataTable[] GetDataAv2(string sql)
-        {
-            var dt = new DataTable[2];
-            dt[0] = new DataTable(); // this DataTable will make use of column caption
-            dt[1] = new DataTable(); // this DataTable will make use of column caption
-            var cn = new SqlConnection(commonModule.GetConnString());
-            var cm = new SqlCommand(sql, cn);
-            cn.Open();
-            SqlDataReader dr;
-            dr = cm.ExecuteReader();
-            dt[0].Columns.Add(dr.GetName(1), dr.GetFieldType(1));
-            dt[0].Columns.Add(dr.GetName(2), dr.GetFieldType(2)); // Count Column
-            dt[1].Columns.Add(dr.GetName(1), dr.GetFieldType(1));
-            dt[1].Columns.Add(dr.GetName(3), dr.GetFieldType(3)); // Pct Column
-            DataRow drw;
-            DataRow drw1;
-            while (dr.Read())
-            {
-                drw = dt[0].NewRow();
-                drw1 = dt[1].NewRow();
-                drw[0] = dr[1]; // ambil field [desc]
-                drw[1] = dr[2]; // ambil field [value]
-                drw1[0] = dr[1]; // ambil field [desc]
-                drw1[1] = dr[3]; // ambil field [Pct]
-                dt[0].Rows.Add(drw);
-                dt[1].Rows.Add(drw1);
-                if (Trace.IsEnabled)
-                {
-                    Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
-                }
-            }
+         public DataTable[] GetDataAv2(string sql)
+         {
+             var dt = new DataTable[2];
+             dt[0] = new DataTable(); // this DataTable will make use of column caption
+             dt[1] = new DataTable(); // this DataTable will make use of column caption
+             var cn = new SqlConnection(commonModule.GetConnString());
+             var cm = new SqlCommand(sql, cn);
+             cn.Open();
+             SqlDataReader dr;
+             dr = cm.ExecuteReader();
+             dt[0].Columns.Add(dr.GetName(1), dr.GetFieldType(1));
+             dt[0].Columns.Add(dr.GetName(2), dr.GetFieldType(2)); // Count Column
+             dt[1].Columns.Add(dr.GetName(1), dr.GetFieldType(1));
+             dt[1].Columns.Add(dr.GetName(3), dr.GetFieldType(3)); // Pct Column
+             DataRow drw;
+             DataRow drw1;
+             while (dr.Read())
+             {
+                 drw = dt[0].NewRow();
+                 drw1 = dt[1].NewRow();
+                 drw[0] = dr[1]; // ambil field [desc]
+                 drw[1] = dr[2]; // ambil field [value]
+                 drw1[0] = dr[1]; // ambil field [desc]
+                 drw1[1] = dr[3]; // ambil field [Pct]
+                 dt[0].Rows.Add(drw);
+                 dt[1].Rows.Add(drw1);
+                 if (Trace.IsEnabled)
+                 {
+                     Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
+                 }
+             }
 
-            int iRowsCount = dt[0].Rows.Count;
-            int iColsCount = dt[0].Columns.Count;
-            int iCnt = 0;
-            if (dr.NextResult())
-            {
-                do
-                {
-                    iCnt += 1;
-                    dt[0].Columns.Add(dr.GetName(2), typeof(int));
-                    dt[1].Columns.Add(dr.GetName(3) + iCnt.ToString(), typeof(float));
-                    iColsCount += 1;
-                    for (int i = 0, loopTo = iRowsCount - 1; i <= loopTo; i++)
-                    {
-                        dr.Read();
-                        dt[0].Rows[i][iColsCount - 1] = dr[2]; // adds rows (from the field [desc])to the last created columns in the dt
-                        dt[1].Rows[i][iColsCount - 1] = dr[3]; // adds rows (from the field [desc])to the last created columns in the dt
-                        if (Trace.IsEnabled)
-                        {
-                            Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
-                        }
-                    }
+             int iRowsCount = dt[0].Rows.Count;
+             int iColsCount = dt[0].Columns.Count;
+             int iCnt = 0;
+             if (dr.NextResult())
+             {
+                 do
+                 {
+                     iCnt += 1;
+                     dt[0].Columns.Add(dr.GetName(2), typeof(int));
+                     dt[1].Columns.Add(dr.GetName(3) + iCnt.ToString(), typeof(float));
+                     iColsCount += 1;
+                     for (int i = 0, loopTo = iRowsCount - 1; i <= loopTo; i++)
+                     {
+                         dr.Read();
+                         dt[0].Rows[i][iColsCount - 1] = dr[2]; // adds rows (from the field [desc])to the last created columns in the dt
+                         dt[1].Rows[i][iColsCount - 1] = dr[3]; // adds rows (from the field [desc])to the last created columns in the dt
+                         if (Trace.IsEnabled)
+                         {
+                             Trace.Warn("testAv", dr[0].ToString() + "," + dr[1].ToString() + "," + dr[2].ToString());
+                         }
+                     }
 
-                    if (dr.GetName(2).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
-                    {
-                        dt[0].Columns[iColsCount - 1].Caption = dr.GetName(2).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
-                    }
-                    else
-                    {
-                        dt[0].Columns[iColsCount - 1].Caption = dr.GetName(2);
-                    }
-                }
-                while (dr.NextResult());
-            }
+                     if (dr.GetName(2).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
+                     {
+                         dt[0].Columns[iColsCount - 1].Caption = dr.GetName(2).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
+                     }
+                     else
+                     {
+                         dt[0].Columns[iColsCount - 1].Caption = dr.GetName(2);
+                     }
+                 }
+                 while (dr.NextResult());
+             }
 
-            dr.Close();
-            cn.Close();
-            return dt;
-        }
-        DataTable GetDataCat(string sql)
-        {
-            var dt = new DataTable(); // this DataTable will make use of column caption
-            var cn = new SqlConnection(commonModule.GetConnString());
-            var cm = new SqlCommand(sql, cn);
-            cn.Open();
-            SqlDataReader dr;
-            dr = cm.ExecuteReader();
-            for (int i = 1, loopTo = dr.FieldCount - 1; i <= loopTo; i += 2)
-            {
-                var dc = new DataColumn();
-                dc.DataType = dr.GetFieldType(i);
-                dc.ColumnName = dr.GetName(i);
-                if (dr.GetName(i).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
-                {
-                    dc.Caption = dr.GetName(i).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
-                }
-                else
-                {
-                    dc.Caption = dr.GetName(i);
-                }
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
+          DataTable GetDataCat(string sql)
+         {
+             var dt = new DataTable(); // this DataTable will make use of column caption
+             var cn = new SqlConnection(commonModule.GetConnString());
+             var cm = new SqlCommand(sql, cn);
+             cn.Open();
+             SqlDataReader dr;
+             dr = cm.ExecuteReader();
+             for (int i = 1, loopTo = dr.FieldCount - 1; i <= loopTo; i += 2)
+             {
+                 var dc = new DataColumn();
+                 dc.DataType = dr.GetFieldType(i);
+                 dc.ColumnName = dr.GetName(i);
+                 if (dr.GetName(i).IndexOf("cap") == 5) // kalau ada nama kolom berawalan "cap", since the query for the comparator results in "Countcap1Jawa", etc
+                 {
+                     dc.Caption = dr.GetName(i).Remove(5, 5); // removes "cap<2 digits number> (see comp_id field in the GDS2_11_Comp)"
+                 }
+                 else
+                 {
+                     dc.Caption = dr.GetName(i);
+                 }
 
-                dt.Columns.Add(dc);
-            }
+                 dt.Columns.Add(dc);
+             }
 
-            DataRow dRow;
-            int i2;
-            // Dim dc As DataColumn
-            while (dr.Read())
-            {
-                dRow = dt.NewRow();
-                i2 = 0;
-                for (int i = 1, loopTo1 = dr.FieldCount - 1; i <= loopTo1; i += 2)
-                {
-                    // If Not IsDBNull(dr(i)) Then
-                    // dRow(i2) = Server.HtmlEncode(dr(i).ToString)
-                    dRow[i2] = Server.HtmlEncode(dr.IsDBNull(i) ? "0" : dr[i].ToString());
-                    // Else
-                    // dRow(i2) = dr(i).ToString
-                    // End If
-                    // If Trace.IsEnabled Then
-                    // Trace.Warn("dr(" & i & ")", dr(i))
-                    // End If
-                    i2 += 1;
-                }
+             DataRow dRow;
+             int i2;
+             // Dim dc As DataColumn
+             while (dr.Read())
+             {
+                 dRow = dt.NewRow();
+                 i2 = 0;
+                 for (int i = 1, loopTo1 = dr.FieldCount - 1; i <= loopTo1; i += 2)
+                 {
+                     // If Not IsDBNull(dr(i)) Then
+                     // dRow(i2) = Server.HtmlEncode(dr(i).ToString)
+                     dRow[i2] = Server.HtmlEncode(dr.IsDBNull(i) ? "0" : dr[i].ToString());
+                     // Else
+                     // dRow(i2) = dr(i).ToString
+                     // End If
+                     // If Trace.IsEnabled Then
+                     // Trace.Warn("dr(" & i & ")", dr(i))
+                     // End If
+                     i2 += 1;
+                 }
 
-                dt.Rows.Add(dRow);
-            }
-            // End If
+                 dt.Rows.Add(dRow);
+             }
+             // End If
 
-            dr.Close();
-            cn.Close();
-            return dt;
-        }
+             dr.Close();
+             cn.Close();
+             return dt;
+         }
 
-        DataTable GetDataCont(string sql)
-        {
-            var dt = new DataTable();
-            var cn = new SqlConnection(commonModule.GetConnString());
-            var cm = new SqlCommand(sql, cn);
-            SqlDataReader dr;
-            DataRow dRow;
-            cn.Open();
-            dr = cm.ExecuteReader();
-            for (int i = 0, loopTo = dr.FieldCount - 1; i <= loopTo; i++)
-                dt.Columns.Add(dr.GetName(i), dr.GetFieldType(i));
-            do
-            {
-                while (dr.Read())
-                {
-                    dRow = dt.NewRow();
-                    for (int i = 0, loopTo1 = dr.FieldCount - 1; i <= loopTo1; i++)
-                        dRow[i] = (dr.IsDBNull(i) ? 0 : dr[i]);
-                    dt.Rows.Add(dRow);
-                }
-            }
-            while (dr.NextResult());
-            // End If
+          DataTable GetDataCont(string sql)
+          {
+              var dt = new DataTable();
+              var cn = new SqlConnection(commonModule.GetConnString());
+              var cm = new SqlCommand(sql, cn);
+              SqlDataReader dr;
+              DataRow dRow;
+              cn.Open();
+              dr = cm.ExecuteReader();
+              for (int i = 0, loopTo = dr.FieldCount - 1; i <= loopTo; i++)
+                  dt.Columns.Add(dr.GetName(i), dr.GetFieldType(i));
+              do
+              {
+                  while (dr.Read())
+                  {
+                      dRow = dt.NewRow();
+                      for (int i = 0, loopTo1 = dr.FieldCount - 1; i <= loopTo1; i++)
+                          dRow[i] = (dr.IsDBNull(i)? 0: dr[i]);
+                      dt.Rows.Add(dRow);
+                  }
+              }
+              while (dr.NextResult());
+              // End If
 
-            if (Convert.ToDouble(dt.Compute("AVG (Mean)", "")) <= 1)   // If the cont. variables are percentages (yes-no | not like distance or income)
-            {
-                for (int i = 0, loopTo2 = dt.Rows.Count - 1; i <= loopTo2; i++)
-                {
-                    dt.Rows[i][1] = Convert.ToDouble(dt.Rows[i][1]) * 100;
-                    dt.Rows[i][2] = Convert.ToDouble(dt.Rows[i][2]) * 100;
-                    dt.Rows[i][3] = Convert.ToDouble(dt.Rows[i][3]) * 100;
-                    dt.Rows[i][4] = Convert.ToDouble(dt.Rows[i][4]) * 100;
-                    dt.Rows[i][5] = Convert.ToDouble(dt.Rows[i][5]) * 100;
-                    dt.Rows[i][6] = Convert.ToDouble(dt.Rows[i][6]) * 100;
-                }
+              if (Convert.ToDouble(dt.Compute("AVG (Mean)", "")) <= 1)   // If the cont. variables are percentages (yes-no | not like distance or income)
+              {
+                  for (int i = 0, loopTo2 = dt.Rows.Count - 1; i <= loopTo2; i++)
+                  {
+                      dt.Rows[i][1] = Convert.ToDouble(dt.Rows[i][1]) * 100;
+                      dt.Rows[i][2] = Convert.ToDouble(dt.Rows[i][2]) * 100;
+                      dt.Rows[i][3] = Convert.ToDouble(dt.Rows[i][3]) * 100;
+                      dt.Rows[i][4] = Convert.ToDouble(dt.Rows[i][4]) * 100;
+                      dt.Rows[i][5] = Convert.ToDouble(dt.Rows[i][5]) * 100;
+                      dt.Rows[i][6] = Convert.ToDouble(dt.Rows[i][6]) * 100;
+                  }
 
-                isPct = true;
-            }
+                  isPct = true;
+              }
 
-            return dt;
-        }
+              return dt;
+          }
 
-        public bool GetValidRequest()
-        {
-            // For i As Integer = 0 To Request.Params.Keys.Count - 1
-            // Response.Write(Request.Params.Keys.Item(i))
-            // Response.Write(" = ")
-            // Response.Write(Request.Params(i))
-            // Response.Write("<BR>")
-            // Next
-
-
-            iDs = (Request.Params["ds"] != "" ? Convert.ToInt32(Request.Params["ds"]) : 11); // default to 11 (household)
-            bEn = commonModule.IsEnglish();
-            isChartVisible = (Request.Params["ch"] == "1" ? true : false);
-            // Dim astr() As String = Request.Params("v").Split("~")
-            // var_id = astr(5)
-            // sDist = astr(0)
-            // sRegn = astr(1)
-            if (!string.IsNullOrEmpty(Request.Params["d"]))
-                sDist = Request.Params["d"];
-            else
-                sDist = "Natl";
-
-            if (!string.IsNullOrEmpty(Request.Params["r"]))
-                sRegn = Request.Params["r"];
-            else
-                sRegn = "All";
-
-            if (!bEn)
-                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-
-            if (!string.IsNullOrEmpty(Request.Params["v"]))
-            {
-                var_id = Request.Params["v"];
-                return true;
-            }
-            else
-                return false;
-
-            // 0 = sDist
-            // 1 = sRegn
-            // 2 = ""
-            // 3 = contflg
-            // 4 = exstr
-            // 5 = gdsid
-            // 6 = ""
-
-        }
-
-        public void InitTrees()
-        {
-            bool _isEnglish = bEn;
-            int _datasetNumber;
-            bool _isContVarOnly = false;
-            //TreeLocations1.SelectedID = Request.Params["r"].ToString() + "~" + Request.Params["d"].ToString();
-            TreeLocations1.SelectedID = sRegn + "~" + sDist;
-            TreeVars1.SelectedID = Request.Params["v"];
-            if (Request.Params["ds"] != "")
-            {
-                _datasetNumber = Convert.ToInt32(Request.QueryString["ds"]);
-            }
-            else
-            {
-                _datasetNumber = 11;
-            }
-
-            if (Request.Params["c"] == "1")
-            {
-                _isContVarOnly = true;
-            }
-
-            {
-                TreeLocations1.DatasetNumber = _datasetNumber;
-                TreeLocations1.IsEnglish = _isEnglish;
-                TreeLocations1.IsSecondLevelVisible = true;
-                TreeLocations1.DivTitleString = "Pilih Propinsi/Kabupaten";
-                TreeLocations1.DivTitleStringEn = "Province/District Selection";
-                TreeLocations1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                TreeLocations1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                TreeLocations1.DivTitleAdditionalAttr = "onclick=\"sh0('dlroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
-
-            }
-
-            {
-                //var withBlock1 = this.TreeVars1;
-                TreeVars1.DatasetNumber = _datasetNumber;
-                TreeVars1.GdsTable = oGt;
-                TreeVars1.IsEnglish = _isEnglish;
-                TreeVars1.DivTitleString = "Pilih dari daftar kuesioner " + oGt.Desc;
-                TreeVars1.DivTitleStringEn = oGt.Desc_En + " questionnaires list";
-                TreeVars1.IsContVarOnly = _isContVarOnly;
-                TreeVars1.IsSecondLevelVisible = true;
-                TreeVars1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                TreeVars1.DivContentStyle = "padding:0px 10px 0px 10px;";
-                TreeVars1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                TreeVars1.DivTitleAdditionalAttr = "onclick=\"sh0('dvroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
-
-            }
-
-            {
-                TreeComparators1.DatasetNumber = _datasetNumber;
-                TreeComparators1.DivTitleString = "Pilih Pembanding";
-                TreeComparators1.DivTitleStringEn = "Comparators Selection";
-                TreeComparators1.IsEnglish = _isEnglish;
-                TreeComparators1.IsSecondLevelVisible = true;
-                TreeComparators1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
-                TreeComparators1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
-                TreeComparators1.DivTitleAdditionalAttr = "onclick=\"sh0('dcroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
-
-            }
-
-            if (Request.Params["c"] == "1")
-            {
-                TreeLocations1.Visible = false;
-                TreeComparators1.Visible = false;
-                TreeVars1.IsSecondLevelVisible = true;
-            }
-        }
-
-        public void SetUI()
-        {
-            btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
-            btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
-
-            if (!string.IsNullOrEmpty(Request.Params["c"]))
-            {
-                if (char.IsNumber(Request.Params["c"], 0))
-                {
-                    if (Convert.ToInt32(Request.Params["c"]) == 1)
-                        isSingleVar = false;
-                    else
-                        isSingleVar = true;
-                }
-                else
-                    isSingleVar = true;
-            }
-
-            c = Convert.ToInt32(Request.Params["c"] != null ? (Request.Params["c"].ToString() == "1" ? 1 : 0) : 0);
-            l = Convert.ToInt32((bEn ? 1 : 0));
-            
-            if (isSingleVar)
-            {
-                submitString = string.Format("return dist3('frmV',{0});", l);
-                actionString = "pvOut.aspx";
-            }
-            else
-            {
-                submitString = string.Format("return mz('frmV',{0},{1})", c, l);
-                actionString = "tw.aspx";
-            }
-
-            if (bEn)
-            {
-                chString = "Show chart";
-            }
-            else
-            {
-                chString = "Tampilkan dengan chart";
-            }			
-        }
-
-        public void ShowResultAv()
-        {
-
-            DataTable[] oDt = GetDataAv2(BuildSqlAvFinal());
-            DataGrid1.Visible = false;
-            Literal1.Text = DrawTable2(oDt[0], oDt[1], "grid"); // sesuaikan dengan file .css
-            LiteralToolTip.Text = WriteToolTipDiv();
-            if (isChartVisible)
-            {
-                CreateChartCatSumm(oDt[1]);
-                CreateChartCatSumm2(oDt[1], oDt[0]);
-            }
-        }
+          public bool GetValidRequest()
+          {
+              // For i As Integer = 0 To Request.Params.Keys.Count - 1
+              // Response.Write(Request.Params.Keys.Item(i))
+              // Response.Write(" = ")
+              // Response.Write(Request.Params(i))
+              // Response.Write("<BR>")
+              // Next
 
 
-        public void ShowResultCat()
-        {
-            DataTable oDt = GetDataCat(BuildSqlCatFinal());
-            DataGrid1.Visible = false;
-            Literal1.Text = DrawTable(oDt, "grid"); // sesuaikan dengan file .css
-            Literal1.Text += WriteToolTipDiv();
-            if (isChartVisible)
-                CreateChartCat(oDt);
-        }
+              iDs = (Request.Params["ds"] != "" ? Convert.ToInt32(Request.Params["ds"]) : 11); // default to 11 (household)
+              bEn = commonModule.IsEnglish();
+              isChartVisible = (Request.Params["ch"] == "1"? true: false);
+              // Dim astr() As String = Request.Params("v").Split("~")
+              // var_id = astr(5)
+              // sDist = astr(0)
+              // sRegn = astr(1)
+              if (!string.IsNullOrEmpty(Request.Params["d"]))
+                  sDist = Request.Params["d"];
+              else
+                  sDist = "Natl";
 
-        public void ShowResultCont()
-        {
-            var sb = new StringBuilder();
-            if (sDist == "All") // All districts in a provinces
-            {
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, oGt.ProvFld, oGg.Prov, null, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.Province, oGv.Criteria));
-                sb.Append(";");
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
-                sb.Append(";");
-            }
-            else if (sDist == "Natl") // All provinces / national
-            {
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
-                sb.Append(";");
-            }
-            else
-            {
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, oGt.KabuFld, oGg.Kabu, oGt.ProvFld, oGg.Prov, oGg.KabuName, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.District, oGv.Criteria));
-                sb.Append(";");
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, oGt.ProvFld, oGg.Prov, null, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.Province, oGv.Criteria));
-                sb.Append(";");
-                sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
-                sb.Append(";");
-            }
+              if (!string.IsNullOrEmpty(Request.Params["r"]))
+                  sRegn = Request.Params["r"];
+              else
+                  sRegn = "All";
 
-            // ********************
+              if (!bEn)
+                  System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
 
-            string[] comps = GetRequestComparators();
-            if (!(comps == null))
-            {
-                DataTable dt = GetComparator(oGt.CompTable);
-                DataRow[] drw;
-                for (int i = 0, loopTo = comps.Length - 1; i <= loopTo; i++)
-                {
-                    drw = dt.Select("subgrp_id=" + comps[i]);
-                    if (bEn) // Jagan (maksudnya: Jangan) pake IIF (soalnya FalsePart-nya tetep di-evaluate)
-                    {
-                        for (int j = 0, loopTo1 = drw.Length - 1; j <= loopTo1; j++)
-                        {
-                            sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, drw[j]["var"].ToString(), drw[j]["value"].ToString(), drw[j]["desc_en"].ToString(), oGv.Tbl_Id, BasicCompType.Other, oGv.Criteria));
-                            sb.Append(";");
-                        }
-                    }
-                    else
-                    {
-                        for (int j = 0, loopTo2 = drw.Length - 1; j <= loopTo2; j++)
-                        {
-                            sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, drw[j]["var"].ToString(), drw[j]["value"].ToString(), drw[j]["desc"].ToString(), oGv.Tbl_Id, BasicCompType.Other, oGv.Criteria));
-                            sb.Append(";");
-                        }
-                    }
-                }
+              if (!string.IsNullOrEmpty(Request.Params["v"]))
+              {
+                  var_id = Request.Params["v"];
+                  return true;
+              }
+              else
+                  return false;
 
-                if (Trace.IsEnabled)
-                {
-                    Trace.Warn("BuildSqlCont()", sb.ToString());
-                }
-                // ********************
-            }
+              // 0 = sDist
+              // 1 = sRegn
+              // 2 = ""
+              // 3 = contflg
+              // 4 = exstr
+              // 5 = gdsid
+              // 6 = ""
 
-            if ((sb.ToString(sb.Length - 1, 1) ?? "") == ";")
-            {
-                sb.Remove(sb.Length - 1, 1);    // removes trailkling (= maksud gw trailing lho!) semicolon
-            }
+          }
 
-            DataTable oDt = GetDataCont(sb.ToString());
-            DataGrid1.Visible = true;
-            DataGrid1.Caption = "<DIV STYLE=\"background-color:#AAAAFF;font:bold 10pt Arial;\">" + (bEn ? oGv.Var_Parent_Desc_En : oGv.Var_Parent_Desc) + "</DIV><DIV STYLE=\"background-color:#AAAAFF;font:bold 8pt Arial;\">" + (bEn ? oGv.Desc_En : oGv.Desc) + "</DIV>";
-            DataGrid1.DataSource = oDt;
-            DataGrid1.DataBind();
-            Literal1.Text += WriteToolTipDiv();
-            if (isChartVisible)
-            {
-                CreateChartCont(oDt);
-                CreateChartContBar(oDt);
-            }
-        }
+          public void InitTrees()
+          {
+              bool _isEnglish = bEn;
+              int _datasetNumber;
+              bool _isContVarOnly = false;
+              //TreeLocations1.SelectedID = Request.Params["r"].ToString() + "~" + Request.Params["d"].ToString();
+              TreeLocations1.SelectedID = sRegn + "~" + sDist;
+              TreeVars1.SelectedID = Request.Params["v"];
+              if (Request.Params["ds"] != "")
+              {
+                  _datasetNumber = Convert.ToInt32(Request.QueryString["ds"]);
+              }
+              else
+              {
+                  _datasetNumber = 11;
+              }
+
+              if (Request.Params["c"] == "1")
+              {
+                  _isContVarOnly = true;
+              }
+
+              {
+                  TreeLocations1.DatasetNumber = _datasetNumber;
+                  TreeLocations1.IsEnglish = _isEnglish;
+                  TreeLocations1.IsSecondLevelVisible = true;
+                  TreeLocations1.DivTitleString = "Pilih Propinsi/Kabupaten";
+                  TreeLocations1.DivTitleStringEn = "Province/District Selection";
+                  TreeLocations1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeLocations1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeLocations1.DivTitleAdditionalAttr = "onclick=\"sh0('dlroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+
+              }
+
+              {
+                  //var withBlock1 = this.TreeVars1;
+                  TreeVars1.DatasetNumber = _datasetNumber;
+                  TreeVars1.GdsTable = oGt;
+                  TreeVars1.IsEnglish = _isEnglish;
+                  TreeVars1.DivTitleString = "Pilih dari daftar kuesioner " + oGt.Desc;
+                  TreeVars1.DivTitleStringEn = oGt.Desc_En + " questionnaires list";
+                  TreeVars1.IsContVarOnly = _isContVarOnly;
+                  TreeVars1.IsSecondLevelVisible = true;
+                  TreeVars1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeVars1.DivContentStyle = "padding:0px 10px 0px 10px;";
+                  TreeVars1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeVars1.DivTitleAdditionalAttr = "onclick=\"sh0('dvroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+
+              }
+
+              {
+                  TreeComparators1.DatasetNumber = _datasetNumber;
+                  TreeComparators1.DivTitleString = "Pilih Pembanding";
+                  TreeComparators1.DivTitleStringEn = "Comparators Selection";
+                  TreeComparators1.IsEnglish = _isEnglish;
+                  TreeComparators1.IsSecondLevelVisible = true;
+                  TreeComparators1.DivContainerStyle = "background-color:#F7F8FA;border:solid 1px #ABAEBF;";
+                  TreeComparators1.DivTitleStyle = "background-color:#DFDFE7;color:#000000;";
+                  TreeComparators1.DivTitleAdditionalAttr = "onclick=\"sh0('dcroot');\"" + "onmouseover=\"this.style.backgroundColor='#C9D8FC';\"" + "onmouseout=\"this.style.backgroundColor='#DFDFE7';\"";
+
+              }
+
+              if (Request.Params["c"] == "1")
+              {
+                  TreeLocations1.Visible = false;
+                  TreeComparators1.Visible = false;
+                  TreeVars1.IsSecondLevelVisible = true;
+              }
+          }
+
+          public void SetUI()
+          {
+              btnNext.Value = bEn ? commonModule.NEXTSTRINGEN : commonModule.NEXTSTRING;
+              btnPrev.Value = bEn ? commonModule.PREVSTRINGEN : commonModule.PREVSTRING;
+
+              if (!string.IsNullOrEmpty(Request.Params["c"]))
+              {
+                  if (char.IsNumber(Request.Params["c"], 0))
+                  {
+                      if (Convert.ToInt32(Request.Params["c"]) == 1)
+                          isSingleVar = false;
+                      else
+                          isSingleVar = true;
+                  }
+                  else
+                      isSingleVar = true;
+              }
+          }
+
+          public void ShowResultAv()
+          {
+
+              DataTable[] oDt = GetDataAv2(BuildSqlAvFinal());
+              DataGrid1.Visible = false;
+              Literal1.Text = DrawTable2(oDt[0], oDt[1], "grid"); // sesuaikan dengan file .css
+              LiteralToolTip.Text =WriteToolTipDiv();
+              if (isChartVisible)
+              {
+                  CreateChartCatSumm(oDt[1]);
+                  CreateChartCatSumm2(oDt[1], oDt[0]);
+              }
+          }
 
 
-        private string WriteToolTipDiv() // this function nulisin div buat bikin tooltip di WebChartViewer
-        {
-            StringBuilder fsOut;
-            fsOut = new StringBuilder("<DIV ID=\"tip\" ");
-            fsOut.Append(" Style = \"position:absolute; ");
-            fsOut.Append(" top:0px;left:0px;width:200px;height:50px; ");
-            fsOut.Append(" background:yellow;z-Order:4;visibility:hidden; ");
-            fsOut.Append(" border:1px solid black; ");
-            fsOut.Append(" font:bold 12px Arial; ");
-            fsOut.Append(" padding:3px 3px 3px 10px; ");
-            fsOut.Append(" overflow:visible; ");
-            fsOut.Append(" filter:Alpha(Opacity=85) \"> ");
-            fsOut.Append(" </DIV> ");
-            return fsOut.ToString();
-        }
+          public void ShowResultCat()
+          {
+              DataTable oDt = GetDataCat(BuildSqlCatFinal());
+              DataGrid1.Visible = false;
+              Literal1.Text = DrawTable(oDt, "grid"); // sesuaikan dengan file .css
+              Literal1.Text += WriteToolTipDiv();
+              if (isChartVisible)
+                  CreateChartCat(oDt);
+          }
+
+          public void ShowResultCont()
+          {
+              var sb = new StringBuilder();
+              if (sDist == "All") // All districts in a provinces
+              {
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, oGt.ProvFld, oGg.Prov, null, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.Province, oGv.Criteria));
+                  sb.Append(";");
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
+                  sb.Append(";");
+              }
+              else if (sDist == "Natl") // All provinces / national
+              {
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
+                  sb.Append(";");
+              }
+              else
+              {
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, oGt.KabuFld, oGg.Kabu, oGt.ProvFld, oGg.Prov, oGg.KabuName, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.District, oGv.Criteria));
+                  sb.Append(";");
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, oGt.ProvFld, oGg.Prov, null, oGg.ProvName, null, null, null, oGv.Tbl_Id, BasicCompType.Province, oGv.Criteria));
+                  sb.Append(";");
+                  sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, null, null, null, oGv.Tbl_Id, BasicCompType.National, oGv.Criteria));
+                  sb.Append(";");
+              }
+
+              // ********************
+
+              string[] comps = GetRequestComparators();
+              if (!(comps == null))
+              {
+                  DataTable dt = GetComparator(oGt.CompTable);
+                  DataRow[] drw;
+                  for (int i = 0, loopTo = comps.Length - 1; i <= loopTo; i++)
+                  {
+                      drw = dt.Select("subgrp_id=" + comps[i]);
+                      if (bEn) // Jagan (maksudnya: Jangan) pake IIF (soalnya FalsePart-nya tetep di-evaluate)
+                      {
+                          for (int j = 0, loopTo1 = drw.Length - 1; j <= loopTo1; j++)
+                          {
+                              sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, drw[j]["var"].ToString(), drw[j]["value"].ToString(), drw[j]["desc_en"].ToString(), oGv.Tbl_Id, BasicCompType.Other, oGv.Criteria));
+                              sb.Append(";");
+                          }
+                      }
+                      else
+                      {
+                          for (int j = 0, loopTo2 = drw.Length - 1; j <= loopTo2; j++)
+                          {
+                              sb.Append(BuildSqlCont(oGv.Var, oGv.Tbl, null, null, null, null, null, null, drw[j]["var"].ToString(), drw[j]["value"].ToString(), drw[j]["desc"].ToString(), oGv.Tbl_Id, BasicCompType.Other, oGv.Criteria));
+                              sb.Append(";");
+                          }
+                      }
+                  }
+
+                  if (Trace.IsEnabled)
+                  {
+                      Trace.Warn("BuildSqlCont()", sb.ToString());
+                  }
+                  // ********************
+              }
+
+              if ((sb.ToString(sb.Length - 1, 1) ?? "") == ";")
+              {
+                  sb.Remove(sb.Length - 1, 1);    // removes trailkling (= maksud gw trailing lho!) semicolon
+              }
+
+              DataTable oDt = GetDataCont(sb.ToString());
+              DataGrid1.Visible = true;
+              DataGrid1.Caption = "<DIV STYLE=\"background-color:#AAAAFF;font:bold 10pt Arial;\">" + (bEn? oGv.Var_Parent_Desc_En: oGv.Var_Parent_Desc) + "</DIV><DIV STYLE=\"background-color:#AAAAFF;font:bold 8pt Arial;\">" + (bEn? oGv.Desc_En: oGv.Desc) + "</DIV>";
+              DataGrid1.DataSource = oDt;
+              DataGrid1.DataBind();
+              Literal1.Text += WriteToolTipDiv();
+              if (isChartVisible)
+              {
+                  CreateChartCont(oDt);
+                  CreateChartContBar(oDt);
+              }
+          }
+
+
+          private string WriteToolTipDiv() // this function nulisin div buat bikin tooltip di WebChartViewer
+          {
+              StringBuilder fsOut;
+              fsOut = new StringBuilder("<DIV ID=\"tip\" ");
+              fsOut.Append(" Style = \"position:absolute; ");
+              fsOut.Append(" top:0px;left:0px;width:200px;height:50px; ");
+              fsOut.Append(" background:yellow;z-Order:4;visibility:hidden; ");
+              fsOut.Append(" border:1px solid black; ");
+              fsOut.Append(" font:bold 12px Arial; ");
+              fsOut.Append(" padding:3px 3px 3px 10px; ");
+              fsOut.Append(" overflow:visible; ");
+              fsOut.Append(" filter:Alpha(Opacity=85) \"> ");
+              fsOut.Append(" </DIV> ");
+              return fsOut.ToString();
+          }
 
 
     }

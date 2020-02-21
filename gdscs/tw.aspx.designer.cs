@@ -10,79 +10,7 @@
 namespace gds {
     
     
-    public partial class tw {
-        
-        /// <summary>
-        /// MnuTop1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuTop MnuTop1;
-        
-        /// <summary>
-        /// LangBar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.langBar1 LangBar1;
-        
-        /// <summary>
-        /// lstds control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect lstds;
-        
-        /// <summary>
-        /// lstr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect lstr;
-        
-        /// <summary>
-        /// lstds2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect lstds2;
-        
-        /// <summary>
-        /// PanelAnalysis1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelAnalysis PanelAnalysis1;
-        
-        /// <summary>
-        /// PanelSearchHtml1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelSearchHtml PanelSearchHtml1;
-        
-        /// <summary>
-        /// pTitleTw control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelGenericTitle pTitleTw;
+    public partial class ScatterPage {
         
         /// <summary>
         /// TreeTwOut1 control.
@@ -92,23 +20,5 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::gds.treeTwOut TreeTwOut1;
-        
-        /// <summary>
-        /// PanelCopyright1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelCopyright PanelCopyright1;
-        
-        /// <summary>
-        /// MnuBottom1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuBottom MnuBottom1;
     }
 }
