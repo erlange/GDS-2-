@@ -26,8 +26,15 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 2. Copy to your local file directory and make it a web application
 
 ### Database Installation
-1. Download the backup file here
+The GDS2 database size is huge and Github doesn't allow big file to be hosted in its repositories, so I stored the database in DropBox instead.
+
+1. Download the backup file [from DropBox here](https://www.dropbox.com/s/qz1qdorm3k89uwe/gds.zip) and extract the zip file.
 2. Restore it to your SQL Server
+
+```
+RESTORE DATABASE gds 
+  FROM DISK = 'C:\YourLocalDirectory\gds.bak' 
+```
 
 ### Source Code
 * Download the [ZIP file](https://github.com/erlange/GDS-2-/archive/master.zip) or clone this repository:
@@ -36,4 +43,5 @@ mkdir [your-directory]
 cd [your-directory]
 git clone https://github.com/erlange/GDS-2-.git
 ```
-Then you can open the `.sln` and build the solution file with Visual Studio.
+
+You can then open the `.sln` and build the solution file with Visual Studio.

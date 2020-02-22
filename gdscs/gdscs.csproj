@@ -61,7 +61,6 @@
     <Content Include="components\treeVars.ascx" />
     <Content Include="components\treeVars2.ascx" />
     <Content Include="contacts.aspx" />
-    <Content Include="contacts_old.aspx" />
     <Content Include="doc.aspx" />
     <Content Include="doclist.aspx" />
     <Content Include="gallery.aspx" />
@@ -70,25 +69,17 @@
     <Content Include="imgd.aspx" />
     <Content Include="links.aspx" />
     <Content Include="pvOut.aspx" />
-    <Content Include="pvOut_old.aspx" />
     <Content Include="default.aspx" />
-    <Content Include="gallery_old.aspx" />
-    <Content Include="links_old.aspx" />
     <Content Include="na.aspx" />
-    <Content Include="doclist_old.aspx" />
     <Content Include="err.aspx" />
     <Content Include="gallery\785814-001.jpg" />
     <Content Include="gallery\DC006653.jpg" />
     <Content Include="gallery\IH073991.jpg" />
     <Content Include="gallery\RR011829.jpg" />
     <Content Include="gallery\YM016025.jpg" />
-    <Content Include="gds_old.aspx" />
-    <Content Include="gdsid_old.aspx" />
     <Content Include="highlight.xml" />
-    <Content Include="imgd_old.aspx" />
     <Content Include="panelAnalysis.ascx" />
     <Content Include="panelComments.ascx" />
-    <Content Include="Default_old.aspx" />
     <Content Include="images\!!minus.gif" />
     <Content Include="images\!!plus.gif" />
     <Content Include="images\!minus.gif" />
@@ -393,7 +384,6 @@
     <Content Include="panelSearchHtml.ascx" />
     <Content Include="panelToolTip.ascx" />
     <Content Include="q.aspx" />
-    <Content Include="s_old.aspx" />
     <Content Include="s.css" />
     <Content Include="s.aspx" />
     <Content Include="sc.aspx" />
@@ -406,8 +396,6 @@
     <Content Include="setLang.aspx" />
     <Content Include="ShowImg.aspx" />
     <Content Include="tw.aspx" />
-    <Content Include="tw_old.aspx" />
-    <Content Include="v_old.aspx" />
     <Content Include="v.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -532,13 +520,6 @@
     <Compile Include="contacts.aspx.designer.cs">
       <DependentUpon>contacts.aspx</DependentUpon>
     </Compile>
-    <Compile Include="contacts_old.aspx.cs">
-      <DependentUpon>contacts_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="contacts_old.aspx.designer.cs">
-      <DependentUpon>contacts_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="doc.aspx.cs">
       <DependentUpon>doc.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -595,13 +576,6 @@
     <Compile Include="pvOut.aspx.designer.cs">
       <DependentUpon>pvOut.aspx</DependentUpon>
     </Compile>
-    <Compile Include="pvOut_old.aspx.cs">
-      <DependentUpon>pvOut_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pvOut_old.aspx.designer.cs">
-      <DependentUpon>pvOut_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="leftOpt.master.cs">
       <DependentUpon>leftOpt.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -615,13 +589,6 @@
     </Compile>
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="gallery_old.aspx.cs">
-      <DependentUpon>gallery_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="gallery_old.aspx.designer.cs">
-      <DependentUpon>gallery_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="Gds.Master.cs">
       <DependentUpon>Gds.Master</DependentUpon>
@@ -637,13 +604,6 @@
     <Compile Include="left.master.designer.cs">
       <DependentUpon>left.master</DependentUpon>
     </Compile>
-    <Compile Include="links_old.aspx.cs">
-      <DependentUpon>links_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="links_old.aspx.designer.cs">
-      <DependentUpon>links_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="na.aspx.cs">
       <DependentUpon>na.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -651,40 +611,12 @@
     <Compile Include="na.aspx.designer.cs">
       <DependentUpon>na.aspx</DependentUpon>
     </Compile>
-    <Compile Include="doclist_old.aspx.cs">
-      <DependentUpon>doclist_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="doclist_old.aspx.designer.cs">
-      <DependentUpon>doclist_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="err.aspx.cs">
       <DependentUpon>err.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="err.aspx.designer.cs">
       <DependentUpon>err.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="gds_old.aspx.cs">
-      <DependentUpon>gds_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="gds_old.aspx.designer.cs">
-      <DependentUpon>gds_old.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="gdsid_old.aspx.cs">
-      <DependentUpon>gdsid_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="gdsid_old.aspx.designer.cs">
-      <DependentUpon>gdsid_old.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="imgd_old.aspx.cs">
-      <DependentUpon>imgd_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="imgd_old.aspx.designer.cs">
-      <DependentUpon>imgd_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="panelAnalysis.ascx.cs">
       <DependentUpon>panelAnalysis.ascx</DependentUpon>
@@ -699,13 +631,6 @@
     </Compile>
     <Compile Include="panelComments.ascx.designer.cs">
       <DependentUpon>panelComments.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Default_old.aspx.cs">
-      <DependentUpon>Default_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default_old.aspx.designer.cs">
-      <DependentUpon>Default_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="langBar.ascx.cs">
       <DependentUpon>langBar.ascx</DependentUpon>
@@ -834,13 +759,6 @@
     <Compile Include="q.aspx.designer.cs">
       <DependentUpon>q.aspx</DependentUpon>
     </Compile>
-    <Compile Include="s_old.aspx.cs">
-      <DependentUpon>s_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="s_old.aspx.designer.cs">
-      <DependentUpon>s_old.aspx</DependentUpon>
-    </Compile>
     <Compile Include="s.aspx.cs">
       <DependentUpon>s.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -882,20 +800,6 @@
     </Compile>
     <Compile Include="tw.aspx.designer.cs">
       <DependentUpon>tw.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="tw_old.aspx.cs">
-      <DependentUpon>tw_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="tw_old.aspx.designer.cs">
-      <DependentUpon>tw_old.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="v_old.aspx.cs">
-      <DependentUpon>v_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="v_old.aspx.designer.cs">
-      <DependentUpon>v_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="v.aspx.cs">
       <DependentUpon>v.aspx</DependentUpon>
