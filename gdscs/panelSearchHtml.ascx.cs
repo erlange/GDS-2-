@@ -10,14 +10,7 @@ namespace gds
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (commonModule.IsEnglish())
-            {
-                this.lblSearch.Text = "Search keyword";
-            }
-            else
-            {
-                this.lblSearch.Text = "Pencarian";
-            }
+            this.lblSearch.Text = commonModule.IsEnglish() ? "Search keyword" : "Pencarian";
         }
     }
 }

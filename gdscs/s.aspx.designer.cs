@@ -10,34 +10,7 @@
 namespace gds {
     
     
-    public partial class gds2_s {
-        
-        /// <summary>
-        /// Form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
-        
-        /// <summary>
-        /// MnuTop1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuTop MnuTop1;
-        
-        /// <summary>
-        /// LangBar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.langBar1 LangBar1;
+    public partial class ModeSelectionPage {
         
         /// <summary>
         /// pTitle1 control.
@@ -103,6 +76,15 @@ namespace gds {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btn1;
         
         /// <summary>
+        /// pTitle2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.panelGenericTitle pTitle2;
+        
+        /// <summary>
         /// pText2 control.
         /// </summary>
         /// <remarks>
@@ -110,15 +92,6 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::gds.panelGenericText pText2;
-        
-        /// <summary>
-        /// lstds2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect lstds2;
         
         /// <summary>
         /// imgDs2 control.
@@ -137,6 +110,15 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btn2;
+        
+        /// <summary>
+        /// pTitle3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.panelGenericTitle pTitle3;
         
         /// <summary>
         /// pText3 control.
@@ -173,23 +155,5 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btn3;
-        
-        /// <summary>
-        /// PanelCopyright1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelCopyright PanelCopyright1;
-        
-        /// <summary>
-        /// MnuBottom1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuBottom MnuBottom1;
     }
 }

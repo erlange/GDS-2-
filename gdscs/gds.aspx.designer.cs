@@ -10,52 +10,7 @@
 namespace gds {
     
     
-    public partial class gds {
-        
-        /// <summary>
-        /// Form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
-        
-        /// <summary>
-        /// MnuTop1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuTop MnuTop1;
-        
-        /// <summary>
-        /// LangBar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.langBar1 LangBar1;
-        
-        /// <summary>
-        /// MnuLeft1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuLeft MnuLeft1;
-        
-        /// <summary>
-        /// PanelSearch1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelSearch PanelSearch1;
+    public partial class AboutGdsPage {
         
         /// <summary>
         /// PanelHtml1 control.
@@ -65,23 +20,5 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::gds.panelHtml PanelHtml1;
-        
-        /// <summary>
-        /// PanelCopyright1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelCopyright PanelCopyright1;
-        
-        /// <summary>
-        /// MnuBottom1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.mnuBottom MnuBottom1;
     }
 }

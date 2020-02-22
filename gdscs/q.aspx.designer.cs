@@ -10,51 +10,69 @@
 namespace gds {
     
     
-    public partial class def2 {
+    public partial class SearchResultPage {
         
         /// <summary>
-        /// pTitleWelcome control.
+        /// lblHeader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelGenericTitle pTitleWelcome;
+        protected global::System.Web.UI.WebControls.Label lblHeader;
         
         /// <summary>
-        /// pTextWelcome control.
+        /// Form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelGenericText pTextWelcome;
+        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
         
         /// <summary>
-        /// pTitleSurveyData control.
+        /// lblSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelGenericTitle pTitleSurveyData;
+        protected global::System.Web.UI.WebControls.Label lblSearch;
         
         /// <summary>
-        /// pTextSurveyData control.
+        /// TextBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelGenericText pTextSurveyData;
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
         
         /// <summary>
-        /// PanelGallery1 control.
+        /// btnOK control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelGallery PanelGallery1;
+        protected global::System.Web.UI.WebControls.ImageButton btnOK;
+        
+        /// <summary>
+        /// lblResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResult;
+        
+        /// <summary>
+        /// DataGrid1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataGrid DataGrid1;
     }
 }

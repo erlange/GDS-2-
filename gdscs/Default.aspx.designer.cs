@@ -10,43 +10,43 @@
 namespace gds {
     
     
-    public partial class gds2_default {
+    public partial class DefaultPage {
         
         /// <summary>
-        /// Form1 control.
+        /// pTitleWelcome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
+        protected global::gds.panelGenericTitle pTitleWelcome;
         
         /// <summary>
-        /// LangBar1 control.
+        /// pTextWelcome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.langBar1 LangBar1;
+        protected global::gds.panelGenericText pTextWelcome;
         
         /// <summary>
-        /// MnuLeft1 control.
+        /// pTitleSurveyData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.mnuLeft MnuLeft1;
+        protected global::gds.panelGenericTitle pTitleSurveyData;
         
         /// <summary>
-        /// PanelSearch1 control.
+        /// pTextSurveyData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelSearch PanelSearch1;
+        protected global::gds.panelGenericText pTextSurveyData;
         
         /// <summary>
         /// PanelGallery1 control.
@@ -56,6 +56,15 @@ namespace gds {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::gds.panelGallery PanelGallery1;
+        
+        /// <summary>
+        /// pTitleHighlight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::gds.panelGenericTitle pTitleHighlight;
         
         /// <summary>
         /// PanelHighlight1 control.
@@ -76,12 +85,12 @@ namespace gds {
         protected global::gds.panelPpt PanelPpt1;
         
         /// <summary>
-        /// PanelCopyright1 control.
+        /// PanelComments1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::gds.panelCopyright PanelCopyright1;
+        protected global::gds.panelComments PanelComments1;
     }
 }

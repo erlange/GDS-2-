@@ -13,10 +13,7 @@ namespace gds
             Page.RegisterHiddenField("__EVENTTARGET", btnQ.ClientID);
             btnQ.Attributes.Add("onclick", "if(document.getElementById('" + txtQ.ClientID + "').value.length==0){return false}");
 
-            if (commonModule.IsEnglish())
-                lblSearch.Text = "Search keyword";
-            else
-                lblSearch.Text = "Pencarian";
+            lblSearch.Text = commonModule.IsEnglish() ? "Search keyword" : "Pencarian";
         }
 
         protected void btnQ_Click(object sender, ImageClickEventArgs e)

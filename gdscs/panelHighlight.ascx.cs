@@ -19,36 +19,18 @@ namespace gds
 
         public int GdsId
         {
-            get
-            {
-                return _gdsId;
-            }
-            set
-            {
-                _gdsId = value;
-            }
+            get{return _gdsId;}
+            set{_gdsId = value;}
         }
         public int VarId
         {
-            get
-            {
-                return _varId;
-            }
-            set
-            {
-                _varId = value;
-            }
+            get{return _varId;}
+            set{_varId = value;}
         }
         public int IslandId
         {
-            get
-            {
-                return _islandId;
-            }
-            set
-            {
-                _islandId = value;
-            }
+            get{return _islandId;}
+            set{_islandId = value;}
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -88,23 +70,23 @@ namespace gds
             }
 
             {
-                var withBlock = this.lstIsland.Items;
+                var items = this.lstIsland.Items;
                 if (commonModule.IsEnglish())
                 {
-                    withBlock.Add(new ListItem("National", "0"));
-                    withBlock.Add(new ListItem("Sumatera", "1"));
-                    withBlock.Add(new ListItem("Java & Bali", "2"));
+                    items.Add(new ListItem("National", "0"));
+                    items.Add(new ListItem("Sumatera", "1"));
+                    items.Add(new ListItem("Java & Bali", "2"));
                 }
                 else
                 {
-                    withBlock.Add(new ListItem("Nasional", "0"));
-                    withBlock.Add(new ListItem("Sumatera", "1"));
-                    withBlock.Add(new ListItem("Jawa & Bali", "2"));
+                    items.Add(new ListItem("Nasional", "0"));
+                    items.Add(new ListItem("Sumatera", "1"));
+                    items.Add(new ListItem("Jawa & Bali", "2"));
                 }
-                withBlock.Add(new ListItem("Kalimantan", "3"));
-                withBlock.Add(new ListItem("Sulawesi", "4"));
-                withBlock.Add(new ListItem("NTB & NTT", "5"));
-                withBlock.Add(new ListItem("Maluku & Papua", "6"));
+                items.Add(new ListItem("Kalimantan", "3"));
+                items.Add(new ListItem("Sulawesi", "4"));
+                items.Add(new ListItem("NTB & NTT", "5"));
+                items.Add(new ListItem("Maluku & Papua", "6"));
                 
             }
             lstVar.DataSource = ((System.Data.DataSet)Cache["highlight"]).Tables[0];

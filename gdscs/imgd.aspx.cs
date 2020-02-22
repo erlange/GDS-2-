@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace gds
 {
-    public partial class imgd : System.Web.UI.Page
+    public partial class ImagePage : System.Web.UI.Page
     {
-
-
         protected Boolean bEn;
         protected const int THUMBWIDTH = 400;
         protected const int THUMBHEIGHT = 400;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
+            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
             MnuTop1.SetSelectedIndex(-1);
             MnuBottom1.SetSelectedIndex(-1);
             bEn = commonModule.IsEnglish();
@@ -56,7 +56,7 @@ namespace gds
                 // Me.img1.ImageUrl = String.Format("ShowImg.aspx?id={0}", img.DocumentId)
                 // Me.img1.NavigateUrl = String.Format("ShowImg.aspx?id={0}", img.DocumentId)
                 this.lblFilename.Text = img.Url.Split('/')[img.Url.Split('/').Length - 1];
-                
+
                 this.lblFilename.NavigateUrl = string.Format("ShowImg.aspx?id={0}", img.DocumentId);
                 if (bEn)
                 {

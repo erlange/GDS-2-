@@ -24,17 +24,10 @@ namespace gds
 
         void CheckAdminRole()
         {
+            btnEdit.Visible = commonModule.IsInAdminsRole();
+            lblBr.Visible = commonModule.IsInAdminsRole();
             if (commonModule.IsInAdminsRole())
-            {
-                btnEdit.Visible = true;
                 btnEdit.NavigateUrl = "AdminEditGenericText.aspx?id=" + intPanelId.ToString();
-                lblBr.Visible = true;
-            }
-            else
-            {
-                btnEdit.Visible = false;
-                lblBr.Visible = false;
-            }
 
         }
     }

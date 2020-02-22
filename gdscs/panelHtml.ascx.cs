@@ -17,14 +17,7 @@ namespace gds
         protected void Page_Load(object sender, EventArgs e)
         {
             CheckAdminRole();
-            if (commonModule.IsEnglish())
-            {
-                GetPanelContent(intPanelId, Language.English);
-            }
-            else
-            {
-                GetPanelContent(intPanelId, Language.Indonesian);
-            }
+            GetPanelContent(intPanelId, commonModule.IsEnglish() ? Language.English : Language.Indonesian);
         }
 
         void GetPanelContent(int panelId, Language language)
@@ -35,14 +28,10 @@ namespace gds
         }
         void CheckAdminRole()
         {
-            if (commonModule.IsInAdminsRole())
-            {
-                btnEdit.Visible = true;
-                btnEdit.NavigateUrl = "AdminEditContent.aspx?id=" + intPanelId.ToString();
-            }
-            else
-                btnEdit.Visible = false;
+            btnEdit.Visible = commonModule.IsInAdminsRole();
 
+            if (commonModule.IsInAdminsRole())
+                btnEdit.NavigateUrl = "AdminEditContent.aspx?id=" + intPanelId.ToString();
         }
     }
 }

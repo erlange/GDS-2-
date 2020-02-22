@@ -25,14 +25,9 @@ namespace gds
             maxRecords = int.Parse(ConfigurationManager.AppSettings["panelGalleryMaxRecords"]);
             DataTable dt = gdsDoc.GetMaxDocuments(maxRecords, 11, true);  // image. Lihat tbl Categories
             Album1.ImageTable = dt;
-            if (commonModule.IsEnglish())
-            {
-                this.lblFooter.Text = "See Gallery...";
-            }
-            else
-            {
-                this.lblFooter.Text = "Lihat Gallery..";
-            }
+
+            this.lblFooter.Text = commonModule.IsEnglish() ? "See Gallery..." : "Lihat Gallery..";
+            
         }
 
     }

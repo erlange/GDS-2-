@@ -6,13 +6,17 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
+
 namespace gds
 {
-    public partial class doclist : System.Web.UI.Page
+    public partial class DownloadPage : System.Web.UI.Page
     {
         panelDocList p;
         protected void Page_Load(object sender, EventArgs e)
         {
+            mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
+            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
+
             MnuTop1.SetSelectedIndex(3);
             MnuBottom1.SetSelectedIndex(3);
             var cat = new gdsDocumentCategories();
@@ -55,4 +59,4 @@ namespace gds
 
         }
     }
-}
+    }

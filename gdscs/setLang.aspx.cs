@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace gds
 {
-    public partial class setLang : System.Web.UI.Page
+    public partial class SwitchLangPage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

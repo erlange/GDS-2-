@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace gds
-{   
-    public partial class links : System.Web.UI.Page
+{
+    public partial class LinksPage : System.Web.UI.Page
     {
         bool bEn;
         protected void Page_Load(object sender, EventArgs e)
         {
+            mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
+            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
             MnuTop1.SetSelectedIndex(5);
             MnuBottom1.SetSelectedIndex(5);
             CheckIsAdmins();
@@ -52,7 +53,7 @@ namespace gds
                 }
                 else
                 {
-                    lblTitle.Text = Convert.IsDBNull(drv["title"])? "": drv["title"].ToString();
+                    lblTitle.Text = Convert.IsDBNull(drv["title"]) ? "" : drv["title"].ToString();
                     lblDesc.Text = Convert.IsDBNull(drv["desc"]) ? "- Tanpa Keterangan -" : drv["desc_en"].ToString();
                     lblSubmitDate.Text = "Submitted Date";
                 }

@@ -6,36 +6,26 @@ using System.Web.UI.WebControls;
 
 namespace gds
 {
-    public partial class gds2_default : System.Web.UI.Page
+    public partial class DefaultPage : System.Web.UI.Page
     {
-        bool bEn;
-
-        protected panelComments PanelComments1;
-        protected panelGenericTitle pTitleWelcome;
-        protected panelGenericText pTextWelcome;
-        protected panelGenericTitle pTitleSurveyData;
-        protected panelGenericText pTextSurveyData;
-        
-        protected panelGenericTitle pTitleHighlight;
-        protected mnuTop TopMenu1;
-        protected mnuBottom MnuBottom1;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            PanelComments1.PanelId = 2;
+            //PanelComments1.PanelId = 2;
+
+            mnuTop TopMenu1 = (mnuTop)Master.Master.FindControl("TopMenu1");
+            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
 
             pTitleSurveyData.PanelId = 2;
             pTextSurveyData.PanelId = 2;
 
-            pTitleHighlight.PanelId = 3;
+            //pTitleHighlight.PanelId = 3;
 
             pTitleWelcome.PanelId = 1;
             pTextWelcome.PanelId = 1;
 
             TopMenu1.SetSelectedIndex(0);
             MnuBottom1.SetSelectedIndex(0);
+
         }
-
-
     }
 }

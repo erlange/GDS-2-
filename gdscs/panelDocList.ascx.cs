@@ -102,14 +102,11 @@ namespace gds
                 lblFilename.Text = filename;
                 lblFilename.NavigateUrl = drv["url"].ToString();
                 lblSize.Text = commonModule.ConvertBytes(Convert.ToInt64( drv["size"]));
+
                 if (System.IO.File.Exists(Server.MapPath("imgedit/" + extension + ".gif")))
-                {
                     Image1.ImageUrl = "imgedit/" + extension + ".gif";
-                }
                 else
-                {
                     Image1.ImageUrl = "imgedit/file.gif";
-                }
 
                 if (isDemoMode())
                 {

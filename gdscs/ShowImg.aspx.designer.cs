@@ -10,6 +10,6 @@
 namespace gds {
     
     
-    public partial class ShowImg {
+    public partial class ShowImagePage {
     }
 }

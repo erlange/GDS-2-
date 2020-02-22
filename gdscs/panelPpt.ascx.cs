@@ -12,7 +12,9 @@ namespace gds
         Boolean bEn = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            CheckAdminRole();
+            bEn = commonModule.IsEnglish();
+            ShowData();
         }
 
             public void ShowData()
@@ -27,28 +29,38 @@ namespace gds
                 dv.Sort = "submitDate DESC";
                 DataList1.DataSource = dv;
                 DataList1.DataBind();
-                if (bEn)
-                {
-                    this.lblTitle.Text = "Papers and Presentations";
-                    this.lblGoToDoc.Text = "Papers and Presentations...";
-                }
-                else
-                {
-                    this.lblTitle.Text = "Paper dan Presentasi";
-                    this.lblGoToDoc.Text = "Paper dan Presentasi...";
-                }
+                lblTitle.Text = bEn ? "Papers and Presentations" : "Paper dan Presentasi";
+                lblGoToDoc.Text = bEn ? "Papers and Presentations..." : "Paper dan Presentasi...";
+                
             }
             public void CheckAdminRole()
             {
-                if (commonModule.IsInAdminsRole())
-                    this.btnEditRecords.Visible = true;
-                else
-                    this.btnEditRecords.Visible = false;
+                btnEditRecords.Visible = commonModule.IsInAdminsRole();
             }
 
         protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
         {
+            if (e.Item.ItemType == ListItemType.Item | e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Label lblDate = (Label)e.Item.FindControl("lblDate");
+                Label lblDesc = (Label)e.Item.FindControl("lblDesc");
+                HyperLink lblUrl = (HyperLink)e.Item.FindControl("lblUrl");
 
+                DataRowView drv = (DataRowView)e.Item.DataItem;
+                string filename = drv["url"].ToString().Split('/')[drv["url"].ToString().Split('/').Length - 1];
+                if (bEn)
+                {
+                    lblUrl.Text = Convert.IsDBNull(drv["title_en"]) ? filename : drv["title_en"].ToString();
+                    lblDesc.Text = Convert.IsDBNull(drv["desc_en"]) ? "" : drv["desc_en"].ToString();
+                }
+                else
+                {
+                    lblUrl.Text = Convert.IsDBNull(drv["title"]) ? filename : drv["title"].ToString();
+                    lblDesc.Text = Convert.IsDBNull(drv["desc"]) ? "" : drv["desc"].ToString();
+                }
+
+                lblUrl.NavigateUrl = drv["url"].ToString();
+            }
         }
     }
 }

@@ -40,15 +40,6 @@ namespace gds {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnEn;
         
         /// <summary>
-        /// PanelSearchHtml1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::gds.panelSearchHtml PanelSearchHtml1;
-        
-        /// <summary>
         /// lblDate control.
         /// </summary>
         /// <remarks>

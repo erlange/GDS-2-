@@ -5,12 +5,13 @@ using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Web.UI.HtmlControls;
 namespace gds
 {
-    public partial class gds2_s : System.Web.UI.Page
+    public partial class ModeSelectionPage : System.Web.UI.Page
     {
         protected bool bEn;
+        protected HtmlSelect lstds2;
         //protected mnuBottom MnuBottom1;
         //protected mnuTop MnuTop1;
         //protected panelGenericTitle pTitle1;
@@ -18,27 +19,36 @@ namespace gds
         //protected panelGenericText pText2;
         //protected panelGenericText pText3;
         string sButtonValue = "Lanjut &gt;&gt;";
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                GetRequest();
-                SetUi();
-                SetContent();
-                SetHelp();
-                getDsProv();
-            }
-            catch (SqlException ex)
-            {
-                Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                Response.Redirect("err.aspx");
-            }
-            catch (Exception ex)
-            {
-                Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
-                Response.Redirect("err.aspx");
-            }
+            GetRequest();
+            SetUi();
+            SetContent();
+            SetHelp();
+            getDsProv();
+
+            btn1.Attributes["onclick"] = "document.forms['frm1'].ds.value=" + lstds.ClientID + ".value;document.forms['frm1'].r.value=" + lstr.ClientID + ".value;document.forms['frm1'].submit()";
+            btn2.Attributes["onclick"] = "document.forms['frm2'].ds.value=" + lstds2.ClientID + ".value;document.forms['frm2'].c.value=1;document.forms['frm2'].submit();";
+            btn3.Attributes["onclick"] = "document.forms['frm3'].ds.value=" + lstds3.ClientID + ".value;document.forms['frm3'].submit();";
+            //try
+            //{
+            //    GetRequest();
+            //    SetUi();
+            //    SetContent();
+            //    SetHelp();
+            //    getDsProv();
+            //}
+            //catch (SqlException ex)
+            //{
+            //    Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    Response.Redirect("err.aspx");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Session["errMsg"] = ex.Message + (char)10 + Request.Url.ToString() + (char)10 + DateTime.Now;
+            //    Response.Redirect("err.aspx");
+            //}
         }
 
         public void SetHelp()
@@ -69,7 +79,10 @@ namespace gds
         }
         public void SetContent()
         {
-            pTitle1.PanelId = 7;
+            pTitle1.PanelId = 8;
+            pTitle2.PanelId = 9;
+            pTitle3.PanelId = 10;
+
             pText1.PanelId = 3;
             pText2.PanelId = 4;
             pText3.PanelId = 5;
@@ -78,20 +91,16 @@ namespace gds
         public void GetRequest()
         {
             bEn = commonModule.IsEnglish();
-            MnuBottom1.SetSelectedIndex(2);
+            mnuTop MnuTop1 = (mnuTop)Master.Master.FindControl("TopMenu1");
+            mnuBottom MnuBottom1 = (mnuBottom)Master.Master.FindControl("MnuBottom1");
+
             MnuTop1.SetSelectedIndex(2);
+            MnuBottom1.SetSelectedIndex(2);
         }
 
         public void SetUi()
         {
-            if (bEn)
-            {
-                sButtonValue = Server.HtmlDecode("Next &gt;&gt;");
-            }
-            else
-            {
-                sButtonValue = Server.HtmlDecode("Lanjut &gt;&gt;");
-            }
+            sButtonValue = bEn ? Server.HtmlDecode("Next &gt;&gt;") : Server.HtmlDecode("Lanjut &gt;&gt;");
 
             btn1.Value = sButtonValue;
             btn2.Value = sButtonValue;
@@ -151,6 +160,4 @@ namespace gds
         }
 
     }
-
-
 }

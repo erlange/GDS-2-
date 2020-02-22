@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace gds
 {
-    public partial class ShowImg : System.Web.UI.Page
+    public partial class ShowImagePage : System.Web.UI.Page
     {
 
         const int thumbWidth = 80;
