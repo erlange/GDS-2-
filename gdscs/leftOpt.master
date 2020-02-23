@@ -13,11 +13,11 @@
                 valign="top" nowrap width="192">
                 <!-- BEGIN Panel -->
                 <!-- END Panel -->
-                <uc1:panelanalysis ID="PanelAnalysis1" runat="server">
-                </uc1:panelanalysis>
+                <uc1:panelAnalysis ID="PanelAnalysis1" runat="server">
+                </uc1:panelAnalysis>
                 <br>
                 <!-- BEGIN Panel -->
-                <uc1:panelsearchhtml id="PanelSearchHtml1" runat="server"></uc1:panelsearchhtml>
+                <%--<uc1:panelsearchhtml id="PanelSearchHtml1" runat="server"></uc1:panelsearchhtml>--%>
                 <!-- END Panel -->
             </td>
             <td valign="top" width="344" style="width: 562px">

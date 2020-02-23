@@ -6,7 +6,6 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Configuration;
 using ChartDirector;
-using Microsoft.VisualBasic;
 
 namespace gds
 {
@@ -121,6 +120,7 @@ namespace gds
             string iSumTotal = "";
 
             title = Microsoft.VisualBasic.Strings.Left( commonModule.FormatByLength(desc, 30), commonModule.FormatByLength(desc, 30).Length - 1); // removes trailing Chr(10)
+            
 
             for (int i = 0; i <= iRowsCount - 1; i++)
             {

@@ -16,7 +16,7 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 
 
 ## Requirements
-1. .NET Framework 2.0 or newer.  Yes, this project was ancient. 
+1. .NET Framework 2.0 or newer.  Yes, this project is ancient. 
 2. For development use Visual Studio 2010 or newer.
 3. Microsoft SQL Server 2000 Developer Version or higher.
 4. Windows XP or newer with IIS installed.

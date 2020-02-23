@@ -122,8 +122,7 @@
 	</tr>
 	<tr>
 		<td class="pnlCnt" width="80%" bgcolor="#ffffcc"><select class="lst" id="lstr" style="BACKGROUND-COLOR: white" name="lstr" runat="server"></select></td>
-		<td class="pnlCnt" align="right" width="20%" bgcolor="#ffffcc"><input id="btn1" onclick="document.forms['frm1'].ds.value=lstds.value;document.forms['frm1'].r.value=lstr.value;document.forms['frm1'].submit();"
-				type="image" src="images/go.jpg" value="OK" name="Image1" runat="server"></td>
+		<td class="pnlCnt" align="right" width="20%" bgcolor="#ffffcc"><input id="btn1" type="image" src="images/go.jpg" value="OK" name="Image1" runat="server"></td>
 	</tr>
 	<tr>
 		<td class="pnlCnt" align="right" width="80%" bgcolor="#ffffcc"></td>
@@ -149,7 +148,6 @@
 			<label for="c2"><input id="c2" type="radio" value="2" name="c">
 				<asp:label id="lblMulti" runat="server"></asp:label>&nbsp;</label>&nbsp;
 		</td>
-		<td class="pnlCnt" align="right" width="20%" bgcolor="#e6e6fa"><input id="btn2" onclick="document.forms['frm2'].ds.value=lstds2.value;if(c[0].checked) {document.forms['frm2'].c.value=1;} else {document.forms['frm2'].c.value=2;}document.forms['frm2'].submit();"
-				type="image" src="images/go.jpg" value="OK" name="submit" runat="server"></td>
+		<td class="pnlCnt" align="right" width="20%" bgcolor="#e6e6fa"><input id="btn2" type="image" src="images/go.jpg" value="OK" name="submit" runat="server" /></td>
 	</tr>
 </table>

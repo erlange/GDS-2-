@@ -19,19 +19,12 @@ namespace gds
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
                 Literal1.Text = BuildMenuRoot(commonModule.IsEnglish());
-            }
 
             if (commonModule.IsInAdminsRole())
-            {
-                Literal2.Visible = true;
                 Literal2.Text = BuildAdminMenuRoot(commonModule.IsEnglish());
-            }
-            else
-            {
-                Literal2.Visible = false;
-            }
+
+            Literal2.Visible = commonModule.IsInAdminsRole();
         
         }
 
@@ -46,9 +39,7 @@ namespace gds
                 ds.ReadXml(Server.MapPath("mnuLeft.xml"));
             }
             else
-            {
                 ds = (DataSet)Cache["mnuLeft"];
-            }
 
             fsOut.Append(BuildMenuChildren(ds.Tables[0], "menuparentid IS NULL AND isvisible= '1'", isEnglish));
             return fsOut.ToString();
@@ -63,13 +54,9 @@ namespace gds
                 if (!sl.Contains(dRw[i]["menuid"].ToString()))
                 {
                     if (isEnglish)
-                    {
                         desc = (dRw[i].IsNull("menutitleen") ? dRw[i]["menutitle"].ToString() : dRw[i]["menutitleen"].ToString());
-                    }
                     else
-                    {
                         desc = (dRw[i].IsNull("menutitle") ? dRw[i]["menutitle"].ToString() : dRw[i]["menutitle"].ToString());
-                    } // isEnglish
 
                     sl.Add(dRw[i]["menuid"]);
                     if (dRw[i]["isleaf"].ToString() == "0") // bukan leaf-level
@@ -78,24 +65,16 @@ namespace gds
                         fsOut.AppendFormat("<div onclick=\"sh0('d{0}')\">", dRw[i]["menuid"].ToString());
                         fsOut.AppendLine();
                         if (dRw[i]["ismemberexpanded"] == "0")
-                        {
                             fsOut.AppendFormat("<img id=\"d{0}img\" src=\"images/plus.gif\" />&nbsp;", dRw[i]["menuid"].ToString());
-                        }
                         else if (dRw[i]["ismemberexpanded"] == "1")
-                        {
                             fsOut.AppendFormat("<img id=\"d{0}img\" src=\"images/minus.gif\" />&nbsp;", dRw[i]["menuid"]);
-                        }
 
                         fsOut.AppendLine(desc);
                         fsOut.AppendLine("</div>");
                         if (dRw[i]["ismemberexpanded"] == "0")
-                        {
                             fsOut.AppendFormat("<div id=\"d{0}\" style=\"padding:0px 0px 0px 15px;display:none;\">", dRw[i]["menuid"]);
-                        }
                         else if (dRw[i]["ismemberexpanded"] == "1")
-                        {
                             fsOut.AppendFormat("<div id=\"d{0}\" style=\"padding:0px 0px 0px 15px;display:block;\">", dRw[i]["menuid"]);
-                        }
 
                         fsOut.AppendLine();
                         fsOut.Append(BuildMenuChildren(table, string.Format(" menuparentid = '{0}' AND isvisible = '1'", dRw[i]["menuid"]), isEnglish));
@@ -117,6 +96,8 @@ namespace gds
                     } // Not dRw(i)("isleaf") = 1
                 } // Not sl.Contains(dRw(i)("menuid"))
             }
+
+
 
             return fsOut.ToString();
         }
@@ -141,13 +122,9 @@ namespace gds
                 if (!sl.Contains(dRw[i]["menuid"].ToString()))
                 {
                     if (isEnglish)
-                    {
                         desc = dRw[i].IsNull("menutitleen") ? dRw[i]["menutitle"].ToString() : dRw[i]["menutitleen"].ToString();
-                    }
                     else
-                    {
                         desc = dRw[i].IsNull("menutitle") ? dRw[i]["menutitle"].ToString() : dRw[i]["menutitle"].ToString();
-                    } // isEnglish
 
                     sl.Add(dRw[i]["menuid"]);
                     if (dRw[i]["isleaf"] == "0") // bukan leaf-level
@@ -155,24 +132,16 @@ namespace gds
                         fsOut.AppendLine("<div class=\"mnuLeft\" onmouseover=\"chs(this,'mnuLeftHover')\" onmouseout=\"chs(this,'mnuLeft')\">");
                         fsOut.AppendFormat("<div onclick=\"sh0('ad{0}')\">", dRw[i]["menuid"]);
                         if (dRw[i]["ismemberexpanded"] == "0")
-                        {
                             fsOut.AppendFormat("<img id=\"ad{0}img\" src=\"images/plus.gif\" />&nbsp;", dRw[i]["menuid"]);
-                        }
                         else if (dRw[i]["ismemberexpanded"] == "1")
-                        {
                             fsOut.AppendFormat("<img id=\"ad{0}img\" src=\"images/minus.gif\" />&nbsp;", dRw[i]["menuid"]);
-                        }
 
                         fsOut.Append(desc);
                         fsOut.AppendLine("</div>");
                         if (dRw[i]["ismemberexpanded"] == "0")
-                        {
                             fsOut.AppendFormat("<div id=\"ad{0}\" style=\"padding:0px 0px 0px 20px;display:none;\">", dRw[i]["menuid"]);
-                        }
                         else if (dRw[i]["ismemberexpanded"] == "1")
-                        {
                             fsOut.AppendFormat("<div id=\"ad{0}\" style=\"padding:0px 0px 0px 20px;display:block;\">", dRw[i]["menuid"]);
-                        }
 
                         fsOut.AppendLine();
                         fsOut.AppendLine(BuildMenuChildren(table, string.Format(" menuparentid = '{0}'  And isVisible = '1'", dRw[i]["menuid"].ToString()), isEnglish));

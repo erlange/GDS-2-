@@ -33,7 +33,7 @@ namespace gds
             }
             // Put user code to initialize the page here
             btn1.Attributes.Add("onclick", string.Format("document.forms['frm1'].ds.value=document.getElementById('{0}').value;document.forms['frm1'].r.value=document.getElementById('{1}').value;document.forms['frm1'].submit();", lstds.ClientID, lstr.ClientID));
-            btn2.Attributes.Add("onclick", string.Format("document.forms['frm2'].ds.value=document.getElementById('{0}').value;if(c[0].checked) {1}document.forms['frm2'].c.value=1;{2} else {1}document.forms['frm2'].c.value=2;{2}document.forms['frm2'].submit();", lstds2.ClientID, "{", "}"));
+            btn2.Attributes.Add("onclick", string.Format("document.forms['frm2'].ds.value=document.getElementById('{0}').value;if(document.getElementsByName('c')[0].checked) {1}document.forms['frm2'].c.value=1;{2} else {1}document.forms['frm2'].c.value=2;{2}document.forms['frm2'].submit();", lstds2.ClientID, "{", "}"));
             setHelp();
         }
 

@@ -66,6 +66,7 @@
     <Content Include="gallery.aspx" />
     <Content Include="gds.aspx" />
     <Content Include="gdsid.aspx" />
+    <Content Include="images\search-21.png" />
     <Content Include="imgd.aspx" />
     <Content Include="links.aspx" />
     <Content Include="pvOut.aspx" />
@@ -387,7 +388,6 @@
     <Content Include="s.css" />
     <Content Include="s.aspx" />
     <Content Include="sc.aspx" />
-    <Content Include="sc_old.aspx" />
     <Content Include="sc.js" />
     <Content Include="script.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
@@ -772,13 +772,6 @@
     </Compile>
     <Compile Include="sc.aspx.designer.cs">
       <DependentUpon>sc.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="sc_old.aspx.cs">
-      <DependentUpon>sc_old.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="sc_old.aspx.designer.cs">
-      <DependentUpon>sc_old.aspx</DependentUpon>
     </Compile>
     <Compile Include="setLang.aspx.cs">
       <DependentUpon>setLang.aspx</DependentUpon>
