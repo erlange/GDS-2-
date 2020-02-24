@@ -1,2 +1,0 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="panelToolTip.ascx.cs" Inherits="gds.panelToolTip" %>
-<div id="ttip" style="BORDER-RIGHT: black 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: black 1px solid; PADDING-LEFT: 10px; BACKGROUND: #ffffcc; FILTER: Alpha(Opacity=85); LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 3px; FONT: 11px Arial; OVERFLOW: visible; BORDER-LEFT: black 1px solid; WIDTH: 200px; BOTTOM: 0px; PADDING-TOP: 3px; BORDER-BOTTOM: black 1px solid; POSITION: absolute; HEIGHT: 35px; TEXT-ALIGN: left; z-index:12"></div>
