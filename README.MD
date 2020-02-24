@@ -18,6 +18,7 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 ## Overview
 ![GDS2](./docimg/GDS-00.png "GDS2")
 
+GDS2 is an integrated survey of households, public health and education facilities, and district and village level officials. The survey instrument is designed to assemble detailed information on the provision of and use of local public services, as well as the governance environment in which those services are delivered and used. The GDS has been designed to complement a core of secondary data such as the Central Bureau of Statistics' household survey (SUSENAS), village census (PODES), and manufacturing census (Survey Industri) as well as the Ministry of Finance's local government finance data (SIKD). Three versions of the GDS (GDS1, GDS1+ and GDS2) have already been implemented; all waves are implemented by Center for Population and Policy Studies at the University of Gadjah Mada (CPPS-UGM).
 ## Requirements
 1. .NET Framework 2.0 or newer.  Yes, this project is ancient. 
 2. For development use Visual Studio 2010 or newer. You can [download the latest Visual Studio here](https://visualstudio.microsoft.com/downloads/).
