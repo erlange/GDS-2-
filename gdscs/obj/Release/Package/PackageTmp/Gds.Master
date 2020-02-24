@@ -1,0 +1,58 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Gds.master.cs" Inherits="gds.GdsMaster" %>
+<%@ Register TagPrefix="uc1" TagName="TopMenu" Src="mnuTop.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="mnuBottom" Src="mnuBottom.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="panelCopyright" Src="panelCopyright.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="langBar" Src="langBar.ascx" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title id="Title1" runat="server">Governance and Decentralization Survey Indonesia Web
+        Site</title>
+    <asp:ContentPlaceHolder ID="HeadPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+    <link href="s.css" type="text/css" rel="stylesheet">
+    <script language="javascript" src="script.js"></script>
+</head>
+<body onload="pre();">
+<%--    <form id="Form1" name="Form1" runat="server">--%>
+    <table class="pgCnt" cellspacing="0" cellpadding="0" width="780" align="center" border="0">
+        <tr>
+            <td>
+                <!-- Logo Menu Start -->
+                <uc1:TopMenu ID="TopMenu1" runat="server"></uc1:TopMenu>
+                <!-- Logo End -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- BEGIN ToolBar -->
+                <uc1:langbar ID="LangBar1" runat="server"></uc1:langbar>
+                <!-- END ToolBar -->
+                <!-- BEGIN Panel Container -->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+                <!-- END Panel Container -->
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <uc1:panelCopyright ID="PanelCopyright1" runat="server"></uc1:panelCopyright>
+                <uc1:mnuBottom ID="MnuBottom1" runat="server"></uc1:mnuBottom>
+            </td>
+        </tr>
+    </table>
+<%--    </form>--%>
+		<form name="frm1" action="v.aspx" method="get">
+			<input type="hidden" name="ds"> <input type="hidden" name="r">
+		</form>
+		<form name="frm2" action="tw.aspx" method="get">
+			<input type="hidden" name="ds"> <input type="hidden" name="c">
+		</form>
+		<form name="frm3" action="sc.aspx" method="get">
+			<input type="hidden" name="ds">
+		</form>
+
+</body>
+</html>

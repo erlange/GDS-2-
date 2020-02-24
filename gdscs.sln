@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docimg", "docimg", "{F545D7
 		docimg\GDS-02-02.png = docimg\GDS-02-02.png
 		docimg\GDS-03-01.png = docimg\GDS-03-01.png
 		docimg\GDS-03-02.png = docimg\GDS-03-02.png
+		docimg\IIS.png = docimg\IIS.png
 	EndProjectSection
 EndProject
 Global

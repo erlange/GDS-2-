@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Gds.Master" AutoEventWireup="true" CodeBehind="leftOpt.master.cs"
+    Inherits="gds.leftOptMaster" %>
+
+<%@ Register TagPrefix="uc1" TagName="panelAnalysis" Src="panelAnalysis.ascx" %>
+<%@ Register src="panelSearchHtml.ascx" tagname="panelsearchhtml" tagprefix="uc1" %>
+
+<asp:Content ID="ContentHead1" ContentPlaceHolderID="HeadPlaceHolder1" runat="server">
+</asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <table id="pnlContainer" cellspacing="0" cellpadding="4" width="100%" border="0">
+        <tr>
+            <td style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px"
+                valign="top" nowrap width="192">
+                <!-- BEGIN Panel -->
+                <!-- END Panel -->
+                <uc1:panelAnalysis ID="PanelAnalysis1" runat="server">
+                </uc1:panelAnalysis>
+                <br>
+                <!-- BEGIN Panel -->
+                <%--<uc1:panelsearchhtml id="PanelSearchHtml1" runat="server"></uc1:panelsearchhtml>--%>
+                <!-- END Panel -->
+            </td>
+            <td valign="top" width="344" style="width: 562px">
+                <!-- BEGIN Panel -->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+                <!-- END Panel -->
+            </td>
+        </tr>
+    </table>
+</asp:Content>

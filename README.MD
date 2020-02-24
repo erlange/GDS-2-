@@ -9,8 +9,8 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 * [**Requirements**](#requirements)
 * [**Installation**](#installation)
   * [Database Installation](#database-installation)
-  * [Source Code](#Source-Code)
-* [**Analysis Modes**](#basic-usage)
+  * [Source Code](#source-code)
+* [**Analysis Modes**](#analysis-modes)
   * [Single Variable](#single-variable)
   * [Scatter Plot](#scatter-plot)
   * [Score Maker](#score-maker)
@@ -20,13 +20,16 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 
 ## Requirements
 1. .NET Framework 2.0 or newer.  Yes, this project is ancient. 
-2. For development use Visual Studio 2010 or newer.
-3. Microsoft SQL Server 2000 Developer Version or higher.
+2. For development use Visual Studio 2010 or newer. You can [download the latest Visual Studio here](https://visualstudio.microsoft.com/downloads/).
+3. Microsoft SQL Server 2000 Developer Version or higher. [Download SQL Server here](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
 4. Windows XP or newer with IIS installed.
 
 ## Installation
-1. Download the published release version here.
-2. Copy to your local file directory and make it a web application
+1. Direct download the [published release version here](https://github.com/erlange/GDS-2-/releases/download/v1.0/gds2-rel.0.1.0.zip).
+2. Create an IIS virtual directory and configure it as a web application. The easiest way is to right click the `gdscs` folder, click Properties of that folder, then go to the Web Sharing and choose Share This Folder option tab as shown in this figure. Click OK to close the Properties window.
+![GDS2](./docimg/IIS.png "How to create an IIS virtual directory")
+For further info on how to Install IIS and configure an ASP.NET you can [read here](https://docs.microsoft.com/en-us/iis/application-frameworks/scenario-build-an-aspnet-website-on-iis/configure-an-asp-net-website-on-iis).
+3. You should be able to browse to `http://localhost/gdscs` from your browser.
 
 ### Database Installation
 The GDS2 database size is huge and Github doesn't allow big file to be hosted in its repositories, so I stored the database in DropBox instead.

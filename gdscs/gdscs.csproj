@@ -68,6 +68,7 @@
     <Content Include="gdsid.aspx" />
     <Content Include="images\search-21.png" />
     <Content Include="imgd.aspx" />
+    <Content Include="index.htm" />
     <Content Include="links.aspx" />
     <Content Include="pvOut.aspx" />
     <Content Include="default.aspx" />

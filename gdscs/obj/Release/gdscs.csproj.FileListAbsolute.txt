@@ -1,0 +1,7 @@
+C:\gdscs\gdscs\bin\gdscs.dll
+C:\gdscs\gdscs\bin\gdscs.pdb
+C:\gdscs\gdscs\bin\airlangga.tree.dll
+C:\gdscs\gdscs\bin\netchartdir.dll
+C:\gdscs\gdscs\obj\Release\ResolveAssemblyReference.cache
+C:\gdscs\gdscs\obj\Release\gdscs.dll
+C:\gdscs\gdscs\obj\Release\gdscs.pdb
