@@ -40,24 +40,16 @@ namespace gds
         public void setHelp()
         {
             if (bEn)
-            {
                 imgHelpAdv.Attributes.Add("onmouseover", "ci('ttip','This type of analysis allows you to determine correlation between two variables, and create score for all provinces')");
-            }
             else
-            {
                 imgHelpAdv.Attributes.Add("onmouseover", "ci('ttip','Anda dapat menggunakan tipe analisis ini untuk menentukan korelasi antara dua variabel. Anda juga dapat membuat score hasil survei untuk seluruh propinsi berdasarkan variabel-variabel tertentu.')");
-            }
 
             imgHelpAdv.Attributes.Add("onmousemove", "cm('ttip')");
             imgHelpAdv.Attributes.Add("onmouseout", "ch('ttip')");
             if (bEn)
-            {
                 imgHelpBasic.Attributes.Add("onmouseover", "ci('ttip','Choose this to analyze single variable.')");
-            }
             else
-            {
                 imgHelpBasic.Attributes.Add("onmouseover", "ci('ttip','Analisis jenis ini untuk menampilkan hasil dari satu variabel dari data survei GDS2.')");
-            }
 
             imgHelpBasic.Attributes.Add("onmousemove", "cm('ttip')");
             imgHelpBasic.Attributes.Add("onmouseout", "ch('ttip')");
@@ -112,9 +104,7 @@ namespace gds
                 if (Request.Params["ds"] != null)
                 {
                     if (Request.Params["ds"].ToString() == li.Value)
-                    {
                         li.Selected = true;
-                    }
                 }
             }
 
@@ -124,9 +114,7 @@ namespace gds
                 var li = new ListItem(dr[1].ToString(), dr[0].ToString());
                 lstr.Items.Add(li);
                 if (iR.ToString() == li.Value)
-                {
                     li.Selected = true;
-                }
             }
 
             dr.Close();

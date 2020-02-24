@@ -27,7 +27,7 @@ namespace gds
             SetContent();
             SetHelp();
             getDsProv();
-
+            
             btn1.Attributes["onclick"] = "document.forms['frm1'].ds.value=" + lstds.ClientID + ".value;document.forms['frm1'].r.value=" + lstr.ClientID + ".value;document.forms['frm1'].submit()";
             btn2.Attributes["onclick"] = "document.forms['frm2'].ds.value=" + lstds2.ClientID + ".value;document.forms['frm2'].c.value=1;document.forms['frm2'].submit();";
             btn3.Attributes["onclick"] = "document.forms['frm3'].ds.value=" + lstds3.ClientID + ".value;document.forms['frm3'].submit();";

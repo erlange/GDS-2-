@@ -14,6 +14,7 @@ namespace gds
         private int _gdsId;
         private int _varId;
         private int _islandId;
+        private string clickUrl;
 
 
         public int GdsId
@@ -179,12 +180,17 @@ namespace gds
             tbFooter.setSize(iChartW, INTBOTTOMTEXTHEIGHT);
             this.chart1.Image = c.makeWebImage(Chart.PNG);
 
-            string clickUrl;
             clickUrl = string.Format("pvOut.aspx?v={0}&cp1=1&r=All&d=Natl&ds=11&c=0&ch=1", varId);
             if (commonModule.IsEnglish())
                 chart1.ImageMap = c.getHTMLImageMap(clickUrl, "", "title='{label}. Count: {value}'");
             else
                 chart1.ImageMap = c.getHTMLImageMap(clickUrl, "", "title='{label}. Jumlah: {value}'");
+
+        }
+
+        protected void btnOK_Click(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect(clickUrl);
         }
 
 

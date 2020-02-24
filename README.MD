@@ -10,10 +10,13 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 * [**Installation**](#installation)
   * [Database Installation](#database-installation)
   * [Source Code](#Source-Code)
-* [**Usage**](#basic-usage)
-  * [Specifying the URL to Download](#specifying-the-url-to-download)
-  * [Output Directory](#output-directory)
+* [**Analysis Modes**](#basic-usage)
+  * [Single Variable](#single-variable)
+  * [Scatter Plot](#scatter-plot)
+  * [Score Maker](#score-maker)
 
+## Overview
+![GDS2](./docimg/GDS-00.png "GDS2")
 
 ## Requirements
 1. .NET Framework 2.0 or newer.  Yes, this project is ancient. 
@@ -45,3 +48,39 @@ git clone https://github.com/erlange/GDS-2-.git
 ```
 
 You can then open the `.sln` and build the solution file with Visual Studio.
+
+
+## Analysis Modes
+
+![GDS2](./docimg/GDS-01.png "3 Analysis Modes of GDS2")
+
+GDS2 provides 3 types of query which enable you to further analyse the data.
+
+### Single Variable
+![GDS2](./docimg/GDS-01-00.png "Single Variable Selection")
+
+At the very basic this single variable analysis allows you to display the survey result for selected region from selected dataset.
+
+![GDS2](./docimg/GDS-01-01.png "Result")
+
+Results can then be displayed in chart and compared with other comparators such as geographical or socio-economic characteristics
+
+
+### Scatter Plot
+
+![GDS2](./docimg/GDS-02-01.png "2 Variables Selection")
+
+Use this to determine correlation between two continuous (numeric) variables. 
+
+![GDS2](./docimg/GDS-02-02.png "Scatter Plot")
+
+Results will then be displayed in scatter-type chart with a trend line.
+
+
+### Score Maker
+
+![GDS2](./docimg/GDS-03-01.png "Score Maker Variables Selection")
+
+Use this to score each region for up to five custom-weighted continuous (numeric) variables.
+
+![GDS2](./docimg/GDS-03-02.png "Score Maker Variables Selection")
