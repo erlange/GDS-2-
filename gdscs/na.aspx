@@ -50,12 +50,12 @@
 												<td class="pnlCnt" height="28"><br><br><br>
 													<% if(bEn) %>
 													Sorry, this item is not available in this version.
-													<br><a href="javascript:history.go(-1);">Click here</a> to
-													go to the previous page and try again.
+													<br>You might need to contact the developer to obtain this resource or <a href="javascript:history.go(-1);">click here</a> to
+													go to the previous page.
 													<% else %>
 													Maaf, item ini tidak tersedia dalam versi ini.
-													<br><a href="javascript:history.go(-1);">Klik di sini</a>
-													untuk kembali ke halaman sebelumnya dan mencoba lagi
+													<br>Silakan menghubungi developer atau <a href="javascript:history.go(-1);">Klik di sini</a>
+													untuk kembali ke halaman sebelumnya 
 													<%  %>
 													<br><br><br>
 												</td></tr></table>

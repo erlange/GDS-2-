@@ -10,7 +10,7 @@
 			<asp:label id="lblDate" runat="server" Visible=false></asp:label>&nbsp;
 			<asp:label id="lblUser" runat="server" visible="False"></asp:label>&nbsp; <a id="btnLogout" href="AdminLogout.aspx" class="langMnu" runat="server">
 				Log-out</a>&nbsp;
-                <form action=q.aspx method=get style="margin:0px; padding:0px; display:inline">
+                <form action=q.aspx method=get style="margin:0px; padding:0px; display:inline" onsubmit="if(this.q.value.trim()=='')return false;else this.submit();">
                 <input type="text" style="color:#ffffff; height:18px;border:1px solid white; background-color:#3675C9;"  name="q" id="txtQ" />
                 <input type="image" src="images/search-21.png" alt="Search" title="Search" style="vertical-align:bottom;width:21px;height:21px;" />
                 </form>

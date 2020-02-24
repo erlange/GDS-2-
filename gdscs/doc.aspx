@@ -73,7 +73,7 @@
                         </asp:TemplateColumn>
                         <asp:TemplateColumn SortExpression="url" HeaderText="Filename">
                             <ItemTemplate>
-                                <asp:HyperLink ID="lblUrl" runat="server" Text='<%# DataBinder.Eval(Container, "DataItem.url") %>'
+                                <asp:HyperLink ID="lblUrl" runat="server" Text='<%# DataBinder.Eval(Container, "DataItem.url" ) %>'
                                     NavigateUrl='<%# DataBinder.Eval(Container, "DataItem.url") %>'>
                                 </asp:HyperLink>
                             </ItemTemplate>

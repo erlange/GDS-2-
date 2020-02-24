@@ -117,18 +117,18 @@ namespace gds
             double[] data = new double[iRowsCount - 1 + 1];
             string[] labels = new string[iRowsCount - 1 + 1];
             string title;
-            string iSumTotal = "";
+            long iSumTotal = 0;
 
-            title = Microsoft.VisualBasic.Strings.Left( commonModule.FormatByLength(desc, 30), commonModule.FormatByLength(desc, 30).Length - 1); // removes trailing Chr(10)
+            //title = Microsoft.VisualBasic.Strings.Left(commonModule.FormatByLength(desc, 30), commonModule.FormatByLength(desc, 30).Length - 1); // removes trailing Chr(10)
+            title = commonModule.FormatByLength(desc, 30).Substring(0, commonModule.FormatByLength(desc, 30).Length - 1); // removes trailing Chr(10)
             
-
             for (int i = 0; i <= iRowsCount - 1; i++)
             {
-                iSumTotal += table.Rows[i]["CountNatl"];
+                iSumTotal += Convert.ToInt64(table.Rows[i]["CountNatl"]);
                 data[i] = Convert.ToDouble( table.Rows[i]["CountNatl"]);
             }
             for (int i = 0; i <= iRowsCount - 1; i++)
-                labels[i] = table.Rows[i]["desc"] + " (" + Microsoft.VisualBasic.Strings.FormatPercent(Convert.ToDouble(table.Rows[i]["CountNatl"]) / Convert.ToDouble( iSumTotal)) + ")";
+                labels[i] = table.Rows[i]["desc"] + " " + (data[i] / Convert.ToDouble(iSumTotal)).ToString("#0.0%");
             int tmpHeight = BASEHEIGHT + (10 * iRowsCount);
             int h = BASEHEIGHT + (10 * iRowsCount);
 

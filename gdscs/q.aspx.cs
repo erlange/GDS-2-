@@ -25,10 +25,8 @@ namespace gds
                 {
                     if (Request.Params["q"].Length > 0)
                     {
-                        string keyword;
-                        keyword = Request.Params["q"];
-                        keyword = Server.HtmlEncode(keyword);
-                        keyword = keyword.Replace("'", "");
+                        string keyword = Server.HtmlEncode(Request.Params["q"]);
+                        keyword = keyword.Replace("'", "").Trim();
                         TextBox1.Text = keyword;
                         Search(keyword);
                     }

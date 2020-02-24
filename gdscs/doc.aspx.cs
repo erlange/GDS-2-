@@ -114,7 +114,7 @@ namespace gds
 
                 if (bEn)
                 {
-                    lblDocTitle.Text = Convert.IsDBNull(drv["title_en"])? "": drv["title_en"].ToString();
+                    lblDocTitle.Text = Convert.IsDBNull(drv["title_en"]) ? "" : drv["title_en"].ToString();
                     lblDesc.Text = Convert.IsDBNull(drv["desc_en"])? "": drv["desc_en"].ToString();
                 }
                 else
@@ -122,6 +122,10 @@ namespace gds
                     lblDocTitle.Text = Convert.IsDBNull(drv["title"])? "":drv["title"].ToString();
                     lblDesc.Text = Convert.IsDBNull(drv["desc"]) ? "" : drv["desc"].ToString();
                 }
+
+                lblDocTitle.NavigateUrl = Convert.IsDBNull(drv["url"]) ? "" : "g.aspx?f=" + drv["url"].ToString();
+                lblUrl.NavigateUrl = Convert.IsDBNull(drv["url"]) ? "" : "g.aspx?f=" + drv["url"].ToString();
+
 
             if (e.Item.ItemType == ListItemType.Header)
             {

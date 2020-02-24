@@ -48,6 +48,7 @@ namespace gds
 
                 DataRowView drv = (DataRowView)e.Item.DataItem;
                 string filename = drv["url"].ToString().Split('/')[drv["url"].ToString().Split('/').Length - 1];
+
                 if (bEn)
                 {
                     lblUrl.Text = Convert.IsDBNull(drv["title_en"]) ? filename : drv["title_en"].ToString();
@@ -59,7 +60,7 @@ namespace gds
                     lblDesc.Text = Convert.IsDBNull(drv["desc"]) ? "" : drv["desc"].ToString();
                 }
 
-                lblUrl.NavigateUrl = drv["url"].ToString();
+                lblUrl.NavigateUrl = "g.aspx?f=" + drv["url"].ToString();
             }
         }
     }
