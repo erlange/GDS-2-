@@ -27,7 +27,9 @@ GDS-2 is a web based tool meant to facilitate data query on governance issues an
 ## Installation
 1. Direct download the [published release version here](https://github.com/erlange/GDS-2-/releases/download/v1.0/gds2-rel.0.1.0.zip).
 2. Create an IIS virtual directory and configure it as a web application. The easiest way is to right click the `gdscs` folder, click Properties of that folder, then go to the Web Sharing and choose Share This Folder option tab as shown in this figure. Click OK to close the Properties window.
+
 ![GDS2](./docimg/IIS.png "How to create an IIS virtual directory")
+
 For further info on how to Install IIS and configure an ASP.NET you can [read here](https://docs.microsoft.com/en-us/iis/application-frameworks/scenario-build-an-aspnet-website-on-iis/configure-an-asp-net-website-on-iis).
 3. You should be able to browse to `http://localhost/gdscs` from your browser.
 
